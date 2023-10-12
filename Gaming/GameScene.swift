@@ -11,11 +11,13 @@ import GameplayKit
 class GameScene: SKScene {
 
     var player = Player()
+    var control = Control()
+
 
     // Call all the necessary function when game first load
     override func didMove(to view: SKView) {
-        player.position = CGPoint(x: frame.midX, y: frame.midY)
-        addChild(player)
+        setupPlayer()
+        setupControl()
     }
 
     // Update Scene (including node location) accroding to delta time
@@ -30,11 +32,11 @@ class GameScene: SKScene {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
 
-            if node.name == "player" {
+            if node.name == "buttonLeft" {
                 player.playerMoveLeft = true
                 player.playerMoveRight = false
                 player.walkingAnimation()
-            } else {
+            } else if node.name == "buttonRight" {
                 player.playerMoveLeft = false
                 player.playerMoveRight = true
                 player.walkingAnimation()
@@ -48,5 +50,18 @@ class GameScene: SKScene {
         player.stopPlayerMovement()
     }
 
+    // Setup function to build Scene
+    func setupPlayer() {
+        player.position = CGPoint(x: frame.minX + 80, y: frame.minY + 120)
+        addChild(player)
+    }
 
+    func setupControl() {
+        control.buttonLeft.position = CGPoint(x: frame.minX + 45, y: frame.minY + 50)
+        control.buttonRight.position = CGPoint(x: frame.minX + 100, y: frame.minY + 50)
+        control.buttonAction.position = CGPoint(x: frame.maxX - 45, y: frame.minY + 50)
+        addChild(control.buttonLeft)
+        addChild(control.buttonRight)
+        addChild(control.buttonAction)
+    }
 }
