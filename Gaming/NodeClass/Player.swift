@@ -33,11 +33,11 @@ class Player: SKSpriteNode {
 
     func updatePlayerPosition() {
         if playerMoveLeft {
-            self.xScale = -1
-            self.position.x += 1
-        } else if playerMoveRight {
             self.xScale = 1
             self.position.x -= 1
+        } else if playerMoveRight {
+            self.xScale = -1
+            self.position.x += 1
         }
     }
 
