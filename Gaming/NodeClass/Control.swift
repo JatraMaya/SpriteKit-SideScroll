@@ -10,7 +10,7 @@ import SpriteKit
 
 class Control {
 
-    enum actionState {
+    enum actionButtonState {
         case isAction
         case isTalking
     }
@@ -27,9 +27,16 @@ class Control {
         self.buttonLeft.name = "buttonLeft"
         self.buttonRight.name = "buttonRight"
         self.buttonAction.name = "buttonAction"
-    }
 
-    func updateButtonState(state: actionState){
+        self.buttonLeft.alpha = 0.3
+        self.buttonRight.alpha = 0.3
+        self.buttonAction.alpha = 0.3
+
+    }
+    
+    /// Handle the text/icon for buttonAction dependent either the action state is isAction/isTalking
+    /// - Parameter state: from enum value of actionButtonState
+    func updateButtonState(state: actionButtonState){
         let state = state
         switch state {
         case .isAction:
