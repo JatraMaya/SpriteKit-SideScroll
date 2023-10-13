@@ -32,6 +32,10 @@ class Control {
         self.buttonRight.alpha = 0.3
         self.buttonAction.alpha = 0.3
 
+        self.buttonLeft.zPosition = 100
+        self.buttonRight.zPosition = 100
+        self.buttonAction.zPosition = 100
+
     }
     
     /// Handle the text/icon for buttonAction dependent either the action state is isAction/isTalking
