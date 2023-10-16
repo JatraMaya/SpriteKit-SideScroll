@@ -10,9 +10,6 @@ import SpriteKit
 
 class Npc: SKSpriteNode {
 
-    let playerCategory: UInt32 = 0x1 << 0
-    let npcCategory: UInt32 = 0x1 << 1
-
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -21,5 +18,6 @@ class Npc: SKSpriteNode {
         super.init(texture: texture, color: UIColor.clear, size: CGSizeZero)
 
         self.zPosition = 10
+
     }
 }
