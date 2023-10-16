@@ -10,10 +10,23 @@ import GameplayKit
 
 class GameScene: SKScene {
 
-    private var player = Player()
-    private var control = Control()
+    var player: Player
+    var control: Control
+    var npcDialog: NpcDialog
+
+    override init(size: CGSize) {
+        player = Player()
+        control = Control()
+        npcDialog = NpcDialog(size: size, imageName: "npc-b-1", imagePlayer: "player1", imageNpc: "npc-b-1")
+        super.init(size: size)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+//    private var npcDialog = NpcDialog(size: frame.size, imageNama: "npc-b-1")
     private var npc = Npc(texture: SKTexture(imageNamed: "npc-a-1"), size: SKTexture(imageNamed: "npc-a-1").size())
-//    private var npc2 = Npc(texture: SKTexture(imageNamed: "npc-b-1"), size: SKTexture(imageNamed: "npc-b-1").size())
     var ucapan = SKLabelNode(text: "Heyooooooooo, I'm an NPC!!")
 
     // Call all the necessary function when game first load
@@ -21,6 +34,10 @@ class GameScene: SKScene {
 
         setupPlayer()
         setupControl()
+        setupDialog()
+
+//        addChild(npcDialog.sprite)
+//        npcDialog.sprite.position = CGPoint(x: frame.minX + 400, y: frame.minY + 120)
 
         npc.position = CGPoint(x: frame.minX + 200, y: frame.minY + 120)
         npc.name = "npc1"
@@ -111,5 +128,13 @@ class GameScene: SKScene {
         } else {
             control.updateButtonState(state: .isAction)
         }
+    }
+
+    func setupDialog() {
+        npcDialog.sprite.position = CGPoint(x: frame.minX + 400, y: frame.minY + 120)
+        addChild(npcDialog.sprite)
+//        npcDialog.dialogBox.position = CGPoint(x: frame.minX + 400, y: frame.minY + 120)
+        npcDialog.dialogBox.position = CGPoint(x: frame.midX, y: frame.midY - 50)
+        addChild(npcDialog.dialogBox)
     }
 }
