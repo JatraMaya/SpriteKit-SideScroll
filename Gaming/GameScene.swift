@@ -10,14 +10,19 @@ import GameplayKit
 
 class GameScene: SKScene {
 
+    var dialogIsActive = false
+    var activeNpc = ""
+
     var player: Player
     var control: Control
-    var npcDialog: NpcDialog
+    var npc1: Npc
+    var npc2: Npc
 
     override init(size: CGSize) {
         player = Player()
         control = Control()
-        npcDialog = NpcDialog(size: size, imageName: "npc-b-1", imagePlayer: "player1", imageNpc: "npc-b-1")
+        npc1 = Npc(size: size, imageName: "npc-b-1", imageNpc: "npc-b-1", npcName: "npc1")
+        npc2 = Npc(size: size, imageName: "npc-a-1", imageNpc: "npc-a-1", npcName: "npc2")
         super.init(size: size)
     }
     
@@ -25,28 +30,14 @@ class GameScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    private var npcDialog = NpcDialog(size: frame.size, imageNama: "npc-b-1")
-    private var npc = Npc(texture: SKTexture(imageNamed: "npc-a-1"), size: SKTexture(imageNamed: "npc-a-1").size())
-    var ucapan = SKLabelNode(text: "Heyooooooooo, I'm an NPC!!")
-
     // Call all the necessary function when game first load
     override func didMove(to view: SKView) {
 
         setupPlayer()
         setupControl()
-        setupDialog()
+        setupNpc()
 
-//        addChild(npcDialog.sprite)
-//        npcDialog.sprite.position = CGPoint(x: frame.minX + 400, y: frame.minY + 120)
-
-        npc.position = CGPoint(x: frame.minX + 200, y: frame.minY + 120)
-        npc.name = "npc1"
-        addChild(npc)
-
-        ucapan.position = CGPoint(x: frame.midX / 2, y: frame.midY)
-        ucapan.name =  "ucapan"
-
-        scene?.name = "scene"
+        scene!.name = "scene"
 
     }
 
@@ -59,18 +50,6 @@ class GameScene: SKScene {
     // control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         setupControlTouches(touches)
-
-        for touch in touches {
-            let location = touch.location(in: self)
-            let node = self.atPoint(location)
-
-            if node.name == "scene"  {
-                if (childNode(withName: "ucapan") != nil) {
-                    ucapan.removeFromParent()
-                }
-            }
-
-        }
     }
 
     // Tracking to stop functionality when button is no longer pressed
@@ -116,25 +95,47 @@ class GameScene: SKScene {
                 player.walkingAnimation()
             } else if node.name == "buttonAction" {
                 if control.buttonAction.text == "👄" {
-                    addChild(ucapan)
+                    if scene?.childNode(withName: "dialogBox") == nil {
+                        if activeNpc == "npc1" {
+                            addChild(npc1.dialogBox)
+                            npc1.setupDialog()
+                        } else if activeNpc == "npc2" {
+                            addChild(npc2.dialogBox)
+                            npc2.setupDialog()
+                        }
+                    }
+                }
+            }
+
+            if node.name == "dialogBox" {
+                if activeNpc == "npc1" {
+                    npc1.updateDialog()
+                } else if activeNpc == "npc2" {
+                    npc2.updateDialog()
                 }
             }
         }
     }
 
     func updateActionButtonText() {
-        if (-40..<35).contains(player.position.x - npc.position.x) {
-            control.updateButtonState(state: .isTalking)
-        } else {
-            control.updateButtonState(state: .isAction)
-        }
+            if (-40..<35).contains(player.position.x - npc1.sprite.position.x) {
+                control.updateButtonState(state: .isTalking)
+                activeNpc = "npc1"
+            } else if (-40..<35).contains(player.position.x - npc2.sprite.position.x) {
+                control.updateButtonState(state: .isTalking)
+                activeNpc = "npc2"
+            } else {
+                control.updateButtonState(state: .isAction)
+            }
     }
 
-    func setupDialog() {
-        npcDialog.sprite.position = CGPoint(x: frame.minX + 400, y: frame.minY + 120)
-        addChild(npcDialog.sprite)
-//        npcDialog.dialogBox.position = CGPoint(x: frame.minX + 400, y: frame.minY + 120)
-        npcDialog.dialogBox.position = CGPoint(x: frame.midX, y: frame.midY - 50)
-        addChild(npcDialog.dialogBox)
+    func setupNpc() {
+        npc1.sprite.position = CGPoint(x: frame.minX + 400, y: frame.minY + 120)
+        addChild(npc1.sprite)
+        npc2.sprite.position = CGPoint(x: frame.minX + 200, y: frame.minY + 120)
+        addChild(npc2.sprite)
+        for i in [npc1, npc2] {
+            i.dialogBox.position = CGPoint(x: frame.minX + 400, y: frame.minY + 100)
+        }
     }
 }
