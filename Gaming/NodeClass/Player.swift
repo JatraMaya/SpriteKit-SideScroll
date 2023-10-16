@@ -19,7 +19,6 @@ class Player: SKSpriteNode {
     init() {
         super.init(texture: frame1, color: UIColor.clear, size: frame1.size())
         self.name = "player"
-        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
         self.zPosition = 60
     }
     
