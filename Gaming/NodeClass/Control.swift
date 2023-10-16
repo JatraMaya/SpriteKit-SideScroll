@@ -15,11 +15,15 @@ class Control {
         case isTalking
     }
 
+    let alphaTransaparancy = 0.5
+    let buttonZPosition: CGFloat = 100
+
     var buttonLeft = SKLabelNode(text: "◀️")
     var buttonRight = SKLabelNode(text: "▶️")
     var buttonAction = SKLabelNode(text: "🤚")
 
     init(buttonLeft: SKLabelNode = SKLabelNode(text: "◀️"), buttonRight: SKLabelNode = SKLabelNode(text: "▶️"), buttonAction: SKLabelNode = SKLabelNode(text: "🤚")) {
+
         self.buttonLeft = buttonLeft
         self.buttonRight = buttonRight
         self.buttonAction = buttonAction
@@ -28,16 +32,33 @@ class Control {
         self.buttonRight.name = "buttonRight"
         self.buttonAction.name = "buttonAction"
 
-        self.buttonLeft.alpha = 0.3
-        self.buttonRight.alpha = 0.3
-        self.buttonAction.alpha = 0.3
+        self.buttonLeft.alpha = alphaTransaparancy
+        self.buttonRight.alpha = alphaTransaparancy
+        self.buttonAction.alpha = alphaTransaparancy
 
-        self.buttonLeft.zPosition = 100
-        self.buttonRight.zPosition = 100
-        self.buttonAction.zPosition = 100
+        self.buttonLeft.zPosition = buttonZPosition
+        self.buttonRight.zPosition = buttonZPosition
+        self.buttonAction.zPosition = buttonZPosition
 
     }
-    
+
+    func updateButtonAlpha(_ buttonName: String) {
+        switch buttonName{
+        case "buttonLeft":
+            self.buttonLeft.alpha = 1
+        case "buttonRight":
+            self.buttonRight.alpha = 1
+        default:
+            self.buttonAction.alpha = 1
+        }
+    }
+
+    func resetButtonAlpha() {
+        for i in [buttonLeft, buttonRight, buttonAction] {
+            i.alpha = self.alphaTransaparancy
+        }
+    }
+
     /// Handle the text/icon for buttonAction dependent either the action state is isAction/isTalking
     /// - Parameter state: from enum value of actionButtonState
     func updateButtonState(state: actionButtonState){

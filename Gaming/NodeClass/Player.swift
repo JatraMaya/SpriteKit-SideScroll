@@ -13,18 +13,16 @@ class Player: SKSpriteNode {
     let frame1 = SKTexture(imageNamed: "player1")
     let frame2 = SKTexture(imageNamed: "player2")
 
-    let playerCategory: UInt32 = 1 >> 1
-
     var playerMoveLeft = false
     var playerMoveRight = false
 
     init() {
         super.init(texture: frame1, color: UIColor.clear, size: frame1.size())
         self.name = "player"
-        self.physicsBody = SKPhysicsBody(texture: frame1, size: frame1.size())
-        self.physicsBody?.affectedByGravity = false
-        self.physicsBody?.categoryBitMask = playerCategory
+        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
+        self.zPosition = 60
     }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -52,5 +50,4 @@ class Player: SKSpriteNode {
         playerMoveRight = false
         self.removeAllActions()
     }
-
 }

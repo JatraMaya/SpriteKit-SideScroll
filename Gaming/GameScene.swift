@@ -8,65 +8,65 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class GameScene: SKScene {
 
-    var player = Player()
-    var control = Control()
-
-    var npc: SKSpriteNode!
-
+    private var player = Player()
+    private var control = Control()
+    private var npc = Npc(texture: SKTexture(imageNamed: "npc-a-1"), size: SKTexture(imageNamed: "npc-a-1").size())
+//    private var npc2 = Npc(texture: SKTexture(imageNamed: "npc-b-1"), size: SKTexture(imageNamed: "npc-b-1").size())
+    var ucapan = SKLabelNode(text: "Heyooooooooo, I'm an NPC!!")
 
     // Call all the necessary function when game first load
     override func didMove(to view: SKView) {
 
-        physicsWorld.contactDelegate = self
         setupPlayer()
         setupControl()
 
-//        let enemyCategory: UInt32 = 1 >> 2
-
-        npc = SKSpriteNode(imageNamed: "npc-a-1")
         npc.position = CGPoint(x: frame.minX + 200, y: frame.minY + 120)
-        npc.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        npc.physicsBody = SKPhysicsBody(rectangleOf: npc.texture!.size())
-        npc.physicsBody?.affectedByGravity = false
-        npc.physicsBody?.isDynamic = true
-        npc.physicsBody?.categoryBitMask = 1 >> 2
+        npc.name = "npc1"
         addChild(npc)
 
-        for node in [player, npc] {
-            node?.physicsBody?.collisionBitMask = 0
-        }
+        ucapan.position = CGPoint(x: frame.midX / 2, y: frame.midY)
+        ucapan.name =  "ucapan"
+
+        scene?.name = "scene"
 
     }
 
     // Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
         player.updatePlayerPosition()
-
+        updateActionButtonText()
     }
 
     // control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         setupControlTouches(touches)
 
+        for touch in touches {
+            let location = touch.location(in: self)
+            let node = self.atPoint(location)
+
+            if node.name == "scene"  {
+                if (childNode(withName: "ucapan") != nil) {
+                    ucapan.removeFromParent()
+                }
+            }
+
+        }
     }
 
     // Tracking to stop functionality when button is no longer pressed
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         player.stopPlayerMovement()
-    }
-
-    func didBegin(_ contact: SKPhysicsContact) {
-        print("test")
-       
+        control.resetButtonAlpha()
     }
 
     // MARK: Various setup functions needed to build a scene
     /// Function to setup player to the scene,
     func setupPlayer() {
-        player.position = CGPoint(x: frame.minX + 80, y: frame.minY + 120)
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        player.position = CGPoint(x: frame.minX + 80, y: frame.minY + 120)
         addChild(player)
     }
     
@@ -90,12 +90,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if node.name == "buttonLeft" {
                 player.playerMoveLeft = true
                 player.playerMoveRight = false
+                control.updateButtonAlpha("buttonLeft")
                 player.walkingAnimation()
             } else if node.name == "buttonRight" {
                 player.playerMoveLeft = false
                 player.playerMoveRight = true
+                control.updateButtonAlpha("buttonRight")
                 player.walkingAnimation()
+            } else if node.name == "buttonAction" {
+                if control.buttonAction.text == "👄" {
+                    addChild(ucapan)
+                }
             }
+        }
+    }
+
+    func updateActionButtonText() {
+        if (-40..<35).contains(player.position.x - npc.position.x) {
+            control.updateButtonState(state: .isTalking)
+        } else {
+            control.updateButtonState(state: .isAction)
         }
     }
 }
