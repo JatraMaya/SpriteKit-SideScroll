@@ -18,10 +18,14 @@ class Npc {
     var dialogText: SKLabelNode
     var dialogLength: Int?
     var dialogStatusCount = 0
+    var isActionButtonActive = false
+//    var buttonAction: SKSpriteNode
+//    var interactionMark: SKLabelNode
 
     init(size: CGSize, imageName: String, imageNpc: String, npcName: String) {
         self.npcName = npcName
         let dialogBoxSize = CGSize(width: size.width - 25, height: 100)
+//        interactionMark = SKLabelNode(text: "💬")
         dialogLength = dialogs[self.npcName]?.count
         playerImage = SKSpriteNode(imageNamed: "player1")
         npcImage = SKSpriteNode(imageNamed: imageName)
@@ -29,10 +33,16 @@ class Npc {
 
         sprite = SKSpriteNode(imageNamed: imageName)
         sprite.name = npcName
+//        sprite.addChild(interactionMark)
         dialogBox = SKShapeNode(rectOf: dialogBoxSize)
         dialogBox.name = "dialogBox"
         dialogBox.fillColor = UIColor.red
         dialogBox.zPosition = 100
+
+//        interactionMark.alpha = 0
+//        interactionMark.fontSize = 20
+//        interactionMark.name = "speechBubble"
+//        interactionMark.position.y = sprite.position.x - 65
 
         dialogText.name = "dialogText"
         playerImage.name = "playerImage"

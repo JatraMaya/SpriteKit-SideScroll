@@ -10,10 +10,10 @@ import GameplayKit
 
 class GameScene: SKScene {
 
-    var dialogIsActive = false
+    var isActionButtonActive = false
     var activeNpc = ""
 
-
+    var buttonAction: SKSpriteNode
     let player: Player
     let cameraNode: SKCameraNode
     let npc1: Npc
@@ -22,6 +22,7 @@ class GameScene: SKScene {
 
     override init(size: CGSize) {
 
+        buttonAction = SKSpriteNode(color: UIColor.brown, size: CGSize(width: 30, height: 30))
         cameraNode = SKCameraNode()
         player = Player()
         npc1 = Npc(size: size, imageName: "npc-b-1", imageNpc: "npc-b-1", npcName: "npc1")
@@ -39,7 +40,7 @@ class GameScene: SKScene {
         setupPlayer()
         setupCamera()
         setupNpc()
-
+        setupActionButton()
 
         scene!.name = "scene"
 
@@ -50,6 +51,16 @@ class GameScene: SKScene {
         player.updatePlayerPosition()
         updateActionSpeechMark()
         camera?.position.x = player.position.x
+
+//        print((scene?.size.width)! / 2)
+//        print((scene?.size.width)! - 50)
+//        print((scene?.size.width)!)
+
+        if isActionButtonActive {
+            buttonAction.run(SKAction.moveTo(x: (scene?.size.width)! / 2.080, duration: 0.1))
+        } else {
+            buttonAction.run(SKAction.moveTo(x: (scene?.size.width)!, duration: 0.2))
+        }
     }
 
     // control functionality when button is touch
@@ -77,15 +88,15 @@ class GameScene: SKScene {
     // MARK: Various setup functions needed to build a scene
     /// Function to setup player to the scene,
     func setupPlayer() {
-        let questionMark = SKLabelNode(text: "💬")
-        questionMark.alpha = 0
-        questionMark.fontSize = 20
-        questionMark.name = "speechBubble"
+//        let questionMark = SKLabelNode(text: "💬")
+//        questionMark.alpha = 0
+//        questionMark.fontSize = 20
+//        questionMark.name = "speechBubble"
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         player.position = CGPoint(x: frame.minX + 80, y: frame.minY + 120)
         addChild(player)
-        player.addChild(questionMark)
-        questionMark.position.y = player.position.x - 65
+//        player.addChild(questionMark)
+//        questionMark.position.y = player.position.x - 65
 
     }
 
@@ -106,18 +117,24 @@ class GameScene: SKScene {
     }
 
     func updateActionSpeechMark() {
-                if (-40..<35).contains(player.position.x - npc1.sprite.position.x) {
-                    player.childNode(withName: "speechBubble")?.alpha = 1
+                if (-distanceBetweenSprite..<distanceBetweenSprite).contains(player.position.x - npc1.sprite.position.x) {
+                    npc1.sprite.childNode(withName: "speechBubble")?.alpha = 1
                     activeNpc = "npc1"
-                } else if (-40..<35).contains(player.position.x - npc2.sprite.position.x) {
+                    self.isActionButtonActive = true
+                } else if (-distanceBetweenSprite..<distanceBetweenSprite).contains(player.position.x - npc2.sprite.position.x) {
                     player.childNode(withName: "speechBubble")?.alpha = 1
                     activeNpc = "npc2"
+                    self.isActionButtonActive = true
+                    print(self.isActionButtonActive)
                 } else {
-                    player.childNode(withName: "speechBubble")?.alpha = 0
+                    npc2.sprite.childNode(withName: "speechBubble")?.alpha = 0
+                    self.isActionButtonActive = false
+                    print(self.isActionButtonActive)
                 }
         }
 
-//    func setupScreenTap() {
-//        let leftScreenBoundries =
-//    }
+    func setupActionButton() {
+        cameraNode.addChild(self.buttonAction)
+        self.buttonAction.position.x = (scene?.frame.width)!
+    }
 }
