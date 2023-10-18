@@ -7,7 +7,7 @@
 
 import Foundation
 
-let distanceBetweenSprite: CGFloat = 25
+let distanceBetweenSprite: CGFloat = 30
 
 let dialogs = [
     "npc1": [
