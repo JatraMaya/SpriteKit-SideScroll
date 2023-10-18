@@ -59,7 +59,7 @@ class GameScene: SKScene {
         if isActionButtonActive {
             buttonAction.run(SKAction.moveTo(x: (scene?.size.width)! / 2.080, duration: 0.1))
         } else {
-            buttonAction.run(SKAction.moveTo(x: (scene?.size.width)!, duration: 0.2))
+            buttonAction.run(SKAction.moveTo(x: (scene?.size.width)!, duration: 0.1))
         }
     }
 
