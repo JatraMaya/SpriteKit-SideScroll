@@ -19,13 +19,12 @@ class Npc {
     var dialogLength: Int?
     var dialogStatusCount = 0
     var isActionButtonActive = false
-//    var buttonAction: SKSpriteNode
-//    var interactionMark: SKLabelNode
+    var interactionMark: SKLabelNode
 
     init(size: CGSize, imageName: String, imageNpc: String, npcName: String) {
         self.npcName = npcName
         let dialogBoxSize = CGSize(width: size.width - 25, height: 100)
-//        interactionMark = SKLabelNode(text: "💬")
+        interactionMark = SKLabelNode(text: "💬")
         dialogLength = dialogs[self.npcName]?.count
         playerImage = SKSpriteNode(imageNamed: "player1")
         npcImage = SKSpriteNode(imageNamed: imageName)
@@ -33,16 +32,16 @@ class Npc {
 
         sprite = SKSpriteNode(imageNamed: imageName)
         sprite.name = npcName
-//        sprite.addChild(interactionMark)
+        sprite.addChild(interactionMark)
         dialogBox = SKShapeNode(rectOf: dialogBoxSize)
         dialogBox.name = "dialogBox"
         dialogBox.fillColor = UIColor.red
         dialogBox.zPosition = 100
 
-//        interactionMark.alpha = 0
-//        interactionMark.fontSize = 20
-//        interactionMark.name = "speechBubble"
-//        interactionMark.position.y = sprite.position.x - 65
+        interactionMark.alpha = 1
+        interactionMark.fontSize = 20
+        interactionMark.name = "speechBubble"
+        interactionMark.position.y = sprite.position.x + 15
 
         dialogText.name = "dialogText"
         playerImage.name = "playerImage"
@@ -53,6 +52,22 @@ class Npc {
         dialogText.position = CGPoint(x: dialogBox.frame.midX, y: dialogBox.frame.midY)
 
     }
+
+    func updateActionSpeechMark(_ playerSprite: SKSpriteNode) -> String {
+        if (-distanceBetweenSprite..<distanceBetweenSprite).contains(playerSprite.position.x - self.sprite.position.x) {
+            if playerSprite.xScale == -1 {
+                self.sprite.childNode(withName: "speechBubble")?.alpha = 1
+                self.isActionButtonActive = true
+            }
+
+        } else {
+            self.sprite.childNode(withName: "speechBubble")?.alpha = 0
+
+        }
+        return self.sprite.name ?? ""
+
+        }
+
 
     func setupDialog() {
         dialogBox.addChild(dialogText)
