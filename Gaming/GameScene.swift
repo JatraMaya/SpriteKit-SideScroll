@@ -42,7 +42,6 @@ class GameScene: SKScene {
         setupActionButton()
 
         scene!.name = "scene"
-        cameraNode.name = "camera"
 
     }
 
@@ -58,7 +57,6 @@ class GameScene: SKScene {
             buttonAction.position.x = (cameraNode.frame.maxX * 3)
             for i in [npc1, npc2] {
                 i.dialogBox.position.x = (cameraNode.frame.midX)
-                print(i.dialogBox.position)
             }
         }
 
@@ -81,9 +79,10 @@ class GameScene: SKScene {
                 player.handlePlayerMovement(touch, self.size)
             }
 
-            for i in [npc1, npc2] {
-                i.handleNpcDialog(touch)
-            }
+//            for i in [npc1, npc2]
+            npc2.handleNpcDialog(touch)
+            npc1.handleNpcDialog(touch)
+//            }
         }
     }
 
