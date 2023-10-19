@@ -18,10 +18,13 @@ class Npc {
     var dialogText: SKLabelNode
     var dialogLength: Int?
     var dialogStatusCount = 0
+    var isNpcActive = false
+    var interactionMark: SKLabelNode
 
     init(size: CGSize, imageName: String, imageNpc: String, npcName: String) {
         self.npcName = npcName
-        let dialogBoxSize = CGSize(width: size.width - 25, height: 100)
+        let dialogBoxSize = CGSize(width: size.width - 65, height: size.height / 3.5)
+        interactionMark = SKLabelNode(text: "💬")
         dialogLength = dialogs[self.npcName]?.count
         playerImage = SKSpriteNode(imageNamed: "player1")
         npcImage = SKSpriteNode(imageNamed: imageName)
@@ -29,24 +32,47 @@ class Npc {
 
         sprite = SKSpriteNode(imageNamed: imageName)
         sprite.name = npcName
+        sprite.addChild(interactionMark)
         dialogBox = SKShapeNode(rectOf: dialogBoxSize)
         dialogBox.name = "dialogBox"
         dialogBox.fillColor = UIColor.red
         dialogBox.zPosition = 100
 
+        interactionMark.alpha = 1
+        interactionMark.fontSize = 20
+        interactionMark.name = "speechBubble"
+        interactionMark.position.y = sprite.position.x + 15
+
         dialogText.name = "dialogText"
         playerImage.name = "playerImage"
         npcImage.name = "npcImage"
 
-        playerImage.position.x = dialogBox.frame.minX + 50
-        npcImage.position.x = dialogBox.frame.maxX - 50
-        dialogText.position = CGPoint(x: dialogBox.frame.midX, y: dialogBox.frame.midY)
+//        playerImage.position.x = dialogBox.frame.minX
+//        npcImage.position.x = dialogBox.frame.maxX
+//        dialogText.position = CGPoint(x: dialogBox.frame.midX, y: dialogBox.frame.midY)
+
+    }
+
+    func updateActionSpeechMark(_ playerSprite: SKSpriteNode) {
+        let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
+
+        if (-distanceBetweenSprite..<distanceBetweenSprite).contains(playerVsSpritePosition) {
+            if playerSprite.xScale == -1 {
+                self.sprite.childNode(withName: "speechBubble")?.alpha = 1
+                self.isNpcActive = true
+            }
+
+        } else {
+            self.sprite.childNode(withName: "speechBubble")?.alpha = 0
+            self.isNpcActive = false
+        }
 
     }
 
     func setupDialog() {
         dialogBox.addChild(dialogText)
         dialogBox.addChild(playerImage)
+        print(self.npcName)
     }
 
     func removeDialog() {
@@ -55,6 +81,7 @@ class Npc {
         dialogText.removeFromParent()
         dialogStatusCount = 0
         dialogText.text = dialogs[self.npcName]?[0]
+        dialogBox.removeFromParent()
     }
 
     func updateDialog() {
@@ -88,6 +115,24 @@ class Npc {
             removeDialog()
             dialogBox.removeFromParent()
         }
+    }
+
+    func handleNpcDialog(_ touch: UITouch) {
+
+        if let parent = self.sprite.parent {
+            let location = touch.location(in: parent)
+            let node = parent.atPoint(location)
+
+            if (node.name == "buttonAction") && (parent.childNode(withName: "dialogBox") == nil) {
+                    parent.addChild(dialogBox)
+                    setupDialog()
+            }
+
+            if (node.name == "dialogBox") {
+                    updateDialog()
+                }
+        }
+
     }
 
 }

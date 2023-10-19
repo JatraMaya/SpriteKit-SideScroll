@@ -7,6 +7,8 @@
 
 import Foundation
 
+let distanceBetweenSprite: CGFloat = 30
+
 let dialogs = [
     "npc1": [
         "hey", "apa kabar", "baik", "lu gimana", "biasa aja"

@@ -33,20 +33,49 @@ class Player: SKSpriteNode {
     }
     
     /// Update player location in the screen based on delta time and condition either playerMoveLeft/playerMoveRight boolean value
-    func updatePlayerPosition() {
+    /// - Parameter frame: Frame of parent scene
+    func updatePlayerPosition(_ frame: CGRect) {
         if playerMoveLeft {
             self.xScale = 1
             self.position.x -= 1
+
+            if self.position.x < frame.minX + 10 {
+                self.position.x = frame.minX + 10
+            }
         } else if playerMoveRight {
             self.xScale = -1
             self.position.x += 1
         }
     }
-    
+
     /// Set value for both playerMoveLeft & playerMoveRight back to false and remove all SKAction triggered by previous conditional
     func stopPlayerMovement() {
         playerMoveLeft = false
         playerMoveRight = false
         self.removeAllActions()
+    }
+    
+    /// Funcrion to handle player movement
+    /// - Parameters:
+    ///   - touch: Value of UITouch
+    ///   - size: size of parent scene
+    func handlePlayerMovement(_ touch: UITouch, _ size: CGSize) {
+
+        if let parent = self.parent {
+            let location = touch.location(in: parent)
+            let node = self.parent?.atPoint(location)
+
+            if (location.x < self.position.x || location.x < (size.width / 2)) {
+                self.playerMoveRight = false
+                self.playerMoveLeft = true
+                self.walkingAnimation()
+            } else {
+                if node?.name == "scene" {
+                    self.playerMoveRight = true
+                    self.playerMoveLeft = false
+                    self.walkingAnimation()
+                }
+            }
+        }
     }
 }

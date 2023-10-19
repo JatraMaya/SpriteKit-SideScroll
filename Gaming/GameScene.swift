@@ -10,20 +10,23 @@ import GameplayKit
 
 class GameScene: SKScene {
 
-    var dialogIsActive = false
-    var activeNpc = ""
-
-    var player: Player
-    var control: Control
-    var npc1: Npc
-    var npc2: Npc
+    var isActionButtonActive = false
+    var buttonAction: SKSpriteNode
+    let player: Player
+    let cameraNode: SKCameraNode
+    let npc1: Npc
+    let npc2: Npc
 
     override init(size: CGSize) {
+
+        buttonAction = SKSpriteNode(color: UIColor.red, size: CGSize(width: 100, height: 50))
+        buttonAction.zPosition = 1000
+        cameraNode = SKCameraNode()
         player = Player()
-        control = Control()
         npc1 = Npc(size: size, imageName: "npc-b-1", imageNpc: "npc-b-1", npcName: "npc1")
         npc2 = Npc(size: size, imageName: "npc-a-1", imageNpc: "npc-a-1", npcName: "npc2")
         super.init(size: size)
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -34,108 +37,89 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
 
         setupPlayer()
-        setupControl()
+        setupCamera()
         setupNpc()
+        setupActionButton()
 
         scene!.name = "scene"
+        cameraNode.name = "camera"
 
     }
 
     // Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
-        player.updatePlayerPosition()
-        updateActionButtonText()
+
+        player.updatePlayerPosition(frame)
+        npc1.updateActionSpeechMark(player)
+        npc2.updateActionSpeechMark(player)
+
+        if player.position.x >= size.width / 2 {
+            camera?.position.x = player.position.x
+            buttonAction.position.x = (cameraNode.frame.maxX * 3)
+            for i in [npc1, npc2] {
+                i.dialogBox.position.x = (cameraNode.frame.midX)
+                print(i.dialogBox.position)
+            }
+        }
+
+        if npc1.isNpcActive || npc2.isNpcActive {
+            buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 375, duration: 0.1))
+            isActionButtonActive = true
+        } else {
+            buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 1))
+            isActionButtonActive = false
+        }
     }
 
     // control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        setupControlTouches(touches)
+        for touch in (touches) {
+//            let location = touch.location(in: self)
+//            let node = self.atPoint(location)
+
+            if childNode(withName: "dialogBox") == nil {
+                player.handlePlayerMovement(touch, self.size)
+            }
+
+            for i in [npc1, npc2] {
+                i.handleNpcDialog(touch)
+            }
+        }
     }
 
     // Tracking to stop functionality when button is no longer pressed
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         player.stopPlayerMovement()
-        control.resetButtonAlpha()
     }
 
     // MARK: Various setup functions needed to build a scene
     /// Function to setup player to the scene,
     func setupPlayer() {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.minX + 80, y: frame.minY + 120)
+        player.position = CGPoint(x: frame.minX + 80, y: size.height / 2)
         addChild(player)
-    }
-    
-    /// Function to setup three buttons control on the scene
-    func setupControl() {
-        control.buttonLeft.position = CGPoint(x: frame.minX + 45, y: frame.minY + 50)
-        control.buttonRight.position = CGPoint(x: frame.minX + 100, y: frame.minY + 50)
-        control.buttonAction.position = CGPoint(x: frame.maxX - 45, y: frame.minY + 50)
-        addChild(control.buttonLeft)
-        addChild(control.buttonRight)
-        addChild(control.buttonAction)
-    }
-    
-    /// Function to handle player touches to the controller node
-    /// - Parameter touches: require Set of UITouch
-    func setupControlTouches(_ touches: Set<UITouch>) {
-        for touch in touches {
-            let location = touch.location(in: self)
-            let node = self.atPoint(location)
 
-            if node.name == "buttonLeft" {
-                player.playerMoveLeft = true
-                player.playerMoveRight = false
-                control.updateButtonAlpha("buttonLeft")
-                player.walkingAnimation()
-            } else if node.name == "buttonRight" {
-                player.playerMoveLeft = false
-                player.playerMoveRight = true
-                control.updateButtonAlpha("buttonRight")
-                player.walkingAnimation()
-            } else if node.name == "buttonAction" {
-                if control.buttonAction.text == "👄" {
-                    if scene?.childNode(withName: "dialogBox") == nil {
-                        if activeNpc == "npc1" {
-                            addChild(npc1.dialogBox)
-                            npc1.setupDialog()
-                        } else if activeNpc == "npc2" {
-                            addChild(npc2.dialogBox)
-                            npc2.setupDialog()
-                        }
-                    }
-                }
-            }
-
-            if node.name == "dialogBox" {
-                if activeNpc == "npc1" {
-                    npc1.updateDialog()
-                } else if activeNpc == "npc2" {
-                    npc2.updateDialog()
-                }
-            }
-        }
     }
 
-    func updateActionButtonText() {
-            if (-40..<35).contains(player.position.x - npc1.sprite.position.x) {
-                control.updateButtonState(state: .isTalking)
-                activeNpc = "npc1"
-            } else if (-40..<35).contains(player.position.x - npc2.sprite.position.x) {
-                control.updateButtonState(state: .isTalking)
-                activeNpc = "npc2"
-            } else {
-                control.updateButtonState(state: .isAction)
-            }
+    func setupCamera() {
+        cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        camera = cameraNode
     }
 
     func setupNpc() {
-        npc1.sprite.position = CGPoint(x: frame.minX + 400, y: frame.minY + 120)
-        addChild(npc1.sprite)
-        npc2.sprite.position = CGPoint(x: frame.minX + 200, y: frame.minY + 120)
-        addChild(npc2.sprite)
         for i in [npc1, npc2] {
-            i.dialogBox.position = CGPoint(x: frame.minX + 400, y: frame.minY + 100)
+            addChild(i.sprite)
+            i.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
+
         }
+        npc1.sprite.position = CGPoint(x: frame.midX + 200, y: size.height / 2)
+        npc2.sprite.position = CGPoint(x: frame.maxX + 300, y: size.height / 2)
+
+    }
+
+    func setupActionButton() {
+    buttonAction.name = "buttonAction"
+    addChild(buttonAction)
+    buttonAction.position = CGPoint(x: cameraNode.frame.maxX * 3, y: (frame.height / 2))
     }
 }
