@@ -55,27 +55,27 @@ class Player: SKSpriteNode {
         self.removeAllActions()
     }
     
-    /// Funcrion to handle plater movement
+    /// Funcrion to handle player movement
     /// - Parameters:
     ///   - touch: Value of UITouch
     ///   - size: size of parent scene
-    func handlePlayerMovement(_ touch: UITouch, size: CGSize) {
+    func handlePlayerMovement(_ touch: UITouch, _ size: CGSize) {
 
         if let parent = self.parent {
             let location = touch.location(in: parent)
+            let node = self.parent?.atPoint(location)
 
-            if location.x < self.position.x || location.x < (size.width / 2) {
+            if (location.x < self.position.x || location.x < (size.width / 2)) {
                 self.playerMoveRight = false
                 self.playerMoveLeft = true
-
+                self.walkingAnimation()
             } else {
-                self.playerMoveRight = true
-                self.playerMoveLeft = false
-
+                if node?.name == "scene" {
+                    self.playerMoveRight = true
+                    self.playerMoveLeft = false
+                    self.walkingAnimation()
+                }
             }
-            self.walkingAnimation()
-
         }
-
     }
 }

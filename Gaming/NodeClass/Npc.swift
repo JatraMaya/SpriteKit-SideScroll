@@ -18,7 +18,7 @@ class Npc {
     var dialogText: SKLabelNode
     var dialogLength: Int?
     var dialogStatusCount = 0
-    var isActionButtonActive = false
+    var isNpcActive = false
     var interactionMark: SKLabelNode
 
     init(size: CGSize, imageName: String, imageNpc: String, npcName: String) {
@@ -37,6 +37,7 @@ class Npc {
         dialogBox.name = "dialogBox"
         dialogBox.fillColor = UIColor.red
         dialogBox.zPosition = 100
+        dialogBox.position.x = 100
 
         interactionMark.alpha = 1
         interactionMark.fontSize = 20
@@ -53,21 +54,21 @@ class Npc {
 
     }
 
-    func updateActionSpeechMark(_ playerSprite: SKSpriteNode) -> String {
-        if (-distanceBetweenSprite..<distanceBetweenSprite).contains(playerSprite.position.x - self.sprite.position.x) {
+    func updateActionSpeechMark(_ playerSprite: SKSpriteNode) {
+        let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
+
+        if (-distanceBetweenSprite..<distanceBetweenSprite).contains(playerVsSpritePosition) {
             if playerSprite.xScale == -1 {
                 self.sprite.childNode(withName: "speechBubble")?.alpha = 1
-                self.isActionButtonActive = true
+                self.isNpcActive = true
             }
 
         } else {
             self.sprite.childNode(withName: "speechBubble")?.alpha = 0
-
-        }
-        return self.sprite.name ?? ""
-
+            self.isNpcActive = false
         }
 
+    }
 
     func setupDialog() {
         dialogBox.addChild(dialogText)
@@ -80,6 +81,7 @@ class Npc {
         dialogText.removeFromParent()
         dialogStatusCount = 0
         dialogText.text = dialogs[self.npcName]?[0]
+        dialogBox.removeFromParent()
     }
 
     func updateDialog() {
@@ -113,6 +115,24 @@ class Npc {
             removeDialog()
             dialogBox.removeFromParent()
         }
+    }
+
+    func handleNpcDialog(_ touch: UITouch) {
+
+        if let parent = self.sprite.parent {
+            let location = touch.location(in: parent)
+            let node = parent.atPoint(location)
+
+            if (node.name == "buttonAction") && isNpcActive && (parent.childNode(withName: "dialogBox") == nil) {
+                    parent.addChild(dialogBox)
+                    setupDialog()
+            }
+
+            if (node.name == "dialogBox") {
+                    updateDialog()
+                }
+        }
+
     }
 
 }
