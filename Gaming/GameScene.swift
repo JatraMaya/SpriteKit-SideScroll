@@ -56,6 +56,10 @@ class GameScene: SKScene {
         if player.position.x >= size.width / 2 {
             camera?.position.x = player.position.x
             buttonAction.position.x = (cameraNode.frame.maxX * 3)
+            for i in [npc1, npc2] {
+                i.dialogBox.position.x = (cameraNode.frame.midX)
+                print(i.dialogBox.position)
+            }
         }
 
         if npc1.isNpcActive || npc2.isNpcActive {
@@ -70,8 +74,8 @@ class GameScene: SKScene {
     // control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in (touches) {
-            let location = touch.location(in: self)
-            let node = self.atPoint(location)
+//            let location = touch.location(in: self)
+//            let node = self.atPoint(location)
 
             if childNode(withName: "dialogBox") == nil {
                 player.handlePlayerMovement(touch, self.size)
@@ -92,7 +96,7 @@ class GameScene: SKScene {
     /// Function to setup player to the scene,
     func setupPlayer() {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.minX + 80, y: frame.minY + 120)
+        player.position = CGPoint(x: frame.minX + 80, y: size.height / 2)
         addChild(player)
 
     }
@@ -105,10 +109,11 @@ class GameScene: SKScene {
     func setupNpc() {
         for i in [npc1, npc2] {
             addChild(i.sprite)
-                 
+            i.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
+
         }
-        npc1.sprite.position = CGPoint(x: frame.minX + 200, y: frame.minY + 120)
-        npc2.sprite.position = CGPoint(x: frame.minX + 300, y: frame.minY + 120)
+        npc1.sprite.position = CGPoint(x: frame.midX + 200, y: size.height / 2)
+        npc2.sprite.position = CGPoint(x: frame.maxX + 300, y: size.height / 2)
 
     }
 

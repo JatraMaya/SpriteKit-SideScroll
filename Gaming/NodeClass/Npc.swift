@@ -23,7 +23,7 @@ class Npc {
 
     init(size: CGSize, imageName: String, imageNpc: String, npcName: String) {
         self.npcName = npcName
-        let dialogBoxSize = CGSize(width: size.width - 25, height: 100)
+        let dialogBoxSize = CGSize(width: size.width - 65, height: size.height / 3.5)
         interactionMark = SKLabelNode(text: "💬")
         dialogLength = dialogs[self.npcName]?.count
         playerImage = SKSpriteNode(imageNamed: "player1")
@@ -37,7 +37,6 @@ class Npc {
         dialogBox.name = "dialogBox"
         dialogBox.fillColor = UIColor.red
         dialogBox.zPosition = 100
-        dialogBox.position.x = 100
 
         interactionMark.alpha = 1
         interactionMark.fontSize = 20
@@ -48,9 +47,9 @@ class Npc {
         playerImage.name = "playerImage"
         npcImage.name = "npcImage"
 
-        playerImage.position.x = dialogBox.frame.minX + 50
-        npcImage.position.x = dialogBox.frame.maxX - 50
-        dialogText.position = CGPoint(x: dialogBox.frame.midX, y: dialogBox.frame.midY)
+//        playerImage.position.x = dialogBox.frame.minX
+//        npcImage.position.x = dialogBox.frame.maxX
+//        dialogText.position = CGPoint(x: dialogBox.frame.midX, y: dialogBox.frame.midY)
 
     }
 
@@ -73,6 +72,7 @@ class Npc {
     func setupDialog() {
         dialogBox.addChild(dialogText)
         dialogBox.addChild(playerImage)
+        print(self.npcName)
     }
 
     func removeDialog() {
@@ -123,7 +123,7 @@ class Npc {
             let location = touch.location(in: parent)
             let node = parent.atPoint(location)
 
-            if (node.name == "buttonAction") && isNpcActive && (parent.childNode(withName: "dialogBox") == nil) {
+            if (node.name == "buttonAction") && (parent.childNode(withName: "dialogBox") == nil) {
                     parent.addChild(dialogBox)
                     setupDialog()
             }
