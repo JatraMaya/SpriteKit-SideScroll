@@ -16,6 +16,7 @@ class GameScene: SKScene {
     let cameraNode: SKCameraNode
     let npc1: Npc
     let npc2: Npc
+    var activeNpc: String = ""
 
     override init(size: CGSize) {
 
@@ -49,8 +50,18 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
 
         player.updatePlayerPosition(frame)
-        npc1.updateActionSpeechMark(player)
-        npc2.updateActionSpeechMark(player)
+
+        for i in [npc1, npc2] {
+            i.updateActionSpeechMark(player)
+        }
+//        npc1.updateActionSpeechMark(player)
+//        npc2.updateActionSpeechMark(player)
+
+        if npc1.isNpcActive {
+            self.activeNpc = npc1.npcName
+        } else if npc2.isNpcActive {
+            self.activeNpc = npc2.npcName
+        }
 
         if player.position.x >= size.width / 2 {
             camera?.position.x = player.position.x
@@ -79,10 +90,14 @@ class GameScene: SKScene {
                 player.handlePlayerMovement(touch, self.size)
             }
 
-//            for i in [npc1, npc2]
-            npc2.handleNpcDialog(touch)
-            npc1.handleNpcDialog(touch)
-//            }
+
+            if self.activeNpc == "npc1" {
+                npc1.handleNpcDialog(touch)
+            } else if self.activeNpc == "npc2"{
+                npc2.handleNpcDialog(touch)
+            }
+
+
         }
     }
 
