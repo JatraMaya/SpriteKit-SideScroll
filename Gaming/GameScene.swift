@@ -54,8 +54,6 @@ class GameScene: SKScene {
         for i in [npc1, npc2] {
             i.updateActionSpeechMark(player)
         }
-//        npc1.updateActionSpeechMark(player)
-//        npc2.updateActionSpeechMark(player)
 
         if npc1.isNpcActive {
             self.activeNpc = npc1.npcName
