@@ -33,6 +33,7 @@ class Npc {
         sprite = SKSpriteNode(imageNamed: imageName)
         sprite.name = npcName
         sprite.addChild(interactionMark)
+
         dialogBox = SKShapeNode(rectOf: dialogBoxSize)
         dialogBox.name = "dialogBox"
         dialogBox.fillColor = UIColor.red
@@ -47,16 +48,15 @@ class Npc {
         playerImage.name = "playerImage"
         npcImage.name = "npcImage"
 
-//        playerImage.position.x = dialogBox.frame.minX
-//        npcImage.position.x = dialogBox.frame.maxX
-//        dialogText.position = CGPoint(x: dialogBox.frame.midX, y: dialogBox.frame.midY)
+        playerImage.position.x = dialogBox.frame.minX + 25
+        npcImage.position.x = dialogBox.frame.maxX - 25
 
     }
 
     func updateActionSpeechMark(_ playerSprite: SKSpriteNode) {
         let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
 
-        if (-distanceBetweenSprite..<distanceBetweenSprite).contains(playerVsSpritePosition) {
+        if (-distanceBetweenSpriteStart..<distanceBetweenSpriteEnd).contains(playerVsSpritePosition) {
             if playerSprite.xScale == -1 {
                 self.sprite.childNode(withName: "speechBubble")?.alpha = 1
                 self.isNpcActive = true
@@ -72,7 +72,6 @@ class Npc {
     func setupDialog() {
         dialogBox.addChild(dialogText)
         dialogBox.addChild(playerImage)
-        print(self.npcName)
     }
 
     func removeDialog() {
