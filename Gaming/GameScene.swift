@@ -26,7 +26,7 @@ class GameScene: SKScene {
     override init(size: CGSize) {
 
         buttonAction = SKSpriteNode(color: UIColor.red, size: CGSize(width: 100, height: 50))
-        buttonAction.zPosition = 1000
+        buttonAction.zPosition = 5002
         cameraNode = SKCameraNode()
         player = Player()
         npc1 = Npc(size: size, imageName: "npc-b-1", imageNpc: "npc-b-1", npcName: "npc1")
@@ -67,6 +67,7 @@ class GameScene: SKScene {
             addChild(i)
         }
         bg3.zPosition = 5000
+        bg4.zPosition = 5001
         setupPlayer()
         setupCamera()
         setupNpc()
@@ -82,8 +83,6 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
 
         player.updatePlayerPosition(frame)
-        print(player.position.x)
-        print(bg2.frame.maxX)
 
         for i in [npc1, npc2] {
             i.updateActionSpeechMark(player)
@@ -117,12 +116,17 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in (touches) {
 //            let location = touch.location(in: self)
+            let location = touch.location(in: self)
+            let node = self.atPoint(location)
 //            let node = self.atPoint(location)
+//
+//            if node.name == "buttocAction" {
+//
+//            }
 
-            if childNode(withName: "dialogBox") == nil {
+            if childNode(withName: "dialogBox") == nil && (node.name != "buttonAction") {
                 player.handlePlayerMovement(touch, self.size)
             }
-
 
             if self.activeNpc == "npc1" {
                 npc1.handleNpcDialog(touch)
@@ -158,10 +162,11 @@ class GameScene: SKScene {
         for i in [npc1, npc2] {
             addChild(i.sprite)
             i.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
+            i.dialogBox.zPosition = 5005
 
         }
-        npc1.sprite.position = CGPoint(x: frame.midX + 200, y: size.height / 4.5)
-        npc2.sprite.position = CGPoint(x: frame.maxX + 300, y: size.height / 4.5)
+        npc1.sprite.position = CGPoint(x: bg2.size.width / 2, y: size.height / 4.5)
+        npc2.sprite.position = CGPoint(x: frame.maxX + 800, y: size.height / 4.5)
 
     }
 
