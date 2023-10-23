@@ -18,6 +18,11 @@ class GameScene: SKScene {
     let npc2: Npc
     var activeNpc: String = ""
 
+    let bg1: SKSpriteNode
+    let bg2: SKSpriteNode
+    let bg3: SKSpriteNode
+    let bg4: SKSpriteNode
+
     override init(size: CGSize) {
 
         buttonAction = SKSpriteNode(color: UIColor.red, size: CGSize(width: 100, height: 50))
@@ -26,6 +31,16 @@ class GameScene: SKScene {
         player = Player()
         npc1 = Npc(size: size, imageName: "npc-b-1", imageNpc: "npc-b-1", npcName: "npc1")
         npc2 = Npc(size: size, imageName: "npc-a-1", imageNpc: "npc-a-1", npcName: "npc2")
+
+        bg1 = SKSpriteNode(imageNamed: "BG-Layer1")
+        bg2 = SKSpriteNode(imageNamed: "BG-Layer2")
+        bg3 = SKSpriteNode(imageNamed: "BG-Layer3")
+        bg4 = SKSpriteNode(imageNamed: "BG-Layer4")
+
+        bg1.name = "bg1"
+
+
+
         super.init(size: size)
 
     }
@@ -37,12 +52,29 @@ class GameScene: SKScene {
     // Call all the necessary function when game first load
     override func didMove(to view: SKView) {
 
+
+        for i in [bg1, bg2, bg3, bg4] {
+            i.size = (i.texture?.size())!
+
+            if i.name != "bg1" {
+                i.anchorPoint = CGPoint(x: 0.065, y: 0.5)
+
+            } else {
+                i.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            }
+            i.size.height = frame.height
+            i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            addChild(i)
+        }
+        bg3.zPosition = 5000
         setupPlayer()
         setupCamera()
         setupNpc()
         setupActionButton()
 
         scene!.name = "scene"
+        scene?.zPosition = 100000
+
 
     }
 
@@ -50,6 +82,8 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
 
         player.updatePlayerPosition(frame)
+        print(player.position.x)
+        print(bg2.frame.maxX)
 
         for i in [npc1, npc2] {
             i.updateActionSpeechMark(player)
@@ -63,6 +97,7 @@ class GameScene: SKScene {
 
         if player.position.x >= size.width / 2 {
             camera?.position.x = player.position.x
+            bg1.position.x = (camera?.position.x)!
             buttonAction.position.x = (cameraNode.frame.maxX * 3)
             for i in [npc1, npc2] {
                 i.dialogBox.position.x = (cameraNode.frame.midX)
@@ -108,8 +143,9 @@ class GameScene: SKScene {
     /// Function to setup player to the scene,
     func setupPlayer() {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.minX + 80, y: size.height / 2)
+        player.position = CGPoint(x: frame.minX + 80, y: size.height / 4.5)
         addChild(player)
+        player.zPosition = 10
 
     }
 
@@ -124,8 +160,8 @@ class GameScene: SKScene {
             i.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
 
         }
-        npc1.sprite.position = CGPoint(x: frame.midX + 200, y: size.height / 2)
-        npc2.sprite.position = CGPoint(x: frame.maxX + 300, y: size.height / 2)
+        npc1.sprite.position = CGPoint(x: frame.midX + 200, y: size.height / 4.5)
+        npc2.sprite.position = CGPoint(x: frame.maxX + 300, y: size.height / 4.5)
 
     }
 
