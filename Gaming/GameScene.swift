@@ -7,6 +7,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameScene: SKScene {
 
@@ -19,6 +20,9 @@ class GameScene: SKScene {
     let item: Item
     var activeNpc: String = ""
     var activeItem: String = ""
+
+    var audioPlayer: AVAudioPlayer?
+    var isAudioPlayed = false
 
     let bg1: SKSpriteNode
     let bg2: SKSpriteNode
@@ -42,10 +46,7 @@ class GameScene: SKScene {
 
         bg1.name = "bg1"
 
-
-
         super.init(size: size)
-
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,14 +55,16 @@ class GameScene: SKScene {
 
     // Call all the necessary function when game first load
     override func didMove(to view: SKView) {
-
+        if !isAudioPlayed {
+            playSound(named: "gayatriSong", fileType: "mp3")
+            isAudioPlayed = true
+        }
 
         for i in [bg1, bg2, bg3, bg4] {
             i.size = (i.texture?.size())!
 
             if i.name != "bg1" {
                 i.anchorPoint = CGPoint(x: 0.065, y: 0.5)
-
             } else {
                 i.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             }
@@ -79,8 +82,6 @@ class GameScene: SKScene {
 
         scene!.name = "scene"
         scene?.zPosition = 100000
-
-
     }
 
     // Update Scene (including node location) accroding to delta time
@@ -126,6 +127,7 @@ class GameScene: SKScene {
             buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 1))
             isActionButtonActive = false
         }
+        print("\(player.position)")
     }
 
     // control functionality when button is touch
@@ -160,6 +162,7 @@ class GameScene: SKScene {
     // Tracking to stop functionality when button is no longer pressed
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         player.stopPlayerMovement()
+
     }
 
     // MARK: Various setup functions needed to build a scene
@@ -200,5 +203,26 @@ class GameScene: SKScene {
     buttonAction.name = "buttonAction"
     addChild(buttonAction)
     buttonAction.position = CGPoint(x: cameraNode.frame.maxX * 3, y: (frame.height / 2))
+    }
+
+    // MARK: Function to handle play and pause sound
+    // Function to play and pause sound
+    func playSound(named: String, fileType: String) {
+        guard let path = Bundle.main.path(forResource: named, ofType: fileType) else {
+            print("Sound file not found")
+            return
+        }
+
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+            audioPlayer?.numberOfLoops = -1
+            audioPlayer?.play()
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
+        }
+    }
+
+    func stopSound() {
+        audioPlayer?.stop()
     }
 }
