@@ -67,7 +67,6 @@ class Player: SKSpriteNode {
         if let parent = self.parent {
             let location = touch.location(in: parent)
             let node = self.parent?.atPoint(location)
-            print(node?.name as Any)
 
             if (location.x < self.position.x || location.x < (size.width / 2)) {
                 self.playerMoveRight = false
