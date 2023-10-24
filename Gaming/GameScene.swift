@@ -166,7 +166,7 @@ class GameScene: SKScene {
     /// Function to setup player to the scene,
     func setupPlayer() {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.minX + 80, y: size.height / 4.5)
+        player.position = CGPoint(x: frame.minX + 80, y: size.height / 3)
         addChild(player)
         player.zPosition = 10
 

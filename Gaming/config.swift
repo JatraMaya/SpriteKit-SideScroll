@@ -7,7 +7,7 @@
 
 import Foundation
 
-let distanceBetweenSpriteStart: CGFloat = 30
+let distanceBetweenSpriteStart: CGFloat = 45
 let distanceBetweenSpriteEnd: CGFloat = -5
 
 let dialogs = [

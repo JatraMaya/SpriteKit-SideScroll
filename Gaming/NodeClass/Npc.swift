@@ -57,7 +57,7 @@ class Npc {
         let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
 
         if (-distanceBetweenSpriteStart..<distanceBetweenSpriteEnd).contains(playerVsSpritePosition) {
-            if playerSprite.xScale == -1 {
+            if playerSprite.xScale == 1 {
                 self.sprite.childNode(withName: "speechBubble")?.alpha = 1
                 self.isNpcActive = true
             }

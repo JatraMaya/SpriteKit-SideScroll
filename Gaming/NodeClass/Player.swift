@@ -10,15 +10,28 @@ import SpriteKit
 
 class Player: SKSpriteNode {
 
-    let frame1 = SKTexture(imageNamed: "player1")
-    let frame2 = SKTexture(imageNamed: "player2")
+    let frame0 = SKTexture(imageNamed: "Frame_0")
+    let frame1 = SKTexture(imageNamed: "Frame_1")
+    let frame2 = SKTexture(imageNamed: "Frame_2")
+    let frame3 = SKTexture(imageNamed: "Frame_3")
+    let frame4 = SKTexture(imageNamed: "Frame_4")
+    let frame5 = SKTexture(imageNamed: "Frame_5")
+    let frame6 = SKTexture(imageNamed: "Frame_6")
+    let frame7 = SKTexture(imageNamed: "Frame_7")
+    let frame8 = SKTexture(imageNamed: "Frame_8")
+    let frame9 = SKTexture(imageNamed: "Frame_9")
+    let frame10 = SKTexture(imageNamed: "Frame_10")
+    let frame11 = SKTexture(imageNamed: "Frame_11")
+    let frame12 = SKTexture(imageNamed: "Frame_12")
+    let frame13 = SKTexture(imageNamed: "Frame_13")
 
     var playerMoveLeft = false
     var playerMoveRight = false
 
     init() {
-        super.init(texture: frame1, color: UIColor.clear, size: frame1.size())
+        super.init(texture: frame0, color: UIColor.clear, size: frame0.size())
         self.name = "player"
+        self.size = CGSize(width: 50, height: 135)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -27,7 +40,7 @@ class Player: SKSpriteNode {
     
     /// Handling Player walking animation with SKAction node
     func walkingAnimation() {
-        let animate = SKAction.animate(with: [frame1, frame2], timePerFrame: 0.10)
+        let animate = SKAction.animate(with: [frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, frame9, frame10, frame11, frame12, frame13], timePerFrame: 0.10)
         self.run(SKAction.repeatForever(animate))
     }
     
@@ -35,14 +48,14 @@ class Player: SKSpriteNode {
     /// - Parameter frame: Frame of parent scene
     func updatePlayerPosition(_ frame: CGRect) {
         if playerMoveLeft {
-            self.xScale = 1
+            self.xScale = -1
             self.position.x -= 1
 
             if self.position.x < frame.minX + 10 {
                 self.position.x = frame.minX + 10
             }
         } else if playerMoveRight {
-            self.xScale = -1
+            self.xScale = 1
             self.position.x += 1
 
             if self.position.x > 6314 {
@@ -56,6 +69,7 @@ class Player: SKSpriteNode {
         playerMoveLeft = false
         playerMoveRight = false
         self.removeAllActions()
+        self.texture = frame0
     }
     
     /// Funcrion to handle player movement
@@ -66,7 +80,7 @@ class Player: SKSpriteNode {
 
         if let parent = self.parent {
             let location = touch.location(in: parent)
-            let node = self.parent?.atPoint(location)
+//            let node = self.parent?.atPoint(location)
 
             if (location.x < self.position.x || location.x < (size.width / 2)) {
                 self.playerMoveRight = false
