@@ -61,14 +61,14 @@ class GameScene: SKScene {
         }
 
         for i in [bg1, bg2, bg3, bg4] {
-            i.size = (i.texture?.size())!
 
             if i.name != "bg1" {
-                i.anchorPoint = CGPoint(x: 0.065, y: 0.5)
+                i.anchorPoint = CGPoint(x: 0.15, y: 0.5)
             } else {
-                i.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                i.anchorPoint = CGPoint(x: 0.50, y: 0.5)
             }
-            i.size.height = frame.height
+
+            i.setScale(0.5)
             i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(i)
         }
@@ -127,16 +127,13 @@ class GameScene: SKScene {
             buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 1))
             isActionButtonActive = false
         }
-        print("\(player.position)")
     }
 
     // control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in (touches) {
-//            let location = touch.location(in: self)
             let location = touch.location(in: self)
             let node = self.atPoint(location)
-//            let node = self.atPoint(location)
 //
 //            if node.name == "buttocAction" {
 //

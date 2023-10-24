@@ -19,11 +19,6 @@ class Player: SKSpriteNode {
     let frame6 = SKTexture(imageNamed: "Frame_6")
     let frame7 = SKTexture(imageNamed: "Frame_7")
     let frame8 = SKTexture(imageNamed: "Frame_8")
-    let frame9 = SKTexture(imageNamed: "Frame_9")
-    let frame10 = SKTexture(imageNamed: "Frame_10")
-    let frame11 = SKTexture(imageNamed: "Frame_11")
-    let frame12 = SKTexture(imageNamed: "Frame_12")
-    let frame13 = SKTexture(imageNamed: "Frame_13")
 
     var playerMoveLeft = false
     var playerMoveRight = false
@@ -40,7 +35,9 @@ class Player: SKSpriteNode {
     
     /// Handling Player walking animation with SKAction node
     func walkingAnimation() {
-        let animate = SKAction.animate(with: [frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, frame9, frame10, frame11, frame12, frame13], timePerFrame: 0.10)
+        let animate = SKAction.animate(with: [frame1, frame2, frame3,
+                                              frame4, frame5,  frame6,
+                                              frame7, frame8], timePerFrame: 0.10)
         self.run(SKAction.repeatForever(animate))
     }
     
@@ -49,14 +46,14 @@ class Player: SKSpriteNode {
     func updatePlayerPosition(_ frame: CGRect) {
         if playerMoveLeft {
             self.xScale = -1
-            self.position.x -= 1
+            self.position.x -= 0.75
 
             if self.position.x < frame.minX + 10 {
                 self.position.x = frame.minX + 10
             }
         } else if playerMoveRight {
             self.xScale = 1
-            self.position.x += 1
+            self.position.x += 0.75
 
             if self.position.x > 6314 {
                 self.position.x = 6314
