@@ -16,16 +16,34 @@ class GameScene: SKScene {
     let cameraNode: SKCameraNode
     let npc1: Npc
     let npc2: Npc
+    let item: Item
     var activeNpc: String = ""
+    var activeItem: String = ""
+
+    let bg1: SKSpriteNode
+    let bg2: SKSpriteNode
+    let bg3: SKSpriteNode
+    let bg4: SKSpriteNode
 
     override init(size: CGSize) {
 
         buttonAction = SKSpriteNode(color: UIColor.red, size: CGSize(width: 100, height: 50))
-        buttonAction.zPosition = 1000
+        buttonAction.zPosition = 5002
         cameraNode = SKCameraNode()
         player = Player()
         npc1 = Npc(size: size, imageName: "npc-b-1", imageNpc: "npc-b-1", npcName: "npc1")
         npc2 = Npc(size: size, imageName: "npc-a-1", imageNpc: "npc-a-1", npcName: "npc2")
+        item = Item(size: size, imageName: "key", itemName: "key", assetName: "asset")
+
+        bg1 = SKSpriteNode(imageNamed: "BG-Layer1")
+        bg2 = SKSpriteNode(imageNamed: "BG-Layer2")
+        bg3 = SKSpriteNode(imageNamed: "BG-Layer3")
+        bg4 = SKSpriteNode(imageNamed: "BG-Layer4")
+
+        bg1.name = "bg1"
+
+
+
         super.init(size: size)
 
     }
@@ -37,41 +55,71 @@ class GameScene: SKScene {
     // Call all the necessary function when game first load
     override func didMove(to view: SKView) {
 
+
+        for i in [bg1, bg2, bg3, bg4] {
+            i.size = (i.texture?.size())!
+
+            if i.name != "bg1" {
+                i.anchorPoint = CGPoint(x: 0.065, y: 0.5)
+
+            } else {
+                i.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            }
+            i.size.height = frame.height
+            i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            addChild(i)
+        }
+        bg3.zPosition = 5000
+        bg4.zPosition = 5001
         setupPlayer()
         setupCamera()
         setupNpc()
+        setupItem()
         setupActionButton()
 
         scene!.name = "scene"
+        scene?.zPosition = 100000
+
 
     }
 
     // Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
-
+        print(self.activeNpc)
+        print(self.activeItem)
         player.updatePlayerPosition(frame)
 
         for i in [npc1, npc2] {
             i.updateActionSpeechMark(player)
         }
-//        npc1.updateActionSpeechMark(player)
-//        npc2.updateActionSpeechMark(player)
+
+        item.updateActionCheckMark(player)
 
         if npc1.isNpcActive {
             self.activeNpc = npc1.npcName
         } else if npc2.isNpcActive {
             self.activeNpc = npc2.npcName
+        } else {
+            self.activeNpc = ""
+        }
+
+        if item.isItemActive {
+            self.activeItem = item.itemName
+        } else {
+            self.activeItem = ""
         }
 
         if player.position.x >= size.width / 2 {
             camera?.position.x = player.position.x
+            bg1.position.x = (camera?.position.x)!
             buttonAction.position.x = (cameraNode.frame.maxX * 3)
             for i in [npc1, npc2] {
                 i.dialogBox.position.x = (cameraNode.frame.midX)
             }
+            item.dialogBox.position.x = (cameraNode.frame.midX)
         }
 
-        if npc1.isNpcActive || npc2.isNpcActive {
+        if npc1.isNpcActive || npc2.isNpcActive || item.isItemActive {
             buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 375, duration: 0.1))
             isActionButtonActive = true
         } else {
@@ -84,19 +132,27 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in (touches) {
 //            let location = touch.location(in: self)
+            let location = touch.location(in: self)
+            let node = self.atPoint(location)
 //            let node = self.atPoint(location)
+//
+//            if node.name == "buttocAction" {
+//
+//            }
 
-            if childNode(withName: "dialogBox") == nil {
+            if childNode(withName: "dialogBox") == nil && (node.name != "buttonAction") {
                 player.handlePlayerMovement(touch, self.size)
             }
-
 
             if self.activeNpc == "npc1" {
                 npc1.handleNpcDialog(touch)
             } else if self.activeNpc == "npc2"{
                 npc2.handleNpcDialog(touch)
             }
-
+            
+            if self.activeItem == self.item.itemName {
+                item.handleItemDescription(touch)
+            }
 
         }
     }
@@ -110,8 +166,9 @@ class GameScene: SKScene {
     /// Function to setup player to the scene,
     func setupPlayer() {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.minX + 80, y: size.height / 2)
+        player.position = CGPoint(x: frame.minX + 80, y: size.height / 4.5)
         addChild(player)
+        player.zPosition = 10
 
     }
 
@@ -124,11 +181,19 @@ class GameScene: SKScene {
         for i in [npc1, npc2] {
             addChild(i.sprite)
             i.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
+            i.dialogBox.zPosition = 5005
 
         }
-        npc1.sprite.position = CGPoint(x: frame.midX + 200, y: size.height / 2)
-        npc2.sprite.position = CGPoint(x: frame.maxX + 300, y: size.height / 2)
+        npc1.sprite.position = CGPoint(x: bg2.size.width / 2, y: size.height / 4.5)
+        npc2.sprite.position = CGPoint(x: bg2.size.width / 2.8, y: size.height / 4.5)
 
+    }
+
+    func setupItem() {
+        addChild(item.sprite)
+        item.sprite.position = CGPoint(x: frame.maxX + 800, y: size.height / 4.5)
+        item.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
+        item.dialogBox.zPosition = 5005
     }
 
     func setupActionButton() {

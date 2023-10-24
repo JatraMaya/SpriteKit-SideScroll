@@ -19,7 +19,6 @@ class Player: SKSpriteNode {
     init() {
         super.init(texture: frame1, color: UIColor.clear, size: frame1.size())
         self.name = "player"
-        self.zPosition = 60
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +44,10 @@ class Player: SKSpriteNode {
         } else if playerMoveRight {
             self.xScale = -1
             self.position.x += 1
+
+            if self.position.x > 6314 {
+                self.position.x = 6314
+            }
         }
     }
 
@@ -70,12 +73,11 @@ class Player: SKSpriteNode {
                 self.playerMoveLeft = true
                 self.walkingAnimation()
             } else {
-                if node?.name == "scene" {
                     self.playerMoveRight = true
                     self.playerMoveLeft = false
                     self.walkingAnimation()
                 }
             }
-        }
+//        }
     }
 }

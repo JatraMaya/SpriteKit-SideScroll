@@ -31,7 +31,7 @@ class Npc {
         dialogText = SKLabelNode(text: dialogs[self.npcName]?[0])
 
         sprite = SKSpriteNode(imageNamed: imageName)
-        sprite.name = npcName
+        sprite.name = self.npcName
         sprite.addChild(interactionMark)
 
         dialogBox = SKShapeNode(rectOf: dialogBoxSize)

@@ -17,3 +17,7 @@ let dialogs = [
     "npc2": [
         "pinjem seratus", "ogah", "kenapa gitu?", "ogah aja"]
 ]
+
+let itemDescriptions = [
+    "key": "This is a basic key to open a door"
+]
