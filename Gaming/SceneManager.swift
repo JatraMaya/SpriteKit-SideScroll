@@ -11,7 +11,7 @@ import SpriteKit
 class SceneManager {
     
     enum SceneType: Int {
-        case GameScene, SceneSecond
+        case GameScene, SecondScene
     }
     
     private init() {}
@@ -35,8 +35,8 @@ class SceneManager {
         switch sceneType {
         case SceneType.GameScene:
             return GameScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        case SceneType.SceneSecond:
-            return SceneSecond(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        case SceneType.SecondScene:
+            return SecondScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         }
     }
 }
