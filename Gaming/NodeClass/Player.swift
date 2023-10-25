@@ -46,14 +46,14 @@ class Player: SKSpriteNode {
     func updatePlayerPosition(_ frame: CGRect) {
         if playerMoveLeft {
             self.xScale = -1
-            self.position.x -= 0.75
+            self.position.x -= playerSpeed
 
             if self.position.x < frame.minX + 10 {
                 self.position.x = frame.minX + 10
             }
         } else if playerMoveRight {
             self.xScale = 1
-            self.position.x += 0.75
+            self.position.x += playerSpeed
 
             if self.position.x > 6314 {
                 self.position.x = 6314
@@ -77,7 +77,6 @@ class Player: SKSpriteNode {
 
         if let parent = self.parent {
             let location = touch.location(in: parent)
-//            let node = self.parent?.atPoint(location)
 
             if (location.x < self.position.x || location.x < (size.width / 2)) {
                 self.playerMoveRight = false
@@ -89,6 +88,5 @@ class Player: SKSpriteNode {
                     self.walkingAnimation()
                 }
             }
-//        }
     }
 }
