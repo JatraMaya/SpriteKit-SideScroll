@@ -63,7 +63,6 @@ class GameScene: SKScene {
             } else {
                 background.anchorPoint = CGPoint(x: 0.50, y: 0.5)
             }
-            background.size.height = frame.height
             background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(background)
         }
@@ -139,9 +138,9 @@ class GameScene: SKScene {
                 i.dialogBox.position.x = (cameraNode.frame.midX)
             }
             item.dialogBox.position.x = (cameraNode.frame.midX)
-        } else if player.position.x > bg2.size.width / 1.21 {
-            if player.position.x > 3059 {
-                player.position.x = 3059
+        } else if player.position.x >= bg2.size.width / 1.25 {
+            if player.position.x > (bg2.size.width / 1.25 ) {
+                player.position.x = (bg2.size.width / 1.25 )
                 player.stopPlayerMovement()
             }
         }
