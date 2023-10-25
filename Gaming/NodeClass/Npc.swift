@@ -11,7 +11,7 @@ import SpriteKit
 class Npc {
 
     var sprite: SKSpriteNode
-    var dialogBox: SKShapeNode
+    var dialogBox: SKSpriteNode
     var npcName: String
     var playerImage: SKSpriteNode
     var npcImage: SKSpriteNode
@@ -23,10 +23,10 @@ class Npc {
 
     init(size: CGSize, imageName: String, imageNpc: String, npcName: String) {
         self.npcName = npcName
-        let dialogBoxSize = CGSize(width: size.width - 65, height: size.height / 3.5)
+//        let dialogBoxSize = CGSize(width: size.width - 65, height: size.height / 3.5)
         interactionMark = SKLabelNode(text: "💬")
         dialogLength = dialogs[self.npcName]?.count
-        playerImage = SKSpriteNode(imageNamed: "player1")
+        playerImage = SKSpriteNode(imageNamed: "imgMada")
         npcImage = SKSpriteNode(imageNamed: imageName)
         dialogText = SKLabelNode(text: dialogs[self.npcName]?[0])
 
@@ -34,10 +34,10 @@ class Npc {
         sprite.name = self.npcName
         sprite.addChild(interactionMark)
 
-        dialogBox = SKShapeNode(rectOf: dialogBoxSize)
+        dialogBox = SKSpriteNode(imageNamed: "frameConversation")
         dialogBox.name = "dialogBox"
-        dialogBox.fillColor = UIColor.red
         dialogBox.zPosition = 100
+        dialogBox.size = CGSize(width: 720, height: 110)
 
         interactionMark.alpha = 1
         interactionMark.fontSize = 20
@@ -45,11 +45,12 @@ class Npc {
         interactionMark.position.y = sprite.position.x + 15
 
         dialogText.name = "dialogText"
-        playerImage.name = "playerImage"
         npcImage.name = "npcImage"
-
-        playerImage.position.x = dialogBox.frame.minX + 25
         npcImage.position.x = dialogBox.frame.maxX - 25
+
+        playerImage.name = "playerImage"
+        playerImage.position.x = dialogBox.frame.minX + 80
+        playerImage.size = CGSize(width: 90, height: 90)
 
     }
 
@@ -122,7 +123,7 @@ class Npc {
             let location = touch.location(in: parent)
             let node = parent.atPoint(location)
 
-            if (node.name == "buttonAction") && (parent.childNode(withName: "dialogBox") == nil) {
+            if (node.name == "buttonNPCInteraction") && (parent.childNode(withName: "dialogBox") == nil) {
                     parent.addChild(dialogBox)
                     setupDialog()
             }

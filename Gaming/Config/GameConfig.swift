@@ -7,4 +7,4 @@
 
 import Foundation
 
-let playerSpeed: CGFloat = 2
+let playerSpeed: CGFloat = 6

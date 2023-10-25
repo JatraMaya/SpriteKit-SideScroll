@@ -11,8 +11,12 @@ import AVFoundation
 
 class GameScene: SKScene {
 
-    var isActionButtonActive = false
-    var buttonAction: SKSpriteNode
+    var isNPCInteractionButtonActive = false
+    var buttonNPCInteraction: SKSpriteNode
+
+    var isObjectInteractionButtonActive = false
+    var buttonObjectInteraction: SKSpriteNode
+
     let player: Player
     let cameraNode: SKCameraNode
     let npc1: Npc
@@ -31,8 +35,13 @@ class GameScene: SKScene {
 
     override init(size: CGSize) {
 
-        buttonAction = SKSpriteNode(color: UIColor.blue, size: CGSize(width: 100, height: 50))
-        buttonAction.zPosition = 5002
+        buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
+        buttonNPCInteraction.zPosition = 5002
+
+        buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
+        buttonObjectInteraction.zPosition = 5002
+        buttonObjectInteraction.size = CGSize(width: 100, height: 60)
+
         cameraNode = SKCameraNode()
         player = Player()
         npc1 = Npc(size: size, imageName: "npc-b-1", imageNpc: "npc-b-1", npcName: "npc1")
@@ -48,7 +57,7 @@ class GameScene: SKScene {
 
         super.init(size: size)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -75,7 +84,8 @@ class GameScene: SKScene {
         setupCamera()
         setupNpc()
         setupItem()
-        setupActionButton()
+        setupNPCInteractionButton()
+        setupObjectInteractionButton()
         setupQuestInfoButton()
         setupSettingButton()
 
@@ -92,20 +102,20 @@ class GameScene: SKScene {
         let maxTriggerPositionGayatriSong: CGFloat = 4200// Define the trigger position based on your game logic
 
         // Check if the player's x position is within the trigger position range
-            if player.position.x >= minTriggerPositionGayatriSong && player.position.x <= maxTriggerPositionGayatriSong {
-                // The player is within the trigger position range
-                if !isAudioPlayed {
-                    isAudioPlayed = true
-                    playSound(named: "villageSound", fileType: "mp3")
-                    audioPlayer?.setVolume(1.0, fadeDuration: 5.0)
-                }
-            } else {
-                // The player is outside the trigger position range
-                if isAudioPlayed {
-                    audioPlayer?.setVolume(0.0, fadeDuration: 5.0)
-                    isAudioPlayed = false
-                }
+        if player.position.x >= minTriggerPositionGayatriSong && player.position.x <= maxTriggerPositionGayatriSong {
+            // The player is within the trigger position range
+            if !isAudioPlayed {
+                isAudioPlayed = true
+                playSound(named: "villageSound", fileType: "mp3")
+                audioPlayer?.setVolume(1.0, fadeDuration: 5.0)
             }
+        } else {
+            // The player is outside the trigger position range
+            if isAudioPlayed {
+                audioPlayer?.setVolume(0.0, fadeDuration: 5.0)
+                isAudioPlayed = false
+            }
+        }
 
         player.updatePlayerPosition(frame)
 
@@ -132,19 +142,27 @@ class GameScene: SKScene {
         if player.position.x >= size.width / 2 {
             camera?.position.x = player.position.x
             bg1.position.x = (camera?.position.x)!
-            buttonAction.position.x = (cameraNode.frame.maxX * 3)
+            buttonNPCInteraction.position.x = (cameraNode.frame.maxX * 3)
             for i in [npc1, npc2] {
                 i.dialogBox.position.x = (cameraNode.frame.midX)
             }
             item.dialogBox.position.x = (cameraNode.frame.midX)
         }
 
-        if npc1.isNpcActive || npc2.isNpcActive || item.isItemActive {
-            buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
-            isActionButtonActive = true
+        if npc1.isNpcActive || npc2.isNpcActive {
+            buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+            isNPCInteractionButtonActive = true
         } else {
-            buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 5))
-            isActionButtonActive = false
+            buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 5))
+            isNPCInteractionButtonActive = false
+        }
+
+        if item.isItemActive {
+            buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+            isObjectInteractionButtonActive = true
+        } else {
+            buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 5))
+            isObjectInteractionButtonActive = false
         }
     }
 
@@ -153,12 +171,12 @@ class GameScene: SKScene {
         for touch in (touches) {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
-//
-//            if node.name == "buttocAction" {
-//
-//            }
+            //
+            //            if node.name == "buttocAction" {
+            //
+            //            }
 
-            if childNode(withName: "dialogBox") == nil && (node.name != "buttonAction") {
+            if childNode(withName: "dialogBox") == nil && (node.name != "buttonNPCInteraction") {
                 player.handlePlayerMovement(touch, self.size)
             }
 
@@ -167,9 +185,9 @@ class GameScene: SKScene {
             } else if self.activeNpc == "npc2"{
                 npc2.handleNpcDialog(touch)
             }
-            
+
             if self.activeItem == self.item.itemName {
-                item.handleItemDescription(touch)
+                item.showItemDescription(touch)
             }
 
         }
@@ -210,20 +228,27 @@ class GameScene: SKScene {
         item.sprite.position = CGPoint(x: frame.maxX + 800, y: size.height / 4.5)
         item.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
         item.dialogBox.zPosition = 5005
-        
+
         addChild(item.sprite)
     }
 
-    func setupActionButton() {
-        buttonAction.name = "buttonAction"
-        buttonAction.position = CGPoint(x: cameraNode.frame.maxX * 5, y: (frame.height / 2))
+    func setupNPCInteractionButton() {
+        buttonNPCInteraction.name = "buttonNPCInteraction"
+        buttonNPCInteraction.position = CGPoint(x: cameraNode.frame.maxX * 5, y: (frame.height / 2))
 
-        addChild(buttonAction)
+        addChild(buttonNPCInteraction)
+    }
+
+    func setupObjectInteractionButton() {
+        buttonObjectInteraction.name = "buttonObjectInteraction"
+        buttonObjectInteraction.position = CGPoint(x: cameraNode.frame.maxX * 5, y: (frame.height / 2))
+
+        addChild(buttonObjectInteraction)
     }
 
     func setupQuestInfoButton() {
         lazy var questInfoButton: Button = {
-            let button = Button(imagedName: "btnQuest", width: 44, height: 44) {
+            let button = Button(imagedName: "btnQuestInfo", width: 44, height: 44) {
                 SceneManager.shared.transition(self, toScene: .SecondScene, transition: SKTransition.fade(withDuration: 0.5))
             }
             button.zPosition = 5002
