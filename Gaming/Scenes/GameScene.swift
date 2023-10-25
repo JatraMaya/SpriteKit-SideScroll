@@ -70,10 +70,11 @@ class GameScene: SKScene {
 
         bg3.zPosition = 5000
         bg4.zPosition = 5001
-        setupPlayer()
+        player.setupPlayer(self, frame)
         setupCamera()
-        setupNpc()
-        setupItem()
+        npc1.setupNpc(self, x: (bg2.size.width / 2), y: (size.height / 4.5))
+        npc2.setupNpc(self, x: (bg2.size.width / 2.8), y: (size.height / 4.5))
+        item.setupItem(self, x: (frame.maxX + 800), y: (size.height / 5))
         setupActionButton()
         setupQuestInfoButton()
         setupSettingButton()
@@ -163,10 +164,6 @@ class GameScene: SKScene {
         for touch in (touches) {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
-//
-//            if node.name == "buttocAction" {
-//
-//            }
 
             if childNode(withName: "dialogBox") == nil && (node.name != "buttonAction") {
                 player.handlePlayerMovementLeftToRight(touch, self.size)
@@ -192,35 +189,9 @@ class GameScene: SKScene {
     }
 
     // MARK: Various setup functions needed to build a scene
-    /// Function to setup player to the scene,
-    func setupPlayer() {
-        player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.midX, y: size.height / 3)
-        addChild(player)
-        player.zPosition = 10
-    }
-
     func setupCamera() {
         cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
         camera = cameraNode
-    }
-
-    func setupNpc() {
-        for i in [npc1, npc2] {
-            addChild(i.sprite)
-            i.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
-            i.dialogBox.zPosition = 5005
-        }
-        npc1.sprite.position = CGPoint(x: bg2.size.width / 2, y: size.height / 4.5)
-        npc2.sprite.position = CGPoint(x: bg2.size.width / 2.8, y: size.height / 4.5)
-    }
-
-    func setupItem() {
-        item.sprite.position = CGPoint(x: frame.maxX + 800, y: size.height / 4.5)
-        item.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
-        item.dialogBox.zPosition = 5005
-
-        addChild(item.sprite)
     }
 
     func setupActionButton() {
