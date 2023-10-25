@@ -36,7 +36,7 @@ class Player: SKSpriteNode {
     func setupPlayer(_ parent: SKScene, _ frame: CGRect, _ isleft: Bool = true) {
         parent.addChild(self)
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        self.position = CGPoint(x: frame.midX, y: size.height)
+        self.position = CGPoint(x: frame.midX, y: size.height + 0.5)
         self.zPosition = 10
 
         if !isleft {

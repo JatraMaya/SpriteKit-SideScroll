@@ -5,9 +5,7 @@
 //  Created by Ahmad Fadly Iksan on 11/10/23.
 //
 
-import UIKit
 import SpriteKit
-import GameplayKit
 
 class GameViewController: UIViewController {
 
@@ -17,6 +15,7 @@ class GameViewController: UIViewController {
         
 //        let scene = SceneSecond(size: view.frame.size)
         let scene = GameScene(size: view.frame.size)
+//        let scene = SingasanaScene(size: view.frame.size)
         if let skView = self.view as? SKView {
             skView.showsFPS = true
             skView.showsNodeCount = true
