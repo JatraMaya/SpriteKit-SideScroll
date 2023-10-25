@@ -6,7 +6,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 import AVFoundation
 
 class GameScene: SKScene {
@@ -80,15 +79,16 @@ class GameScene: SKScene {
         setupItem()
         setupActionButton()
 
+
+
         scene!.name = "scene"
         scene?.zPosition = 100000
     }
 
     // Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
-        print(self.activeNpc)
-        print(self.activeItem)
-        player.updatePlayerPosition(frame)
+        player.updatePlayerPositionLeftToRight(frame)
+        print(player.position.x)
 
         for i in [npc1, npc2] {
             i.updateActionSpeechMark(player)
@@ -110,7 +110,7 @@ class GameScene: SKScene {
             self.activeItem = ""
         }
 
-        if player.position.x >= size.width / 2 {
+        if player.position.x >= size.width / 2  && player.position.x < bg2.size.width / 1.21 {
             camera?.position.x = player.position.x
             bg1.position.x = (camera?.position.x)!
             buttonAction.position.x = (cameraNode.frame.maxX * 3)
@@ -118,6 +118,11 @@ class GameScene: SKScene {
                 i.dialogBox.position.x = (cameraNode.frame.midX)
             }
             item.dialogBox.position.x = (cameraNode.frame.midX)
+        } else if player.position.x > bg2.size.width / 1.21 {
+            if player.position.x > 3059 {
+                player.position.x = 3059
+                player.stopPlayerMovement()
+            }
         }
 
         if npc1.isNpcActive || npc2.isNpcActive || item.isItemActive {
@@ -126,6 +131,10 @@ class GameScene: SKScene {
         } else {
             buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 1))
             isActionButtonActive = false
+        }
+
+        if player.position.x <= 270 {
+            SceneManager.shared.transition(self, toScene: .SceneSecond, transition: SKTransition.fade(withDuration: 0.5))
         }
     }
 
@@ -140,7 +149,7 @@ class GameScene: SKScene {
 //            }
 
             if childNode(withName: "dialogBox") == nil && (node.name != "buttonAction") {
-                player.handlePlayerMovement(touch, self.size)
+                player.handlePlayerMovementLeftToRight(touch, self.size)
             }
 
             if self.activeNpc == "npc1" {
@@ -166,7 +175,7 @@ class GameScene: SKScene {
     /// Function to setup player to the scene,
     func setupPlayer() {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.minX + 80, y: size.height / 3)
+        player.position = CGPoint(x: frame.midX, y: size.height / 3)
         addChild(player)
         player.zPosition = 10
 

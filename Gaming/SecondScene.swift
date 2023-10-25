@@ -52,7 +52,7 @@ class SecondScene: SKScene {
     // Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
 
-        player.updatePlayerPosition(frame)
+        player.updatePlayerPositionLeftToRight(frame)
 
         for i in [npc1, npc2] {
             i.updateActionSpeechMark(player)
@@ -92,7 +92,7 @@ class SecondScene: SKScene {
             }
 
             if childNode(withName: "dialogBox") == nil {
-                player.handlePlayerMovement(touch, self.size)
+                player.handlePlayerMovementLeftToRight(touch, self.size)
             }
 
             if self.activeNpc == "npc1" {

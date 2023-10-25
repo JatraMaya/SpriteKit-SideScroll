@@ -43,21 +43,41 @@ class Player: SKSpriteNode {
     
     /// Update player location in the screen based on delta time and condition either playerMoveLeft/playerMoveRight boolean value
     /// - Parameter frame: Frame of parent scene
-    func updatePlayerPosition(_ frame: CGRect) {
+    func updatePlayerPositionLeftToRight(_ frame: CGRect) {
         if playerMoveLeft {
             self.xScale = -1
-            self.position.x -= 0.75
+            self.position.x -= 3
 
             if self.position.x < frame.minX + 10 {
                 self.position.x = frame.minX + 10
+                self.stopPlayerMovement()
             }
         } else if playerMoveRight {
             self.xScale = 1
-            self.position.x += 0.75
+            self.position.x += 3
 
             if self.position.x > 6314 {
                 self.position.x = 6314
             }
+        }
+    }
+
+    func updatePlayerPositionRightToLeft(_ frame: CGRect) {
+        if playerMoveLeft {
+            self.xScale = -1
+            self.position.x -= playerSpeed
+
+//            if self.position.x > frame.minX + 10 {
+//                self.position.x = frame.minX + 10
+//                self.stopPlayerMovement()
+//            }
+        } else if playerMoveRight {
+            self.xScale = 1
+            self.position.x += playerSpeed
+//
+//            if self.position.x > 6314 {
+//                self.position.x = 6314
+//            }
         }
     }
 
@@ -69,11 +89,11 @@ class Player: SKSpriteNode {
         self.texture = frame0
     }
     
-    /// Funcrion to handle player movement
+    /// Funcrion to handle player movement from Left to Right
     /// - Parameters:
     ///   - touch: Value of UITouch
     ///   - size: size of parent scene
-    func handlePlayerMovement(_ touch: UITouch, _ size: CGSize) {
+    func handlePlayerMovementLeftToRight(_ touch: UITouch, _ size: CGSize) {
 
         if let parent = self.parent {
             let location = touch.location(in: parent)
@@ -86,6 +106,29 @@ class Player: SKSpriteNode {
             } else {
                     self.playerMoveRight = true
                     self.playerMoveLeft = false
+                    self.walkingAnimation()
+                }
+            }
+//        }
+    }
+
+    /// Funcrion to handle player movement from Right to Left
+    /// - Parameters:
+    ///   - touch: Value of UITouch
+    ///   - size: size of parent scene
+    func handlePlayerMovementRightToLeft(_ touch: UITouch, _ size: CGSize) {
+
+        if let parent = self.parent {
+            let location = touch.location(in: parent)
+//            let node = self.parent?.atPoint(location)
+
+            if (location.x > self.position.x || location.x > (size.width / 2)) {
+                self.playerMoveLeft = false
+                self.playerMoveRight = true
+                self.walkingAnimation()
+            } else {
+                    self.playerMoveLeft = true
+                    self.playerMoveRight = false
                     self.walkingAnimation()
                 }
             }
