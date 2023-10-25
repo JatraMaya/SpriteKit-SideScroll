@@ -53,7 +53,6 @@ class SecondScene: SKScene {
 
     override func update(_ currentTime: TimeInterval) {
         player.updatePlayerPositionRightToLeft(frame)
-//        print(player.position.x)
 
         if player.position.x < size.width / 2 {
             print(player.position.x)
@@ -86,6 +85,7 @@ class SecondScene: SKScene {
         player.position = CGPoint(x: frame.midX, y: size.height / 3)
         addChild(player)
         player.zPosition = 10
+        player.xScale = -1
 
     }
 
