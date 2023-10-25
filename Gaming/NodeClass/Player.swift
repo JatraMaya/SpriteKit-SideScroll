@@ -32,7 +32,18 @@ class Player: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
+    func setupPlayer(_ parent: SKScene, _ frame: CGRect, _ isleft: Bool = true) {
+        parent.addChild(self)
+        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        self.position = CGPoint(x: frame.midX, y: size.height)
+        self.zPosition = 10
+
+        if !isleft {
+            self.xScale = -1
+        }
+    }
+
     /// Handling Player walking animation with SKAction node
     func walkingAnimation() {
         let animate = SKAction.animate(with: [frame1, frame2, frame3,
