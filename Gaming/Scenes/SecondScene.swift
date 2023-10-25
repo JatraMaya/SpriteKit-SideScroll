@@ -65,7 +65,12 @@ class SecondScene: SKScene {
             if player.position.x < -1480 {
                 player.position.x = -1480
                 player.stopPlayerMovement()
+            }
         }
+
+        if player.position.x > 576 {
+            player.position.x = 576
+            player.stopPlayerMovement()
         }
     }
 
