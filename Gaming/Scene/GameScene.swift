@@ -56,57 +56,19 @@ class GameScene: SKScene {
     // Call all the necessary function when game first load
     override func didMove(to view: SKView) {
 
-<<<<<<< HEAD:Gaming/GameScene.swift
-        for i in [bg1, bg2, bg3, bg4] {
-||||||| 26666e1:Gaming/GameScene.swift
-        for i in [bg1, bg2, bg3, bg4] {
-            i.size = (i.texture?.size())!
-=======
->>>>>>> 3b89394b90d7a1b58309829fbf935ccb53f6bea6:Gaming/Scene/GameScene.swift
-
-<<<<<<< HEAD:Gaming/GameScene.swift
-            if i.name != "bg1" {
-                i.anchorPoint = CGPoint(x: 0.15, y: 0.5)
-||||||| 26666e1:Gaming/GameScene.swift
-            if i.name != "bg1" {
-                i.anchorPoint = CGPoint(x: 0.065, y: 0.5)
-=======
-//        if !isAudioPlayed {
-//            playSound(named: "gayatriSong", fileType: "mp3")
-//            isAudioPlayed = true
-//        }
-
         for background in [bg1, bg2, bg3, bg4] {
-            background.size = (background.texture?.size())!
+            background.setScale(0.5)
 
             if background.name != "bg1" {
-                background.anchorPoint = CGPoint(x: 0.065, y: 0.5)
-
->>>>>>> 3b89394b90d7a1b58309829fbf935ccb53f6bea6:Gaming/Scene/GameScene.swift
+                background.anchorPoint = CGPoint(x: 0.15, y: 0.5)
             } else {
-<<<<<<< HEAD:Gaming/GameScene.swift
-                i.anchorPoint = CGPoint(x: 0.50, y: 0.5)
-||||||| 26666e1:Gaming/GameScene.swift
-                i.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-=======
-                background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
->>>>>>> 3b89394b90d7a1b58309829fbf935ccb53f6bea6:Gaming/Scene/GameScene.swift
+                background.anchorPoint = CGPoint(x: 0.50, y: 0.5)
             }
-<<<<<<< HEAD:Gaming/GameScene.swift
-
-            i.setScale(0.5)
-            i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-            addChild(i)
-||||||| 26666e1:Gaming/GameScene.swift
-            i.size.height = frame.height
-            i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-            addChild(i)
-=======
             background.size.height = frame.height
             background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(background)
->>>>>>> 3b89394b90d7a1b58309829fbf935ccb53f6bea6:Gaming/Scene/GameScene.swift
         }
+
         bg3.zPosition = 5000
         bg4.zPosition = 5001
         setupPlayer()
@@ -184,13 +146,6 @@ class GameScene: SKScene {
             buttonAction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 5))
             isActionButtonActive = false
         }
-<<<<<<< HEAD:Gaming/GameScene.swift
-||||||| 26666e1:Gaming/GameScene.swift
-        print("\(player.position)")
-=======
-
-//        print("\(player.position)")
->>>>>>> 3b89394b90d7a1b58309829fbf935ccb53f6bea6:Gaming/Scene/GameScene.swift
     }
 
     // control functionality when button is touch
@@ -230,17 +185,9 @@ class GameScene: SKScene {
     /// Function to setup player to the scene,
     func setupPlayer() {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-<<<<<<< HEAD:Gaming/GameScene.swift
-        player.position = CGPoint(x: frame.minX + 80, y: size.height / 3)
-        addChild(player)
-||||||| 26666e1:Gaming/GameScene.swift
         player.position = CGPoint(x: frame.minX + 80, y: size.height / 4.5)
-        addChild(player)
-=======
         player.position = CGPoint(x: frame.minX + 80, y: size.height / 4.5)
->>>>>>> 3b89394b90d7a1b58309829fbf935ccb53f6bea6:Gaming/Scene/GameScene.swift
         player.zPosition = 10
-
         addChild(player)
     }
 
