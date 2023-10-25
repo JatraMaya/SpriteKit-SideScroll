@@ -47,25 +47,25 @@ class SecondScene: SKScene {
             i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(i)
         }
-        setupPlayer()
+        player.setupPlayer(self, frame, false)
         setupCamera()
     }
 
     override func update(_ currentTime: TimeInterval) {
         player.updatePlayerPositionRightToLeft(frame)
-
-        if player.position.x < size.width / 2 {
-            print(player.position.x)
-        }
+        print(player.position.x)
+        print(size.width / -0.6)
 
         if player.position.x <= size.width / 2  {
-            camera?.position.x = player.position.x
-            bg1.position.x = (camera?.position.x)!
-        } else if player.position.x > bg2.size.width / 1.21 {
-            if player.position.x > 3059 {
-                player.position.x = 3059
-                player.stopPlayerMovement()
+            if !(player.position.x <= size.width / -0.72) {
+                camera?.position.x = player.position.x
+                bg1.position.x = (camera?.position.x)!
             }
+
+            if player.position.x < -1480 {
+                player.position.x = -1480
+                player.stopPlayerMovement()
+        }
         }
     }
 
@@ -78,15 +78,6 @@ class SecondScene: SKScene {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         player.stopPlayerMovement()
-    }
-
-    func setupPlayer() {
-        player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.midX, y: size.height / 3)
-        addChild(player)
-        player.zPosition = 10
-        player.xScale = -1
-
     }
 
     func setupCamera() {
