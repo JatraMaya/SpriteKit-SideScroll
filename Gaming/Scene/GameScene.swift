@@ -68,9 +68,9 @@ class GameScene: SKScene {
             addChild(background)
         }
 
-        bg3.zPosition = 5000
-        bg4.zPosition = 5001
-        setupPlayer()
+        bg3.zPosition = layerPosition.layer2
+        bg4.zPosition = layerPosition.layer4
+        player.setupPlayer()
         setupCamera()
         setupNpc()
         setupItem()
@@ -192,14 +192,6 @@ class GameScene: SKScene {
     }
 
     // MARK: Various setup functions needed to build a scene
-    /// Function to setup player to the scene,
-    func setupPlayer() {
-        player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        player.position = CGPoint(x: frame.midX, y: size.height / 3)
-        addChild(player)
-        player.zPosition = 10
-    }
-
     func setupCamera() {
         cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
         camera = cameraNode
