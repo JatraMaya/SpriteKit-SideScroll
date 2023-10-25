@@ -13,6 +13,9 @@
 		646FC41B2AE8117B0004A1F1 /* villageSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */; };
 		646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */; };
 		646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646FC41E2AE8359F0004A1F1 /* Button.swift */; };
+		646FC4242AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4202AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 */; };
+		646FC4252AE9701D0004A1F1 /* Depan Kerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4222AE9701D0004A1F1 /* Depan Kerajaan.mp3 */; };
+		646FC4262AE9701D0004A1F1 /* Pantai.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4232AE9701D0004A1F1 /* Pantai.mp3 */; };
 		BD5B833C2AE2608A004A8345 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B833B2AE2608A004A8345 /* Item.swift */; };
 		BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59BA2AD6948200103994 /* AppDelegate.swift */; };
 		BD6F59C32AD6948200103994 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59C22AD6948200103994 /* GameViewController.swift */; };
@@ -35,6 +38,9 @@
 		646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = villageSound.mp3; sourceTree = "<group>"; };
 		646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = footstepWooden.mp3; sourceTree = "<group>"; };
 		646FC41E2AE8359F0004A1F1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		646FC4202AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Istana & Komplek Kerajaan.mp3"; sourceTree = "<group>"; };
+		646FC4222AE9701D0004A1F1 /* Depan Kerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Depan Kerajaan.mp3"; sourceTree = "<group>"; };
+		646FC4232AE9701D0004A1F1 /* Pantai.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Pantai.mp3; sourceTree = "<group>"; };
 		BD5B833B2AE2608A004A8345 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BD6F59B72AD6948200103994 /* Gaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gaming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD6F59BA2AD6948200103994 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +75,9 @@
 				646FC40E2AE77D660004A1F1 /* gayatriSong.mp3 */,
 				646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */,
 				646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */,
+				646FC4202AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 */,
+				646FC4222AE9701D0004A1F1 /* Depan Kerajaan.mp3 */,
+				646FC4232AE9701D0004A1F1 /* Pantai.mp3 */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -195,12 +204,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */,
+				646FC4242AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 in Resources */,
 				BD6F59C62AD6948200103994 /* Main.storyboard in Resources */,
 				646FC4102AE77D660004A1F1 /* gayatriSong.mp3 in Resources */,
+				646FC4252AE9701D0004A1F1 /* Depan Kerajaan.mp3 in Resources */,
 				646FC41B2AE8117B0004A1F1 /* villageSound.mp3 in Resources */,
 				BD6F59C82AD6948300103994 /* Assets.xcassets in Resources */,
 				646FC4112AE77D660004A1F1 /* beachSound.mp3 in Resources */,
 				BD6F59CB2AD6948300103994 /* LaunchScreen.storyboard in Resources */,
+				646FC4262AE9701D0004A1F1 /* Pantai.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -68,12 +68,12 @@ class Item {
 
     }
 
-    func handleItemDescription(_ touch: UITouch) {
+    func showItemDescription(_ touch: UITouch) {
         if let parent = self.sprite.parent {
             let location = touch.location(in: parent)
             let node = parent.atPoint(location)
 
-            if (node.name == "buttonAction") && (parent.childNode(withName: "dialogBox") == nil) {
+            if (node.name == "buttonObjectInteraction") && (parent.childNode(withName: "dialogBox") == nil) {
                     parent.addChild(dialogBox)
                     setupDescription()
 
