@@ -37,7 +37,7 @@ class Player: SKSpriteNode {
         parent.addChild(self)
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.position = CGPoint(x: frame.midX, y: size.height + 0.5)
-        self.zPosition = 10
+        self.zPosition = layerPosition.layer2.rawValue
 
         if !isleft {
             self.xScale = -1
