@@ -53,6 +53,13 @@ class Npc {
 
     }
 
+    func setupNpc(_ parent: SKNode, x: CGFloat, y: CGFloat) {
+        parent.addChild(self.sprite)
+        self.dialogBox.position = CGPoint(x: x, y: y)
+        self.dialogBox.zPosition = 5005
+        self.sprite.position = CGPoint(x: x, y: y)
+    }
+
     func updateActionSpeechMark(_ playerSprite: SKSpriteNode) {
         let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
 
