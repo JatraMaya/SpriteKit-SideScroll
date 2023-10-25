@@ -46,6 +46,14 @@ class Item {
         self.dialogBox.zPosition = 100
     }
 
+    func setupItem(_ parent: SKScene, x: CGFloat, y: CGFloat) {
+        self.sprite.position = CGPoint(x: x, y: y)
+//        self.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
+        self.dialogBox.zPosition = 5005
+
+        parent.addChild(self.sprite)
+    }
+
     func updateActionCheckMark(_ playerSprite: SKSpriteNode) {
         let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
 
