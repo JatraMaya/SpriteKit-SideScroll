@@ -11,6 +11,9 @@
 		646FC4112AE77D660004A1F1 /* beachSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC40F2AE77D660004A1F1 /* beachSound.mp3 */; };
 		646FC4142AE77EDB0004A1F1 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646FC4132AE77EDB0004A1F1 /* SceneManager.swift */; };
 		646FC4162AE77FED0004A1F1 /* SecondScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646FC4152AE77FED0004A1F1 /* SecondScene.swift */; };
+		646FC41B2AE8117B0004A1F1 /* villageSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */; };
+		646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */; };
+		646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646FC41E2AE8359F0004A1F1 /* Button.swift */; };
 		BD5B833C2AE2608A004A8345 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B833B2AE2608A004A8345 /* Item.swift */; };
 		BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59BA2AD6948200103994 /* AppDelegate.swift */; };
 		BD6F59C12AD6948200103994 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59C02AD6948200103994 /* GameScene.swift */; };
@@ -30,6 +33,9 @@
 		646FC40F2AE77D660004A1F1 /* beachSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beachSound.mp3; sourceTree = "<group>"; };
 		646FC4132AE77EDB0004A1F1 /* SceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManager.swift; sourceTree = "<group>"; };
 		646FC4152AE77FED0004A1F1 /* SecondScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScene.swift; sourceTree = "<group>"; };
+		646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = villageSound.mp3; sourceTree = "<group>"; };
+		646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = footstepWooden.mp3; sourceTree = "<group>"; };
+		646FC41E2AE8359F0004A1F1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		BD5B833B2AE2608A004A8345 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BD6F59B72AD6948200103994 /* Gaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gaming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD6F59BA2AD6948200103994 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,8 +67,19 @@
 			children = (
 				646FC40F2AE77D660004A1F1 /* beachSound.mp3 */,
 				646FC40E2AE77D660004A1F1 /* gayatriSong.mp3 */,
+				646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */,
+				646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */,
 			);
 			path = Sound;
+			sourceTree = "<group>";
+		};
+		646FC4192AE809920004A1F1 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				BD6F59C02AD6948200103994 /* GameScene.swift */,
+				646FC4152AE77FED0004A1F1 /* SecondScene.swift */,
+			);
+			path = Scene;
 			sourceTree = "<group>";
 		};
 		BD6F59AE2AD6948200103994 = {
@@ -85,11 +102,10 @@
 		BD6F59B92AD6948200103994 /* Gaming */ = {
 			isa = PBXGroup;
 			children = (
+				BD6F59BA2AD6948200103994 /* AppDelegate.swift */,
 				BD6F59D42AD7F7B200103994 /* NodeClass */,
 				BD6F59D12AD7D21800103994 /* Config */,
-				BD6F59BA2AD6948200103994 /* AppDelegate.swift */,
-				BD6F59C02AD6948200103994 /* GameScene.swift */,
-				646FC4152AE77FED0004A1F1 /* SecondScene.swift */,
+				646FC4192AE809920004A1F1 /* Scene */,
 				646FC4132AE77EDB0004A1F1 /* SceneManager.swift */,
 				BD6F59C22AD6948200103994 /* GameViewController.swift */,
 				BD6F59C42AD6948200103994 /* Main.storyboard */,
@@ -115,6 +131,7 @@
 				BD6F59D92AD83DAE00103994 /* Control.swift */,
 				BDA0D98B2ADD459100B6ABE6 /* Npc.swift */,
 				BD5B833B2AE2608A004A8345 /* Item.swift */,
+				646FC41E2AE8359F0004A1F1 /* Button.swift */,
 			);
 			path = NodeClass;
 			sourceTree = "<group>";
@@ -177,8 +194,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */,
 				BD6F59C62AD6948200103994 /* Main.storyboard in Resources */,
 				646FC4102AE77D660004A1F1 /* gayatriSong.mp3 in Resources */,
+				646FC41B2AE8117B0004A1F1 /* villageSound.mp3 in Resources */,
 				BD6F59C82AD6948300103994 /* Assets.xcassets in Resources */,
 				646FC4112AE77D660004A1F1 /* beachSound.mp3 in Resources */,
 				BD6F59CB2AD6948300103994 /* LaunchScreen.storyboard in Resources */,
@@ -199,6 +218,7 @@
 				BDE8B3502ADD92D600BAA6BC /* config.swift in Sources */,
 				646FC4162AE77FED0004A1F1 /* SecondScene.swift in Sources */,
 				BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */,
+				646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */,
 				BD6F59D62AD7F7BF00103994 /* Player.swift in Sources */,
 				BD6F59D32AD7D22C00103994 /* GameConfig.swift in Sources */,
 				BD6F59DA2AD83DAE00103994 /* Control.swift in Sources */,
@@ -354,7 +374,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F8U2R4K53M;
+				DEVELOPMENT_TEAM = B34FJD89YP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -367,7 +387,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jatraMaya.Gaming;
+				PRODUCT_BUNDLE_IDENTIFIER = Yari.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -382,7 +402,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F8U2R4K53M;
+				DEVELOPMENT_TEAM = B34FJD89YP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -395,7 +415,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jatraMaya.Gaming;
+				PRODUCT_BUNDLE_IDENTIFIER = Yari.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -22,9 +22,7 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = false
 //            scene.scaleMode = .aspectFit
             skView.presentScene(scene)
-
         }
-
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
