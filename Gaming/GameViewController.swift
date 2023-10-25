@@ -15,6 +15,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         
+//        let scene = SceneSecond(size: view.frame.size)
         let scene = GameScene(size: view.frame.size)
         if let skView = self.view as? SKView {
             skView.showsFPS = true

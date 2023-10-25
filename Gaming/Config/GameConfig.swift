@@ -7,4 +7,9 @@
 
 import Foundation
 
+<<<<<<< HEAD
 let playerSpeed: CGFloat = 2
+||||||| 4943b9b
+=======
+let playerSpeed: CGFloat = 1
+>>>>>>> addNewScene

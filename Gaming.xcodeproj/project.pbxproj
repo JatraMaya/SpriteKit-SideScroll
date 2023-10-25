@@ -15,6 +15,7 @@
 		646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */; };
 		646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646FC41E2AE8359F0004A1F1 /* Button.swift */; };
 		BD5B833C2AE2608A004A8345 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B833B2AE2608A004A8345 /* Item.swift */; };
+		BD6A779F2AE7CEEA0055A537 /* SceneSecond.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6A779E2AE7CEEA0055A537 /* SceneSecond.swift */; };
 		BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59BA2AD6948200103994 /* AppDelegate.swift */; };
 		BD6F59C12AD6948200103994 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59C02AD6948200103994 /* GameScene.swift */; };
 		BD6F59C32AD6948200103994 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59C22AD6948200103994 /* GameViewController.swift */; };
@@ -37,6 +38,7 @@
 		646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = footstepWooden.mp3; sourceTree = "<group>"; };
 		646FC41E2AE8359F0004A1F1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		BD5B833B2AE2608A004A8345 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		BD6A779E2AE7CEEA0055A537 /* SceneSecond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSecond.swift; sourceTree = "<group>"; };
 		BD6F59B72AD6948200103994 /* Gaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gaming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD6F59BA2AD6948200103994 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD6F59C02AD6948200103994 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		646FC4192AE809920004A1F1 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +85,18 @@
 			path = Scene;
 			sourceTree = "<group>";
 		};
+||||||| 4943b9b
+=======
+		BD6A779D2AE7CECD0055A537 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				BD6F59C02AD6948200103994 /* GameScene.swift */,
+				BD6A779E2AE7CEEA0055A537 /* SceneSecond.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+>>>>>>> addNewScene
 		BD6F59AE2AD6948200103994 = {
 			isa = PBXGroup;
 			children = (
@@ -102,10 +117,24 @@
 		BD6F59B92AD6948200103994 /* Gaming */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				BD6F59BA2AD6948200103994 /* AppDelegate.swift */,
+||||||| 4943b9b
+=======
+				BD6A779D2AE7CECD0055A537 /* Scene */,
+>>>>>>> addNewScene
 				BD6F59D42AD7F7B200103994 /* NodeClass */,
 				BD6F59D12AD7D21800103994 /* Config */,
+<<<<<<< HEAD
 				646FC4192AE809920004A1F1 /* Scene */,
+||||||| 4943b9b
+				BD6F59BA2AD6948200103994 /* AppDelegate.swift */,
+				BD6F59C02AD6948200103994 /* GameScene.swift */,
+				646FC4152AE77FED0004A1F1 /* SecondScene.swift */,
+=======
+				BD6F59BA2AD6948200103994 /* AppDelegate.swift */,
+				646FC4152AE77FED0004A1F1 /* SecondScene.swift */,
+>>>>>>> addNewScene
 				646FC4132AE77EDB0004A1F1 /* SceneManager.swift */,
 				BD6F59C22AD6948200103994 /* GameViewController.swift */,
 				BD6F59C42AD6948200103994 /* Main.storyboard */,
@@ -217,6 +246,7 @@
 				BD6F59C32AD6948200103994 /* GameViewController.swift in Sources */,
 				BDE8B3502ADD92D600BAA6BC /* config.swift in Sources */,
 				646FC4162AE77FED0004A1F1 /* SecondScene.swift in Sources */,
+				BD6A779F2AE7CEEA0055A537 /* SceneSecond.swift in Sources */,
 				BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */,
 				646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */,
 				BD6F59D62AD7F7BF00103994 /* Player.swift in Sources */,
