@@ -9,7 +9,7 @@
 import SpriteKit
 import AVFoundation
 
-class GameScene: SKScene {
+class DesaScene: SKScene {
 
     var isNPCInteractionButtonActive = false
     var buttonNPCInteraction: SKSpriteNode
@@ -44,8 +44,8 @@ class GameScene: SKScene {
 
         cameraNode = SKCameraNode()
         player = Player()
-        npc1 = Npc(size: size, imageName: "npc-b-1", imageNpc: "npc-b-1", npcName: "npc1")
-        npc2 = Npc(size: size, imageName: "npc-a-1", imageNpc: "npc-a-1", npcName: "npc2")
+        npc1 = Npc(imageName: "npc-b-1", npcName: "npc1")
+        npc2 = Npc(imageName: "npc-a-1", npcName: "npc2")
         item = Item(size: size, imageName: "key", itemName: "key", assetName: "asset")
 
         bg1 = SKSpriteNode(imageNamed: "BG-Layer1")
@@ -64,6 +64,11 @@ class GameScene: SKScene {
 
     // Call all the necessary function when game first load
     override func didMove(to view: SKView) {
+        if !isAudioPlayed {
+            isAudioPlayed = true
+            playSound(named: "depanKerajaan", fileType: "mp3")
+            audioPlayer?.setVolume(0.5, fadeDuration: 0)
+        }
 
         for background in [bg1, bg2, bg3, bg4] {
             background.setScale(0.5)
@@ -80,7 +85,7 @@ class GameScene: SKScene {
 
         bg3.zPosition = layerPosition.layer3.rawValue
         bg4.zPosition = layerPosition.layer4.rawValue
-        player.setupPlayer(self, frame)
+        player.setupPlayer(self, frame, xPos: 300)
         setupCamera()
         npc1.setupNpc(self, x: (bg2.size.width / 2), y: (size.height / 4.5))
         npc2.setupNpc(self, x: (bg2.size.width / 2.8), y: (size.height / 4.5))
@@ -96,24 +101,24 @@ class GameScene: SKScene {
         // Define the trigger position
         /// Sungai 4200-4830
         /// Pantai 6100-6400
-        let minTriggerPositionGayatriSong: CGFloat = 900
-        let maxTriggerPositionGayatriSong: CGFloat = 4200// Define the trigger position based on your game logic
-
-        // Check if the player's x position is within the trigger position range
-        if player.position.x >= minTriggerPositionGayatriSong && player.position.x <= maxTriggerPositionGayatriSong {
-            // The player is within the trigger position range
-            if !isAudioPlayed {
-                isAudioPlayed = true
-                playSound(named: "villageSound", fileType: "mp3")
-                audioPlayer?.setVolume(1.0, fadeDuration: 5.0)
-            }
-        } else {
-            // The player is outside the trigger position range
-            if isAudioPlayed {
-                audioPlayer?.setVolume(0.0, fadeDuration: 5.0)
-                isAudioPlayed = false
-            }
-        }
+//        let minTriggerPositionGayatriSong: CGFloat = 900
+//        let maxTriggerPositionGayatriSong: CGFloat = 4200// Define the trigger position based on your game logic
+//
+//        // Check if the player's x position is within the trigger position range
+//        if player.position.x >= minTriggerPositionGayatriSong && player.position.x <= maxTriggerPositionGayatriSong {
+//            // The player is within the trigger position range
+//            if !isAudioPlayed {
+//                isAudioPlayed = true
+//                playSound(named: "villageSound", fileType: "mp3")
+//                audioPlayer?.setVolume(1.0, fadeDuration: 5.0)
+//            }
+//        } else {
+//            // The player is outside the trigger position range
+//            if isAudioPlayed {
+//                audioPlayer?.setVolume(0.0, fadeDuration: 5.0)
+//                isAudioPlayed = false
+//            }
+//        }
 
         player.updatePlayerPositionLeftToRight(frame)
 
@@ -161,6 +166,11 @@ class GameScene: SKScene {
         } else {
             buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 5))
             isObjectInteractionButtonActive = false
+        }
+
+        if player.position.x < 234 {
+            player.position.x = 234
+            player.stopPlayerMovement()
         }
     }
 
@@ -220,7 +230,7 @@ class GameScene: SKScene {
     func setupQuestInfoButton() {
         lazy var questInfoButton: Button = {
             let button = Button(imagedName: "btnQuestInfo", width: 44, height: 44) {
-                SceneManager.shared.transition(self, toScene: .SecondScene, transition: SKTransition.fade(withDuration: 0.5))
+                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 0.5))
             }
             button.zPosition = 5002
             return button
@@ -235,7 +245,7 @@ class GameScene: SKScene {
     func setupSettingButton() {
         lazy var settingButton: Button = {
             let button = Button(imagedName: "btnSetting", width: 44, height: 44) {
-                SceneManager.shared.transition(self, toScene: .SecondScene, transition: SKTransition.fade(withDuration: 0.5))
+                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 0.5))
             }
             button.zPosition = 5002
             return button

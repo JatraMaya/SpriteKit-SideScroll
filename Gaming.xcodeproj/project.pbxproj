@@ -13,9 +13,9 @@
 		646FC41B2AE8117B0004A1F1 /* villageSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */; };
 		646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */; };
 		646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646FC41E2AE8359F0004A1F1 /* Button.swift */; };
-		646FC4242AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4202AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 */; };
-		646FC4252AE9701D0004A1F1 /* Depan Kerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4222AE9701D0004A1F1 /* Depan Kerajaan.mp3 */; };
-		646FC4262AE9701D0004A1F1 /* Pantai.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4232AE9701D0004A1F1 /* Pantai.mp3 */; };
+		646FC4242AE9701D0004A1F1 /* komplekKerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4202AE9701D0004A1F1 /* komplekKerajaan.mp3 */; };
+		646FC4252AE9701D0004A1F1 /* depanKerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4222AE9701D0004A1F1 /* depanKerajaan.mp3 */; };
+		646FC4262AE9701D0004A1F1 /* pantai.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4232AE9701D0004A1F1 /* pantai.mp3 */; };
 		BD5B833C2AE2608A004A8345 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B833B2AE2608A004A8345 /* Item.swift */; };
 		BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59BA2AD6948200103994 /* AppDelegate.swift */; };
 		BD6F59C32AD6948200103994 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59C22AD6948200103994 /* GameViewController.swift */; };
@@ -25,8 +25,8 @@
 		BD6F59D32AD7D22C00103994 /* GameConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59D22AD7D22C00103994 /* GameConfig.swift */; };
 		BD6F59D62AD7F7BF00103994 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59D52AD7F7BF00103994 /* Player.swift */; };
 		BDA0D98C2ADD459100B6ABE6 /* Npc.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA0D98B2ADD459100B6ABE6 /* Npc.swift */; };
-		BDA69E6F2AE912E800211E96 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E6E2AE912E800211E96 /* GameScene.swift */; };
-		BDA69E712AE9133500211E96 /* SecondScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E702AE9133500211E96 /* SecondScene.swift */; };
+		BDA69E6F2AE912E800211E96 /* DesaScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E6E2AE912E800211E96 /* DesaScene.swift */; };
+		BDA69E712AE9133500211E96 /* KomplekKerajaanScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E702AE9133500211E96 /* KomplekKerajaanScene.swift */; };
 		BDB3C2BE2AE965D400FBBB08 /* SingasanaScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3C2BD2AE965D400FBBB08 /* SingasanaScene.swift */; };
 		BDE8B3502ADD92D600BAA6BC /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8B34F2ADD92D600BAA6BC /* config.swift */; };
 /* End PBXBuildFile section */
@@ -38,9 +38,9 @@
 		646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = villageSound.mp3; sourceTree = "<group>"; };
 		646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = footstepWooden.mp3; sourceTree = "<group>"; };
 		646FC41E2AE8359F0004A1F1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		646FC4202AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Istana & Komplek Kerajaan.mp3"; sourceTree = "<group>"; };
-		646FC4222AE9701D0004A1F1 /* Depan Kerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Depan Kerajaan.mp3"; sourceTree = "<group>"; };
-		646FC4232AE9701D0004A1F1 /* Pantai.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Pantai.mp3; sourceTree = "<group>"; };
+		646FC4202AE9701D0004A1F1 /* komplekKerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = komplekKerajaan.mp3; sourceTree = "<group>"; };
+		646FC4222AE9701D0004A1F1 /* depanKerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = depanKerajaan.mp3; sourceTree = "<group>"; };
+		646FC4232AE9701D0004A1F1 /* pantai.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pantai.mp3; sourceTree = "<group>"; };
 		BD5B833B2AE2608A004A8345 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BD6F59B72AD6948200103994 /* Gaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gaming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD6F59BA2AD6948200103994 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -51,8 +51,8 @@
 		BD6F59D22AD7D22C00103994 /* GameConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfig.swift; sourceTree = "<group>"; };
 		BD6F59D52AD7F7BF00103994 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		BDA0D98B2ADD459100B6ABE6 /* Npc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Npc.swift; sourceTree = "<group>"; };
-		BDA69E6E2AE912E800211E96 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		BDA69E702AE9133500211E96 /* SecondScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScene.swift; sourceTree = "<group>"; };
+		BDA69E6E2AE912E800211E96 /* DesaScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesaScene.swift; sourceTree = "<group>"; };
+		BDA69E702AE9133500211E96 /* KomplekKerajaanScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KomplekKerajaanScene.swift; sourceTree = "<group>"; };
 		BDB3C2BD2AE965D400FBBB08 /* SingasanaScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingasanaScene.swift; sourceTree = "<group>"; };
 		BDE8B34F2ADD92D600BAA6BC /* config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,9 +75,9 @@
 				646FC40E2AE77D660004A1F1 /* gayatriSong.mp3 */,
 				646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */,
 				646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */,
-				646FC4202AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 */,
-				646FC4222AE9701D0004A1F1 /* Depan Kerajaan.mp3 */,
-				646FC4232AE9701D0004A1F1 /* Pantai.mp3 */,
+				646FC4202AE9701D0004A1F1 /* komplekKerajaan.mp3 */,
+				646FC4222AE9701D0004A1F1 /* depanKerajaan.mp3 */,
+				646FC4232AE9701D0004A1F1 /* pantai.mp3 */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -108,10 +108,9 @@
 				BD6F59BA2AD6948200103994 /* AppDelegate.swift */,
 				646FC4132AE77EDB0004A1F1 /* SceneManager.swift */,
 				BD6F59C22AD6948200103994 /* GameViewController.swift */,
-				BD6F59C42AD6948200103994 /* Main.storyboard */,
 				BD6F59C72AD6948300103994 /* Assets.xcassets */,
+				BD6F59C42AD6948200103994 /* Main.storyboard */,
 				BD6F59C92AD6948300103994 /* LaunchScreen.storyboard */,
-				BDE8B34F2ADD92D600BAA6BC /* config.swift */,
 			);
 			path = Gaming;
 			sourceTree = "<group>";
@@ -120,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				BD6F59D22AD7D22C00103994 /* GameConfig.swift */,
+				BDE8B34F2ADD92D600BAA6BC /* config.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -138,8 +138,8 @@
 		BDA69E6D2AE912D700211E96 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				BDA69E6E2AE912E800211E96 /* GameScene.swift */,
-				BDA69E702AE9133500211E96 /* SecondScene.swift */,
+				BDA69E702AE9133500211E96 /* KomplekKerajaanScene.swift */,
+				BDA69E6E2AE912E800211E96 /* DesaScene.swift */,
 				BDB3C2BD2AE965D400FBBB08 /* SingasanaScene.swift */,
 			);
 			path = Scenes;
@@ -204,15 +204,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */,
-				646FC4242AE9701D0004A1F1 /* Istana & Komplek Kerajaan.mp3 in Resources */,
+				646FC4242AE9701D0004A1F1 /* komplekKerajaan.mp3 in Resources */,
 				BD6F59C62AD6948200103994 /* Main.storyboard in Resources */,
 				646FC4102AE77D660004A1F1 /* gayatriSong.mp3 in Resources */,
-				646FC4252AE9701D0004A1F1 /* Depan Kerajaan.mp3 in Resources */,
+				646FC4252AE9701D0004A1F1 /* depanKerajaan.mp3 in Resources */,
 				646FC41B2AE8117B0004A1F1 /* villageSound.mp3 in Resources */,
 				BD6F59C82AD6948300103994 /* Assets.xcassets in Resources */,
 				646FC4112AE77D660004A1F1 /* beachSound.mp3 in Resources */,
 				BD6F59CB2AD6948300103994 /* LaunchScreen.storyboard in Resources */,
-				646FC4262AE9701D0004A1F1 /* Pantai.mp3 in Resources */,
+				646FC4262AE9701D0004A1F1 /* pantai.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,8 +228,8 @@
 				BD6F59C32AD6948200103994 /* GameViewController.swift in Sources */,
 				BDE8B3502ADD92D600BAA6BC /* config.swift in Sources */,
 				BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */,
-				BDA69E6F2AE912E800211E96 /* GameScene.swift in Sources */,
-				BDA69E712AE9133500211E96 /* SecondScene.swift in Sources */,
+				BDA69E6F2AE912E800211E96 /* DesaScene.swift in Sources */,
+				BDA69E712AE9133500211E96 /* KomplekKerajaanScene.swift in Sources */,
 				646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */,
 				BD6F59D62AD7F7BF00103994 /* Player.swift in Sources */,
 				BD6F59D32AD7D22C00103994 /* GameConfig.swift in Sources */,
