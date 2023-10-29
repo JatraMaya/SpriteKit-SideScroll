@@ -19,10 +19,12 @@ class KomplekKerajaanScene: SKScene {
     let bg1: SKSpriteNode
     let bg2: SKSpriteNode
 
+    var buttonNPCInteraction: SKSpriteNode
+    var buttonQuestInfo: SKSpriteNode
+
     let npcDalamKerajaan: Npc
     var activeNpc: String = ""
     var isNPCInteractionButtonActive = false
-    var buttonNPCInteraction: SKSpriteNode
 
     var audioPlayer: AVAudioPlayer?
     var isAudioPlayed = false
@@ -39,6 +41,9 @@ class KomplekKerajaanScene: SKScene {
 
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
         buttonNPCInteraction.zPosition = 5002
+
+        buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
+        buttonQuestInfo.zPosition = 5002
 
         bg1 = SKSpriteNode(imageNamed: "BG-Layer1")
         bg2 = SKSpriteNode(imageNamed: "keraton2")
@@ -78,12 +83,10 @@ class KomplekKerajaanScene: SKScene {
             i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(i)
         }
-
-        player.setupPlayer(self, frame, xPos: -540)
         setupNPCInteractionButton()
-
+        setupQuestInfoButton()
         setupCamera()
-
+        player.setupPlayer(self, frame, xPos: -540)
         npcDalamKerajaan.setupNpc(self, x: -200, y: 135)
 
         print("\(npcDalamKerajaan.sprite)")
@@ -91,6 +94,8 @@ class KomplekKerajaanScene: SKScene {
 
     override func update(_ currentTime: TimeInterval) {
         player.updatePlayerPositionRightToLeft(frame)
+
+        buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
 
         for i in [npcDalamKerajaan] {
             i.updateActionSpeechMark(player)
@@ -153,6 +158,12 @@ class KomplekKerajaanScene: SKScene {
                 player.handlePlayerMovementRightToLeft(touch, self.size)
             }
 
+            if node.name == "buttonQuestInfo" {
+                buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
+                print("button quest info pressed")
+                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 1))
+            }
+
             if self.activeNpc == "npcDalamKerajaan" {
                 npcDalamKerajaan.handleNpcDialog(touch)
 
@@ -166,7 +177,17 @@ class KomplekKerajaanScene: SKScene {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        player.stopPlayerMovement()
+        for touch in touches {
+            let location = touch.location(in: self)
+            let node = self.atPoint(location)
+
+            player.stopPlayerMovement()
+
+            if node.name == "buttonQuestInfo" {
+                buttonQuestInfo.run(SKAction.scale(to: 1, duration: 0.1))
+                print("button quest info pressed")
+            }
+        }
     }
 
     // MARK: Various setup functions needed to build a scene
@@ -177,9 +198,16 @@ class KomplekKerajaanScene: SKScene {
 
     func setupNPCInteractionButton() {
         buttonNPCInteraction.name = "buttonNPCInteraction"
-        buttonNPCInteraction.position = CGPoint(x: cameraNode.frame.maxY * 5, y: frame.height / 2)
+        buttonNPCInteraction.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
 
         addChild(buttonNPCInteraction)
+    }
+
+    func setupQuestInfoButton() {
+        buttonQuestInfo.name = "buttonQuestInfo"
+        buttonQuestInfo.size = CGSize(width: 44, height: 44)
+        
+        addChild(buttonQuestInfo)
     }
 
     // MARK: Function to handle play and pause sound
