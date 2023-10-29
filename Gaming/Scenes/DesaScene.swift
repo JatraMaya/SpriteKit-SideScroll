@@ -67,7 +67,7 @@ class DesaScene: SKScene {
         if !isAudioPlayed {
             isAudioPlayed = true
             playSound(named: "depanKerajaan", fileType: "mp3")
-            audioPlayer?.setVolume(0.5, fadeDuration: 0)
+            audioPlayer?.setVolume(0.5, fadeDuration: 10)
         }
 
         for background in [bg1, bg2, bg3, bg4] {

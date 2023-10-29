@@ -17,7 +17,7 @@ let dialogs = [
     "npc2": [
         "pinjem seratus", "ogah", "kenapa gitu?", "ogah aja"
     ],
-    "npcDalamKerajan": [
+    "npcDalamKerajaan": [
         "Lapor mahapatih Gadjah Mada, ada yang prajurit yang membawa pesan dari bali menunggu di depan", "Ah... akhirnya"
     ]
 ]
