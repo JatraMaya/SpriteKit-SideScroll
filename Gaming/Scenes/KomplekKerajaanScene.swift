@@ -61,6 +61,8 @@ class KomplekKerajaanScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
 
+
+    // MARK: Call all the necessary function when game first load
     override func didMove(to view: SKView) {
         if !isTutorialDone {
             tutorial.presentText(player, frame: frame)
@@ -69,7 +71,7 @@ class KomplekKerajaanScene: SKScene {
         if !isAudioPlayed {
             isAudioPlayed = true
             playSound(named: "komplekKerajaan", fileType: "mp3")
-            audioPlayer?.setVolume(1.0, fadeDuration: 10)
+            audioPlayer?.setVolume(0.1, fadeDuration: 10)
         }
 
         for background in [bg1, bg2] {
@@ -96,6 +98,8 @@ class KomplekKerajaanScene: SKScene {
         print("\(npcDalamKerajaan.sprite)")
     }
 
+
+    // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
         player.updatePlayerPositionRightToLeft(frame)
 
@@ -150,8 +154,6 @@ class KomplekKerajaanScene: SKScene {
             }
         }
 
-        print("\(size.width/2)")
-
         if npcDalamKerajaan.isNpcActive {
             buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
             isNPCInteractionButtonActive = true
@@ -159,10 +161,10 @@ class KomplekKerajaanScene: SKScene {
             buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
             isNPCInteractionButtonActive = false
         }
-
-        print("\(player.position)")
     }
 
+
+    // MARK: control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !isTutorialDone{
             self.tutorial.removeLabel(player)
@@ -179,12 +181,13 @@ class KomplekKerajaanScene: SKScene {
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
-                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 1))
+                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 1))
             }
 
             if node.name == "buttonSetting" {
                 buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button setting pressed")
+                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 1))
             }
 
             if self.activeNpc == "npcDalamKerajaan" {
@@ -199,6 +202,8 @@ class KomplekKerajaanScene: SKScene {
         }
     }
 
+
+    // MARK: Tracking to stop functionality when button is no longer pressed
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
@@ -252,7 +257,6 @@ class KomplekKerajaanScene: SKScene {
     }
 
     // MARK: Function to handle play and pause sound
-    // Function to play and pause sound
     func playSound(named: String, fileType: String) {
         guard let path = Bundle.main.path(forResource: named, ofType: fileType) else {
             print("Sound file not found")

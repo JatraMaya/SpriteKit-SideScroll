@@ -37,7 +37,6 @@ class DesaScene: SKScene {
     let kapalJungJawa: SKSpriteNode
 
     override init(size: CGSize) {
-
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
         buttonNPCInteraction.zPosition = 5002
 
@@ -58,9 +57,9 @@ class DesaScene: SKScene {
         item = Item(size: size, imageName: "key", itemName: "key", assetName: "asset")
 
         bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
-        bg2 = SKSpriteNode(imageNamed: "Layer1")
-        bg3 = SKSpriteNode(imageNamed: "Layer2")
-        bg4 = SKSpriteNode(imageNamed: "BG-Layer4")
+        bg2 = SKSpriteNode(imageNamed: "desa1")
+        bg3 = SKSpriteNode(imageNamed: "desa2")
+        bg4 = SKSpriteNode(imageNamed: "desa3")
         kapalJungJawa = SKSpriteNode(imageNamed: "compDjongPolos")
 
         bg1.name = "bg1"
@@ -72,12 +71,13 @@ class DesaScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // Call all the necessary function when game first load
+
+    // MARK: Call all the necessary function when game first load
     override func didMove(to view: SKView) {
         if !isAudioPlayed {
             isAudioPlayed = true
             playSound(named: "Depan Kerajaan", fileType: "mp3")
-            audioPlayer?.setVolume(0.5, fadeDuration: 10)
+            audioPlayer?.setVolume(0.2, fadeDuration: 10)
         }
 
         for background in [bg1, bg2, bg3, bg4] {
@@ -93,45 +93,31 @@ class DesaScene: SKScene {
         bg1.setScale(0.5)
         bg2.setScale(0.25)
         bg3.setScale(0.25)
+        bg4.setScale(0.5)
 
         bg3.zPosition = layerPosition.layer3.rawValue
         bg4.zPosition = layerPosition.layer4.rawValue
+
         player.setupPlayer(self, frame, xPos: 300, yPos: 125, width: 45, height: 125)
+        
         setupCamera()
+
         npc1.setupNpc(self, x: (bg2.size.width / 2), y: (size.height / 4.5))
         npc2.setupNpc(self, x: (bg2.size.width / 2.8), y: (size.height / 4.5))
+        
         item.setupItem(self, x: (frame.maxX + 800), y: (size.height / 5))
+        
         setupNPCInteractionButton()
         setupObjectInteractionButton()
         setupQuestInfoButton()
         setupSettingButton()
+        
         setupKapalJungJawa()
     }
 
-    // Update Scene (including node location) accroding to delta time
+
+    // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
-        // Define the trigger position
-        /// Sungai 4200-4830
-        /// Pantai 6100-6400
-//        let minTriggerPositionGayatriSong: CGFloat = 900
-//        let maxTriggerPositionGayatriSong: CGFloat = 4200// Define the trigger position based on your game logic
-//
-//        // Check if the player's x position is within the trigger position range
-//        if player.position.x >= minTriggerPositionGayatriSong && player.position.x <= maxTriggerPositionGayatriSong {
-//            // The player is within the trigger position range
-//            if !isAudioPlayed {
-//                isAudioPlayed = true
-//                playSound(named: "villageSound", fileType: "mp3")
-//                audioPlayer?.setVolume(1.0, fadeDuration: 5.0)
-//            }
-//        } else {
-//            // The player is outside the trigger position range
-//            if isAudioPlayed {
-//                audioPlayer?.setVolume(0.0, fadeDuration: 5.0)
-//                isAudioPlayed = false
-//            }
-//        }
-        print("\(player.position)")
         player.updatePlayerPositionLeftToRight(frame)
 
         buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
@@ -190,7 +176,8 @@ class DesaScene: SKScene {
         }
     }
 
-    // control functionality when button is touch
+
+    // MARK: control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in (touches) {
             let location = touch.location(in: self)
@@ -219,12 +206,12 @@ class DesaScene: SKScene {
             if node.name == "buttonSetting" {
                 buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button setting pressed")
-                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 1))
+                SceneManager.shared.transition(self, toScene: .BaliScene, transition: SKTransition.fade(withDuration: 1))
             }
         }
     }
 
-    // Tracking to stop functionality when button is no longer pressed
+    // MARK: Tracking to stop functionality when button is no longer pressed
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
@@ -285,7 +272,6 @@ class DesaScene: SKScene {
     }
 
     // MARK: Function to handle play and pause sound
-    // Function to play and pause sound
     func playSound(named: String, fileType: String) {
         guard let path = Bundle.main.path(forResource: named, ofType: fileType) else {
             print("Sound file not found")

@@ -7,14 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		646FC4102AE77D660004A1F1 /* gayatriSong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC40E2AE77D660004A1F1 /* gayatriSong.mp3 */; };
-		646FC4112AE77D660004A1F1 /* beachSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC40F2AE77D660004A1F1 /* beachSound.mp3 */; };
 		646FC4142AE77EDB0004A1F1 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646FC4132AE77EDB0004A1F1 /* SceneManager.swift */; };
-		646FC41B2AE8117B0004A1F1 /* villageSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */; };
 		646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */; };
 		646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646FC41E2AE8359F0004A1F1 /* Button.swift */; };
 		646FC4242AE9701D0004A1F1 /* komplekKerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4202AE9701D0004A1F1 /* komplekKerajaan.mp3 */; };
-		646FC4262AE9701D0004A1F1 /* pantai.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 646FC4232AE9701D0004A1F1 /* pantai.mp3 */; };
 		649EC81C2AEE8F8E00E1892F /* BaliScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649EC81B2AEE8F8E00E1892F /* BaliScene.swift */; };
 		649EC81E2AEE8FA500E1892F /* PendopoBaliScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649EC81D2AEE8FA500E1892F /* PendopoBaliScene.swift */; };
 		649EC8282AEEB56800E1892F /* Depan Kerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649EC8252AEEB56800E1892F /* Depan Kerajaan.mp3 */; };
@@ -37,14 +33,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		646FC40E2AE77D660004A1F1 /* gayatriSong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gayatriSong.mp3; sourceTree = "<group>"; };
-		646FC40F2AE77D660004A1F1 /* beachSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beachSound.mp3; sourceTree = "<group>"; };
 		646FC4132AE77EDB0004A1F1 /* SceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManager.swift; sourceTree = "<group>"; };
-		646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = villageSound.mp3; sourceTree = "<group>"; };
 		646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = footstepWooden.mp3; sourceTree = "<group>"; };
 		646FC41E2AE8359F0004A1F1 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		646FC4202AE9701D0004A1F1 /* komplekKerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = komplekKerajaan.mp3; sourceTree = "<group>"; };
-		646FC4232AE9701D0004A1F1 /* pantai.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pantai.mp3; sourceTree = "<group>"; };
 		649EC81B2AEE8F8E00E1892F /* BaliScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaliScene.swift; sourceTree = "<group>"; };
 		649EC81D2AEE8FA500E1892F /* PendopoBaliScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendopoBaliScene.swift; sourceTree = "<group>"; };
 		649EC8252AEEB56800E1892F /* Depan Kerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Depan Kerajaan.mp3"; sourceTree = "<group>"; };
@@ -81,12 +73,8 @@
 		646FC4122AE77D920004A1F1 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				646FC40F2AE77D660004A1F1 /* beachSound.mp3 */,
-				646FC40E2AE77D660004A1F1 /* gayatriSong.mp3 */,
-				646FC41A2AE8117B0004A1F1 /* villageSound.mp3 */,
 				646FC41C2AE811A20004A1F1 /* footstepWooden.mp3 */,
 				646FC4202AE9701D0004A1F1 /* komplekKerajaan.mp3 */,
-				646FC4232AE9701D0004A1F1 /* pantai.mp3 */,
 				649EC8252AEEB56800E1892F /* Depan Kerajaan.mp3 */,
 				649EC8272AEEB56800E1892F /* Pantai Majapahit.mp3 */,
 				649EC8262AEEB56800E1892F /* Sungai.mp3 */,
@@ -221,14 +209,10 @@
 				646FC41D2AE811A20004A1F1 /* footstepWooden.mp3 in Resources */,
 				646FC4242AE9701D0004A1F1 /* komplekKerajaan.mp3 in Resources */,
 				BD6F59C62AD6948200103994 /* Main.storyboard in Resources */,
-				646FC4102AE77D660004A1F1 /* gayatriSong.mp3 in Resources */,
 				649EC8282AEEB56800E1892F /* Depan Kerajaan.mp3 in Resources */,
-				646FC41B2AE8117B0004A1F1 /* villageSound.mp3 in Resources */,
 				BD6F59C82AD6948300103994 /* Assets.xcassets in Resources */,
 				649EC82A2AEEB56800E1892F /* Pantai Majapahit.mp3 in Resources */,
-				646FC4112AE77D660004A1F1 /* beachSound.mp3 in Resources */,
 				BD6F59CB2AD6948300103994 /* LaunchScreen.storyboard in Resources */,
-				646FC4262AE9701D0004A1F1 /* pantai.mp3 in Resources */,
 				649EC8292AEEB56800E1892F /* Sungai.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
