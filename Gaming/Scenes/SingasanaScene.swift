@@ -16,7 +16,7 @@ class SingasanaScene: SKScene {
     override init(size: CGSize) {
         player = Player()
         bg1 = SKSpriteNode(imageNamed: "BG-Layer1")
-        bg2 = SKSpriteNode(imageNamed: "singgasana")
+        bg2 = SKSpriteNode(imageNamed: "Singgasana")
         bg2.setScale(0.5)
         bg2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
 
@@ -29,7 +29,7 @@ class SingasanaScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
-        player.setupPlayer(self, frame)
+        player.setupPlayer(self, frame, false, xPos: 700)
 
         for background in [bg1, bg2] {
             background.setScale(0.5)

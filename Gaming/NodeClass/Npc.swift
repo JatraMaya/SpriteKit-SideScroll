@@ -19,18 +19,20 @@ class Npc {
     var dialogLength: Int?
     var dialogStatusCount = 0
     var isNpcActive = false
-    var interactionMark: SKLabelNode
+    var interactionMark: SKSpriteNode
 
-    init(size: CGSize, imageName: String, imageNpc: String, npcName: String) {
+    init(imageName: String, npcName: String) {
         self.npcName = npcName
-//        let dialogBoxSize = CGSize(width: size.width - 65, height: size.height / 3.5)
-        interactionMark = SKLabelNode(text: "💬")
+        
+        interactionMark = SKSpriteNode(imageNamed: "frame11")
         dialogLength = dialogs[self.npcName]?.count
         playerImage = SKSpriteNode(imageNamed: "imgMada")
         npcImage = SKSpriteNode(imageNamed: imageName)
         dialogText = SKLabelNode(text: dialogs[self.npcName]?[0])
 
+        /// Set Npc size here
         sprite = SKSpriteNode(imageNamed: imageName)
+        sprite.size = CGSize(width: 55, height: 120)
         sprite.name = self.npcName
         sprite.addChild(interactionMark)
 
@@ -40,9 +42,9 @@ class Npc {
         dialogBox.size = CGSize(width: 720, height: 110)
 
         interactionMark.alpha = 1
-        interactionMark.fontSize = 20
+        interactionMark.size = CGSize(width: 35, height: 50)
         interactionMark.name = "speechBubble"
-        interactionMark.position.y = sprite.position.x + 15
+        interactionMark.position.y = sprite.position.x + 80
 
         dialogText.name = "dialogText"
         npcImage.name = "npcImage"
@@ -92,40 +94,32 @@ class Npc {
     }
 
     func updateDialog() {
-
         if dialogStatusCount % 2 == 1 {
-
             if dialogBox.childNode(withName: "playerImage") == nil {
                 dialogBox.addChild(playerImage)
             }
             if dialogBox.childNode(withName: "npcImage") != nil {
                 npcImage.removeFromParent()
             }
-
         } else {
-
             if dialogBox.childNode(withName: "npcImage") == nil {
                 dialogBox.addChild(npcImage)
             }
-
             if dialogBox.childNode(withName: "playerImage") != nil {
                 playerImage.removeFromParent()
             }
         }
 
         if dialogStatusCount != dialogLength! - 1 {
-
             dialogStatusCount += 1
             dialogText.text = dialogs[self.npcName]?[dialogStatusCount]
         } else {
-            
             removeDialog()
             dialogBox.removeFromParent()
         }
     }
 
     func handleNpcDialog(_ touch: UITouch) {
-
         if let parent = self.sprite.parent {
             let location = touch.location(in: parent)
             let node = parent.atPoint(location)

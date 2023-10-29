@@ -15,7 +15,11 @@ let dialogs = [
         "hey", "apa kabar", "baik", "lu gimana", "biasa aja"
     ],
     "npc2": [
-        "pinjem seratus", "ogah", "kenapa gitu?", "ogah aja"]
+        "pinjem seratus", "ogah", "kenapa gitu?", "ogah aja"
+    ],
+    "npcDalamKerajaan": [
+        "Lapor mahapatih Gadjah Mada, ada yang prajurit yang membawa pesan dari bali menunggu di depan", "Ah... akhirnya"
+    ]
 ]
 
 let itemDescriptions = [

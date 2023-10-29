@@ -11,7 +11,7 @@ import SpriteKit
 class SceneManager {
     
     enum SceneType: Int {
-        case GameScene, SecondScene
+        case DesaScene, KomplekKerajaanScene, SingasanaScene
     }
     
     private init() {}
@@ -33,10 +33,12 @@ class SceneManager {
     
     func getScene(_ sceneType: SceneType) -> SKScene? {
         switch sceneType {
-        case SceneType.GameScene:
-            return GameScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        case SceneType.SecondScene:
-            return SecondScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        case SceneType.DesaScene:
+            return DesaScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        case SceneType.KomplekKerajaanScene:
+            return KomplekKerajaanScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        case SceneType.SingasanaScene:
+            return SingasanaScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         }
     }
 }
