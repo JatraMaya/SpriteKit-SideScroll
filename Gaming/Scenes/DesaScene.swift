@@ -16,6 +16,8 @@ class DesaScene: SKScene {
 
     var isObjectInteractionButtonActive = false
     var buttonObjectInteraction: SKSpriteNode
+    var buttonQuestInfo: SKSpriteNode
+    var buttonSetting: SKSpriteNode
 
     let player: Player
     let cameraNode: SKCameraNode
@@ -32,6 +34,7 @@ class DesaScene: SKScene {
     let bg2: SKSpriteNode
     let bg3: SKSpriteNode
     let bg4: SKSpriteNode
+    let kapalJungJawa: SKSpriteNode
 
     override init(size: CGSize) {
 
@@ -42,16 +45,23 @@ class DesaScene: SKScene {
         buttonObjectInteraction.zPosition = 5002
         buttonObjectInteraction.size = CGSize(width: 100, height: 60)
 
+        buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
+        buttonQuestInfo.zPosition = 5002
+
+        buttonSetting = SKSpriteNode(imageNamed: "btnSetting")
+        buttonSetting.zPosition = 5002
+
         cameraNode = SKCameraNode()
         player = Player()
         npc1 = Npc(imageName: "npc-b-1", npcName: "npc1")
         npc2 = Npc(imageName: "npc-a-1", npcName: "npc2")
         item = Item(size: size, imageName: "key", itemName: "key", assetName: "asset")
 
-        bg1 = SKSpriteNode(imageNamed: "BG-Layer1")
-        bg2 = SKSpriteNode(imageNamed: "BG-Layer2")
-        bg3 = SKSpriteNode(imageNamed: "BG-Layer3")
+        bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
+        bg2 = SKSpriteNode(imageNamed: "Layer1")
+        bg3 = SKSpriteNode(imageNamed: "Layer2")
         bg4 = SKSpriteNode(imageNamed: "BG-Layer4")
+        kapalJungJawa = SKSpriteNode(imageNamed: "compDjongPolos")
 
         bg1.name = "bg1"
 
@@ -66,26 +76,27 @@ class DesaScene: SKScene {
     override func didMove(to view: SKView) {
         if !isAudioPlayed {
             isAudioPlayed = true
-            playSound(named: "depanKerajaan", fileType: "mp3")
+            playSound(named: "Depan Kerajaan", fileType: "mp3")
             audioPlayer?.setVolume(0.5, fadeDuration: 10)
         }
 
         for background in [bg1, bg2, bg3, bg4] {
-            background.setScale(0.5)
-
             if background.name != "bg1" {
                 background.anchorPoint = CGPoint(x: 0.15, y: 0.5)
             } else {
                 background.anchorPoint = CGPoint(x: 0.50, y: 0.5)
             }
-            background.size.height = frame.height
             background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(background)
         }
+        
+        bg1.setScale(0.5)
+        bg2.setScale(0.25)
+        bg3.setScale(0.25)
 
         bg3.zPosition = layerPosition.layer3.rawValue
         bg4.zPosition = layerPosition.layer4.rawValue
-        player.setupPlayer(self, frame, xPos: 300)
+        player.setupPlayer(self, frame, xPos: 300, yPos: 125, width: 45, height: 125)
         setupCamera()
         npc1.setupNpc(self, x: (bg2.size.width / 2), y: (size.height / 4.5))
         npc2.setupNpc(self, x: (bg2.size.width / 2.8), y: (size.height / 4.5))
@@ -94,6 +105,7 @@ class DesaScene: SKScene {
         setupObjectInteractionButton()
         setupQuestInfoButton()
         setupSettingButton()
+        setupKapalJungJawa()
     }
 
     // Update Scene (including node location) accroding to delta time
@@ -119,8 +131,12 @@ class DesaScene: SKScene {
 //                isAudioPlayed = false
 //            }
 //        }
-
+        print("\(player.position)")
         player.updatePlayerPositionLeftToRight(frame)
+
+        buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
+
+        buttonSetting.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.27)
 
         for i in [npc1, npc2] {
             i.updateActionSpeechMark(player)
@@ -179,10 +195,6 @@ class DesaScene: SKScene {
         for touch in (touches) {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
-            //
-            //            if node.name == "buttocAction" {
-            //
-            //            }
 
             if childNode(withName: "dialogBox") == nil && (node.name != "buttonNPCInteraction") {
                 player.handlePlayerMovementLeftToRight(touch, self.size)
@@ -198,13 +210,36 @@ class DesaScene: SKScene {
                 item.showItemDescription(touch)
             }
 
+            if node.name == "buttonQuestInfo" {
+                buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
+                print("button quest info pressed")
+                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 1))
+            }
+
+            if node.name == "buttonSetting" {
+                buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
+                print("button setting pressed")
+                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 1))
+            }
         }
     }
 
     // Tracking to stop functionality when button is no longer pressed
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        player.stopPlayerMovement()
+        for touch in touches {
+            let location = touch.location(in: self)
+            let node = self.atPoint(location)
 
+            if node.name == "buttonQuestInfo" {
+                buttonQuestInfo.run(SKAction.scale(to: 1, duration: 0.1))
+            }
+
+            if node.name == "buttonSetting" {
+                buttonSetting.run(SKAction.scale(to: 1, duration: 0.1))
+            }
+        }
+
+        player.stopPlayerMovement()
     }
 
     // MARK: Various setup functions needed to build a scene
@@ -228,33 +263,25 @@ class DesaScene: SKScene {
     }
 
     func setupQuestInfoButton() {
-        lazy var questInfoButton: Button = {
-            let button = Button(imagedName: "btnQuestInfo", width: 44, height: 44) {
-                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 0.5))
-            }
-            button.zPosition = 5002
-            return button
-        }()
+        buttonQuestInfo.name = "buttonQuestInfo"
+        buttonQuestInfo.size = CGSize(width: 44, height: 44)
 
-        anchorPoint = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        questInfoButton.position = CGPoint(x: frame.width * 0.05, y: (frame.height * 0.9))
-
-        addChild(questInfoButton)
+        addChild(buttonQuestInfo)
     }
 
     func setupSettingButton() {
-        lazy var settingButton: Button = {
-            let button = Button(imagedName: "btnSetting", width: 44, height: 44) {
-                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 0.5))
-            }
-            button.zPosition = 5002
-            return button
-        }()
+        buttonSetting.name = "buttonSetting"
+        buttonSetting.size = CGSize(width: 44, height: 44)
 
-        anchorPoint = CGPoint(x: frame.width / 2, y: frame.height / 2)
-        settingButton.position = CGPoint(x: frame.width * 0.05, y: (frame.height * 0.75))
+        addChild(buttonSetting)
+    }
 
-        addChild(settingButton)
+    func setupKapalJungJawa() {
+        kapalJungJawa.name = "kapalJungJawa"
+        kapalJungJawa.size = CGSize(width: 578, height: 501)
+        kapalJungJawa.position = CGPoint(x: 3350, y: 300)
+
+        addChild(kapalJungJawa)
     }
 
     // MARK: Function to handle play and pause sound

@@ -48,7 +48,7 @@ class KomplekKerajaanScene: SKScene {
         buttonSetting = SKSpriteNode(imageNamed: "btnSetting")
         buttonSetting.zPosition = 5002
 
-        bg1 = SKSpriteNode(imageNamed: "BG-Layer1")
+        bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
         bg2 = SKSpriteNode(imageNamed: "keraton2")
         papanWitana = SKSpriteNode(imageNamed: "compPapanWitana")
 
@@ -72,16 +72,14 @@ class KomplekKerajaanScene: SKScene {
             audioPlayer?.setVolume(1.0, fadeDuration: 10)
         }
 
-        for i in [bg1, bg2] {
-
-            if i.name != "bg1" {
-                i.anchorPoint = CGPoint(x: 0.8, y: 0.5)
+        for background in [bg1, bg2] {
+            if background.name != "bg1" {
+                background.anchorPoint = CGPoint(x: 0.8, y: 0.5)
             } else {
-                i.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             }
-
-            i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-            addChild(i)
+            background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            addChild(background)
         }
 
         bg1.setScale(0.5)
