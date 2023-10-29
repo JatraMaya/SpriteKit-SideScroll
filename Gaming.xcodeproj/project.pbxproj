@@ -28,6 +28,7 @@
 		BDA69E6F2AE912E800211E96 /* DesaScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E6E2AE912E800211E96 /* DesaScene.swift */; };
 		BDA69E712AE9133500211E96 /* KomplekKerajaanScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA69E702AE9133500211E96 /* KomplekKerajaanScene.swift */; };
 		BDB3C2BE2AE965D400FBBB08 /* SingasanaScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB3C2BD2AE965D400FBBB08 /* SingasanaScene.swift */; };
+		BDDED9E82AEE4EE800E468C7 /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDDED9E72AEE4EE700E468C7 /* Tutorial.swift */; };
 		BDE8B3502ADD92D600BAA6BC /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE8B34F2ADD92D600BAA6BC /* config.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		BDA69E6E2AE912E800211E96 /* DesaScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesaScene.swift; sourceTree = "<group>"; };
 		BDA69E702AE9133500211E96 /* KomplekKerajaanScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KomplekKerajaanScene.swift; sourceTree = "<group>"; };
 		BDB3C2BD2AE965D400FBBB08 /* SingasanaScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingasanaScene.swift; sourceTree = "<group>"; };
+		BDDED9E72AEE4EE700E468C7 /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		BDE8B34F2ADD92D600BAA6BC /* config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 				BDA0D98B2ADD459100B6ABE6 /* Npc.swift */,
 				BD5B833B2AE2608A004A8345 /* Item.swift */,
 				646FC41E2AE8359F0004A1F1 /* Button.swift */,
+				BDDED9E72AEE4EE700E468C7 /* Tutorial.swift */,
 			);
 			path = NodeClass;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				BDE8B3502ADD92D600BAA6BC /* config.swift in Sources */,
 				BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */,
 				BDA69E6F2AE912E800211E96 /* DesaScene.swift in Sources */,
+				BDDED9E82AEE4EE800E468C7 /* Tutorial.swift in Sources */,
 				BDA69E712AE9133500211E96 /* KomplekKerajaanScene.swift in Sources */,
 				646FC41F2AE8359F0004A1F1 /* Button.swift in Sources */,
 				BD6F59D62AD7F7BF00103994 /* Player.swift in Sources */,

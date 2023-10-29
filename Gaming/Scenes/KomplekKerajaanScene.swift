@@ -10,6 +10,9 @@ import AVFoundation
 
 class KomplekKerajaanScene: SKScene {
 
+
+    var isTutorialDone: Bool
+    let tutorial: Tutorial
     let player: Player
     let cameraNode: SKCameraNode
 
@@ -29,6 +32,9 @@ class KomplekKerajaanScene: SKScene {
         cameraNode = SKCameraNode()
         player = Player()
 
+        isTutorialDone = UserDefaults.standard.bool(forKey: "isTutorialDone")
+        tutorial = Tutorial(size: size, parent: player)
+
         npcDalamKerajaan = Npc(imageName: "IdleNpc", npcName: "npcDalamKerajaan")
 
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
@@ -47,6 +53,11 @@ class KomplekKerajaanScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
+
+        if !isTutorialDone {
+            tutorial.presentText(player, frame: frame)
+         }
+
         if !isAudioPlayed {
             isAudioPlayed = true
             playSound(named: "komplekKerajaan", fileType: "mp3")
@@ -87,6 +98,10 @@ class KomplekKerajaanScene: SKScene {
 
         if npcDalamKerajaan.isNpcActive {
             self.activeNpc = npcDalamKerajaan.npcName
+
+            if !isTutorialDone {
+                tutorial.presentText(player, frame: frame)
+            }
         } else {
             self.activeNpc = ""
         }
@@ -125,6 +140,11 @@ class KomplekKerajaanScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+        if !isTutorialDone{
+            self.tutorial.removeLabel(player)
+        }
+
         for touch in touches {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
@@ -135,6 +155,12 @@ class KomplekKerajaanScene: SKScene {
 
             if self.activeNpc == "npcDalamKerajaan" {
                 npcDalamKerajaan.handleNpcDialog(touch)
+
+                if !isTutorialDone {
+                    tutorial.removeLabel(player)
+                    isTutorialDone = true
+                    UserDefaults.standard.setValue(true, forKey: "isTutorialDone")
+                }
             }
         }
     }
