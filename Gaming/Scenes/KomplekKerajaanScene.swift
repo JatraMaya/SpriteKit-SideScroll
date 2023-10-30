@@ -148,9 +148,10 @@ class KomplekKerajaanScene: SKScene {
                 bg1.position.x = (camera?.position.x)!
             }
 
-            if player.position.x > 530 {
-                player.position.x = 530
+            if player.position.x > 505 {
+                player.position.x = 505
                 player.stopPlayerMovement()
+                print("hit")
             }
         }
 
