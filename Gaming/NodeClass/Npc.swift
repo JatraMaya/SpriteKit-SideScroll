@@ -21,7 +21,7 @@ class Npc {
     var isNpcActive = false
     var interactionMark: SKSpriteNode
 
-    init(imageName: String, npcName: String) {
+    init(imageName: String, npcName: String, npcSize: CGSize) {
         self.npcName = npcName
         
         interactionMark = SKSpriteNode(imageNamed: "frame11")
@@ -32,7 +32,8 @@ class Npc {
 
         /// Set Npc size here
         sprite = SKSpriteNode(imageNamed: imageName)
-        sprite.size = CGSize(width: 55, height: 120)
+        sprite.size = npcSize
+//        sprite.size = CGSize(width: 55, height: 120)
         sprite.name = self.npcName
         sprite.addChild(interactionMark)
 

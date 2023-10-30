@@ -11,21 +11,22 @@ import AVFoundation
 
 class DesaScene: SKScene {
 
+    let player: Player
+    let npc1: Npc
+    let npc2: Npc
     var isNPCInteractionButtonActive = false
     var buttonNPCInteraction: SKSpriteNode
+    var activeNpc: String = ""
 
+    let item: Item
     var isObjectInteractionButtonActive = false
     var buttonObjectInteraction: SKSpriteNode
+    var activeItem: String = ""
+
     var buttonQuestInfo: SKSpriteNode
     var buttonSetting: SKSpriteNode
 
-    let player: Player
     let cameraNode: SKCameraNode
-    let npc1: Npc
-    let npc2: Npc
-    let item: Item
-    var activeNpc: String = ""
-    var activeItem: String = ""
 
     var audioPlayer: AVAudioPlayer?
     var isAudioPlayed = false
@@ -52,9 +53,9 @@ class DesaScene: SKScene {
 
         cameraNode = SKCameraNode()
         player = Player()
-        npc1 = Npc(imageName: "npc-b-1", npcName: "npc1")
-        npc2 = Npc(imageName: "npc-a-1", npcName: "npc2")
-        item = Item(size: size, imageName: "key", itemName: "key", assetName: "asset")
+        npc1 = Npc(imageName: "NpcWarga", npcName: "npc1", npcSize: CGSize(width: 50, height: 110))
+        npc2 = Npc(imageName: "Warga_Tua_2", npcName: "npc2", npcSize: CGSize(width: 50, height: 110))
+        item = Item(size: size, imageName: "compNareswara", itemName: "key", assetName: "ObjectInteractionPatakaSangDwijaNagaNareswara", spriteSize: CGSize(width: 35, height: 138))
 
         bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
         bg2 = SKSpriteNode(imageNamed: "desa1")
@@ -102,9 +103,8 @@ class DesaScene: SKScene {
         
         setupCamera()
 
-        npc1.setupNpc(self, x: (bg2.size.width / 2), y: (size.height / 4.5))
-        npc2.setupNpc(self, x: (bg2.size.width / 2.8), y: (size.height / 4.5))
-        
+        npc1.setupNpc(self, x: 936, y: 150)
+        npc2.setupNpc(self, x: 1544, y: 160)
         item.setupItem(self, x: (frame.maxX + 800), y: (size.height / 5))
         
         setupNPCInteractionButton()
@@ -118,6 +118,7 @@ class DesaScene: SKScene {
 
     // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
+        print("\(player.position)")
         player.updatePlayerPositionLeftToRight(frame)
 
         buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)

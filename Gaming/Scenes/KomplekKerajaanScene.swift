@@ -18,6 +18,11 @@ class KomplekKerajaanScene: SKScene {
     let bg2: SKSpriteNode
     let papanWitana: SKSpriteNode
 
+    let objectPatakaBaruna: Item
+    var isObjectInteractionButtonActive = false
+    var buttonObjectInteraction: SKSpriteNode
+    var activeItem: String = ""
+
     var buttonNPCInteraction: SKSpriteNode
     var buttonQuestInfo: SKSpriteNode
     var buttonSetting: SKSpriteNode
@@ -37,16 +42,22 @@ class KomplekKerajaanScene: SKScene {
         isTutorialDone = UserDefaults.standard.bool(forKey: "isTutorialDone")
         tutorial = Tutorial(size: size, parent: player)
 
-        npcDalamKerajaan = Npc(imageName: "IdleNpc", npcName: "npcDalamKerajaan")
+        npcDalamKerajaan = Npc(imageName: "IdleNpc", npcName: "npcDalamKerajaan", npcSize: CGSize(width: 55, height: 120))
 
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
-        buttonNPCInteraction.zPosition = 5002
+        buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
+
+        buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
+        buttonObjectInteraction.zPosition = layerPosition.layer4.rawValue
+        buttonObjectInteraction.size = CGSize(width: 100, height: 60)
 
         buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
         buttonQuestInfo.zPosition = 5002
 
         buttonSetting = SKSpriteNode(imageNamed: "btnSetting")
         buttonSetting.zPosition = 5002
+
+        objectPatakaBaruna = Item(size: size, imageName: "compBaruna", itemName: "baruna", assetName: "ObjectInteractionPatakaSangHyangBaruna", spriteSize: CGSize(width: 35, height: 138))
 
         bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
         bg2 = SKSpriteNode(imageNamed: "keraton2")
@@ -87,18 +98,27 @@ class KomplekKerajaanScene: SKScene {
         bg1.setScale(0.5)
         bg2.setScale(0.25)
 
-        setupNPCInteractionButton()
         setupSettingButton()
         setupQuestInfoButton()
+
         setupPapanWitana()
+
         setupCamera()
+
+        setupNPCInteractionButton()
+        setupObjectInteractionButton()
+
         player.setupPlayer(self, frame, xPos: -540)
+
+        objectPatakaBaruna.setupItem(self, x: -1070, y: 170)
+
         npcDalamKerajaan.setupNpc(self, x: -200, y: 135, dialogBoxX: player.position.x, dialogBoxY: 90)
     }
 
 
     // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
+        print("\(player.position)")
         player.updatePlayerPositionRightToLeft(frame)
 
         buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
@@ -109,6 +129,9 @@ class KomplekKerajaanScene: SKScene {
             i.updateActionSpeechMark(player)
         }
 
+        /// Update visibility of interaction mark
+        objectPatakaBaruna.updateActionCheckMark(player)
+
         if npcDalamKerajaan.isNpcActive {
             self.activeNpc = npcDalamKerajaan.npcName
 
@@ -117,6 +140,13 @@ class KomplekKerajaanScene: SKScene {
             }
         } else {
             self.activeNpc = ""
+        }
+
+        /// Check active object name
+        if objectPatakaBaruna.isItemActive {
+            self.activeItem = objectPatakaBaruna.itemName
+        } else {
+            self.activeItem = ""
         }
 
         /// Left Scene Barrier
@@ -156,6 +186,7 @@ class KomplekKerajaanScene: SKScene {
 //            }
 //        }
 
+        /// Show NPC Interaction Button
         if npcDalamKerajaan.isNpcActive {
             buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
             isNPCInteractionButtonActive = true
@@ -163,6 +194,18 @@ class KomplekKerajaanScene: SKScene {
             buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
             isNPCInteractionButtonActive = false
         }
+
+        /// Show Object Interaction Button
+        if objectPatakaBaruna.isItemActive {
+            buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+            isObjectInteractionButtonActive = true
+        } else {
+            buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
+            isObjectInteractionButtonActive = false
+        }
+
+        /// Update visibility of interaction mark
+        objectPatakaBaruna.updateActionCheckMark(player)
     }
 
 
@@ -176,9 +219,20 @@ class KomplekKerajaanScene: SKScene {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
 
+            ///
             if childNode(withName: "dialogBox") == nil && (node.name != "buttonNPCInteraction") {
                 player.handlePlayerMovementRightToLeft(touch, self.size)
             }
+
+            ///
+//            if childNode(withName: "dialogBox") == nil && (node.name != "buttonObjectInteraction") {
+//                player.handlePlayerMovementRightToLeft(touch, self.size)
+//            }
+
+            /// Show item descrip when buttonObjectInteraction pressed
+//            if self.activeItem == self.objectPatakaBaruna.itemName {
+//                objectPatakaBaruna.showItemDescription(touch)
+//            }
 
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
@@ -234,6 +288,13 @@ class KomplekKerajaanScene: SKScene {
         buttonNPCInteraction.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
 
         addChild(buttonNPCInteraction)
+    }
+
+    func setupObjectInteractionButton() {
+        buttonObjectInteraction.name = "buttonObjectInteraction"
+        buttonObjectInteraction.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
+
+        addChild(buttonObjectInteraction)
     }
 
     func setupQuestInfoButton() {

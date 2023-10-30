@@ -13,34 +13,36 @@ class Item {
     let sprite: SKSpriteNode
     let dialogBox: SKShapeNode
     let dialogText: SKLabelNode
-    let interactionMark: SKLabelNode
+    let objectInteractionMark: SKSpriteNode
     let itemName: String
     var itemPopUp: SKSpriteNode
     var isItemActive = false
 
 
-    init(size: CGSize, imageName: String, itemName: String, assetName: String) {
+    init(size: CGSize, imageName: String, itemName: String, assetName: String, spriteSize: CGSize) {
         let dialogBoxSize = CGSize(width: size.width - 65, height: size.height / 3.5)
 
         self.sprite = SKSpriteNode(imageNamed: imageName)
+        self.sprite.size = spriteSize
         self.itemName = itemName
         self.dialogBox = SKShapeNode(rectOf: dialogBoxSize)
-        self.interactionMark = SKLabelNode(text: "🔍")
+        self.objectInteractionMark = SKSpriteNode(imageNamed: "objectInteractionMark")
         self.dialogText = SKLabelNode(text: "")
         self.itemPopUp = SKSpriteNode(imageNamed: assetName)
 
-        self.sprite.addChild(interactionMark)
+        self.sprite.addChild(objectInteractionMark)
         self.sprite.name = "item"
 
-        self.itemPopUp.name = "itemDesctiption"
+        self.itemPopUp.name = "itemDescription"
         self.itemPopUp.zPosition = 5
-        self.itemPopUp.size = CGSize(width: size.width, height: size.height)
+        self.itemPopUp.size = CGSize(width: 720, height: 310)
+        self.itemPopUp.position = CGPoint(x: 0, y: 1200)
 
-        self.interactionMark.alpha = 1
-        self.interactionMark.fontSize = 20
-        self.interactionMark.name = "magnifier"
-        self.interactionMark.position.y = sprite.position.x + 15
-        
+        self.objectInteractionMark.alpha = 1
+        self.objectInteractionMark.size = CGSize(width: 35, height: 50)
+        self.objectInteractionMark.name = "questionMarkBubble"
+        self.objectInteractionMark.position.y = sprite.position.x + 90
+
         self.dialogBox.fillColor = UIColor.red
         self.dialogBox.name = "dialogBox"
         self.dialogBox.zPosition = 100
@@ -58,11 +60,11 @@ class Item {
         let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
 
         if (-distanceBetweenSpriteStart..<distanceBetweenSpriteEnd).contains(playerVsSpritePosition) {
-                self.sprite.childNode(withName: "magnifier")?.alpha = 1
+                self.sprite.childNode(withName: "questionMarkBubble")?.alpha = 1
                 self.isItemActive = true
 
         } else {
-            self.sprite.childNode(withName: "magnifier")?.alpha = 0
+            self.sprite.childNode(withName: "questionMarkBubble")?.alpha = 0
             self.isItemActive = false
         }
 
@@ -76,10 +78,9 @@ class Item {
             if (node.name == "buttonObjectInteraction") && (parent.childNode(withName: "dialogBox") == nil) {
                     parent.addChild(dialogBox)
                     setupDescription()
-
             }
 
-            if (node.name == "itemDesctiption") {
+            if (node.name == "itemDescription") {
                 removeDescription()
                 }
         }
