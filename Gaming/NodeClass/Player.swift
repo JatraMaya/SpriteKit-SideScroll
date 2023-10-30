@@ -33,12 +33,19 @@ class Player: SKSpriteNode {
         super.init(coder: aDecoder)
     }
 
-    func setupPlayer(_ parent: SKScene, _ frame: CGRect, _ isleft: Bool = true, xPos: CGFloat? = nil) {
+    func setupPlayer(_ parent: SKScene, _ frame: CGRect, _ isleft: Bool = true, xPos: CGFloat? = nil, yPos: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) {
         parent.addChild(self)
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         let xPosition = xPos ?? frame.midX
-        self.position = CGPoint(x: xPosition, y: size.height + 0.5)
+        let yPosition = yPos ?? size.height + 0.5
+        self.position = CGPoint(x: xPosition, y: yPosition)
         self.zPosition = layerPosition.layer2.rawValue
+
+        if let width = width, let height = height {
+            self.size = CGSize(width: width, height: height)
+        } else {
+            self.size = CGSize(width: 50, height: 135)
+        }
 
         if !isleft {
             self.xScale = -1

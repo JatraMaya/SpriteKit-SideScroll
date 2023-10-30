@@ -9,8 +9,6 @@ import SpriteKit
 import AVFoundation
 
 class KomplekKerajaanScene: SKScene {
-
-
     var isTutorialDone: Bool
     let tutorial: Tutorial
     let player: Player
@@ -18,9 +16,11 @@ class KomplekKerajaanScene: SKScene {
 
     let bg1: SKSpriteNode
     let bg2: SKSpriteNode
+    let papanWitana: SKSpriteNode
 
     var buttonNPCInteraction: SKSpriteNode
     var buttonQuestInfo: SKSpriteNode
+    var buttonSetting: SKSpriteNode
 
     let npcDalamKerajaan: Npc
     var activeNpc: String = ""
@@ -45,8 +45,12 @@ class KomplekKerajaanScene: SKScene {
         buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
         buttonQuestInfo.zPosition = 5002
 
-        bg1 = SKSpriteNode(imageNamed: "BG-Layer1")
+        buttonSetting = SKSpriteNode(imageNamed: "btnSetting")
+        buttonSetting.zPosition = 5002
+
+        bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
         bg2 = SKSpriteNode(imageNamed: "keraton2")
+        papanWitana = SKSpriteNode(imageNamed: "compPapanWitana")
 
         bg1.name = "bg1"
 
@@ -57,8 +61,9 @@ class KomplekKerajaanScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func didMove(to view: SKView) {
 
+    // MARK: Call all the necessary function when game first load
+    override func didMove(to view: SKView) {
         if !isTutorialDone {
             tutorial.presentText(player, frame: frame)
          }
@@ -66,25 +71,26 @@ class KomplekKerajaanScene: SKScene {
         if !isAudioPlayed {
             isAudioPlayed = true
             playSound(named: "komplekKerajaan", fileType: "mp3")
-            audioPlayer?.setVolume(1.0, fadeDuration: 10)
+            audioPlayer?.setVolume(0.1, fadeDuration: 10)
+        }
+
+        for background in [bg1, bg2] {
+            if background.name != "bg1" {
+                background.anchorPoint = CGPoint(x: 0.8, y: 0.5)
+            } else {
+                background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            }
+            background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+            addChild(background)
         }
 
         bg1.setScale(0.5)
         bg2.setScale(0.25)
 
-        for i in [bg1, bg2] {
-
-            if i.name != "bg1" {
-                i.anchorPoint = CGPoint(x: 0.8, y: 0.5)
-            } else {
-                i.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            }
-
-            i.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
-            addChild(i)
-        }
         setupNPCInteractionButton()
+        setupSettingButton()
         setupQuestInfoButton()
+        setupPapanWitana()
         setupCamera()
         player.setupPlayer(self, frame, xPos: -540)
         npcDalamKerajaan.setupNpc(self, x: -200, y: 135)
@@ -92,10 +98,14 @@ class KomplekKerajaanScene: SKScene {
         print("\(npcDalamKerajaan.sprite)")
     }
 
+
+    // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
         player.updatePlayerPositionRightToLeft(frame)
 
         buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
+
+        buttonSetting.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.27)
 
         for i in [npcDalamKerajaan] {
             i.updateActionSpeechMark(player)
@@ -125,12 +135,21 @@ class KomplekKerajaanScene: SKScene {
                 camera?.position.x = player.position.x
                 bg1.position.x = (camera?.position.x)!
             }
+
             if player.position.x < -1480 {
                 player.position.x = -1480
                 player.stopPlayerMovement()
             }
-            if player.position.x > 576 {
-                player.position.x = 576
+        }
+
+        if player.position.x >= size.width / 2  {
+            if !(player.position.x >= size.width / -0.72) {
+                camera?.position.x = player.position.x
+                bg1.position.x = (camera?.position.x)!
+            }
+
+            if player.position.x > 530 {
+                player.position.x = 530
                 player.stopPlayerMovement()
             }
         }
@@ -144,8 +163,9 @@ class KomplekKerajaanScene: SKScene {
         }
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 
+    // MARK: control functionality when button is touch
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !isTutorialDone{
             self.tutorial.removeLabel(player)
         }
@@ -161,6 +181,12 @@ class KomplekKerajaanScene: SKScene {
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
+                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 1))
+            }
+
+            if node.name == "buttonSetting" {
+                buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
+                print("button setting pressed")
                 SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 1))
             }
 
@@ -176,6 +202,8 @@ class KomplekKerajaanScene: SKScene {
         }
     }
 
+
+    // MARK: Tracking to stop functionality when button is no longer pressed
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
@@ -185,7 +213,10 @@ class KomplekKerajaanScene: SKScene {
 
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 1, duration: 0.1))
-                print("button quest info pressed")
+            }
+
+            if node.name == "buttonSetting" {
+                buttonSetting.run(SKAction.scale(to: 1, duration: 0.1))
             }
         }
     }
@@ -210,8 +241,22 @@ class KomplekKerajaanScene: SKScene {
         addChild(buttonQuestInfo)
     }
 
+    func setupSettingButton() {
+        buttonSetting.name = "buttonSetting"
+        buttonSetting.size = CGSize(width: 44, height: 44)
+
+        addChild(buttonSetting)
+    }
+
+    func setupPapanWitana() {
+        papanWitana.name = "papanWitana"
+        papanWitana.size = CGSize(width: 85, height: 133.5)
+        papanWitana.position = CGPoint(x: -760, y: 165)
+
+        addChild(papanWitana)
+    }
+
     // MARK: Function to handle play and pause sound
-    // Function to play and pause sound
     func playSound(named: String, fileType: String) {
         guard let path = Bundle.main.path(forResource: named, ofType: fileType) else {
             print("Sound file not found")

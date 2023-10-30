@@ -44,9 +44,6 @@ class Tutorial {
             parent.addChild(self.dialogBox)
 
         }
-
-
-
     }
 
     func removeLabel(_ parent: SKNode) {
