@@ -32,7 +32,7 @@ class BaliScene: SKScene {
         cameraNode = SKCameraNode()
         player = Player()
 
-        bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
+        bg1 = SKSpriteNode(imageNamed: "gunungAgung")
         bg2 = SKSpriteNode(imageNamed: "bali1")
         bg3 = SKSpriteNode(imageNamed: "bali2")
 
@@ -66,7 +66,7 @@ class BaliScene: SKScene {
             addChild(background)
         }
 
-        bg1.setScale(0.5)
+        bg1.setScale(0.25)
         bg2.setScale(0.25)
         bg3.setScale(0.25)
 

@@ -22,7 +22,7 @@ class PendopoBaliScene: SKScene {
 
     override init(size: CGSize) {
         player = Player()
-        bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
+        bg1 = SKSpriteNode(imageNamed: "gunungAgung")
         bg2 = SKSpriteNode(imageNamed: "pendopoBali")
 
         bg2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -56,7 +56,7 @@ class PendopoBaliScene: SKScene {
             addChild(background)
         }
 
-        bg1.setScale(0.5)
+        bg1.setScale(0.25)
         bg2.setScale(0.25)
 
         player.setupPlayer(self, frame, false, xPos: 500, yPos: 140)

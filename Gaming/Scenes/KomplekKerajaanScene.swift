@@ -93,9 +93,7 @@ class KomplekKerajaanScene: SKScene {
         setupPapanWitana()
         setupCamera()
         player.setupPlayer(self, frame, xPos: -540)
-        npcDalamKerajaan.setupNpc(self, x: -200, y: 135)
-
-        print("\(npcDalamKerajaan.sprite)")
+        npcDalamKerajaan.setupNpc(self, x: -200, y: 135, dialogBoxX: player.position.x, dialogBoxY: 90)
     }
 
 
@@ -121,15 +119,7 @@ class KomplekKerajaanScene: SKScene {
             self.activeNpc = ""
         }
 
-        if player.position.x >= size.width / 2 {
-            camera?.position.x = player.position.x
-            bg1.position.x = (camera?.position.x)!
-            buttonNPCInteraction.position.x = (cameraNode.frame.maxX * 3)
-            for i in [npcDalamKerajaan] {
-                i.dialogBox.position.x = (cameraNode.frame.midX)
-            }
-        }
-
+        /// Left Scene Barrier
         if player.position.x <= size.width / 2  {
             if !(player.position.x <= size.width / -0.72) {
                 camera?.position.x = player.position.x
@@ -142,18 +132,29 @@ class KomplekKerajaanScene: SKScene {
             }
         }
 
+        /// Right Scene Barrier
         if player.position.x >= size.width / 2  {
             if !(player.position.x >= size.width / -0.72) {
                 camera?.position.x = player.position.x
                 bg1.position.x = (camera?.position.x)!
             }
 
-            if player.position.x > 505 {
-                player.position.x = 505
+            if player.position.x > 515 {
+                player.position.x = 515
                 player.stopPlayerMovement()
                 print("hit")
             }
         }
+
+        /// Setup Dialog Box Position
+//        if player.position.x >= size.width / 2 {
+//            camera?.position.x = player.position.x
+//            bg1.position.x = (camera?.position.x)!
+//            buttonNPCInteraction.position.x = (cameraNode.frame.maxX * 3)
+//            for i in [npcDalamKerajaan] {
+//                i.dialogBox.position.x = (cameraNode.frame.midX)
+//            }
+//        }
 
         if npcDalamKerajaan.isNpcActive {
             buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))

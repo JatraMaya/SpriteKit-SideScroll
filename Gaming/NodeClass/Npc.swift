@@ -56,9 +56,11 @@ class Npc {
 
     }
 
-    func setupNpc(_ parent: SKNode, x: CGFloat, y: CGFloat) {
+    func setupNpc(_ parent: SKNode, x: CGFloat, y: CGFloat, dialogBoxX: CGFloat? = nil, dialogBoxY: CGFloat? = nil) {
         parent.addChild(self.sprite)
-        self.dialogBox.position = CGPoint(x: x, y: y)
+        let dialogBoxPositionX = dialogBoxX ?? x
+        let dialogBoxPositionY = dialogBoxY ?? y
+        self.dialogBox.position = CGPoint(x: dialogBoxPositionX, y: dialogBoxPositionY)
         self.dialogBox.zPosition = 5005
         self.sprite.position = CGPoint(x: x, y: y)
     }
