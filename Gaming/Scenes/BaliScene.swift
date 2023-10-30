@@ -82,6 +82,14 @@ class BaliScene: SKScene {
         if player.position.x >= size.width / 2 {
             camera?.position.x = player.position.x
             bg1.position.x = (camera?.position.x)!
+            print(player.position.x)
+            if player.position.x > 2228 {
+                player.position.x = 2228
+                player.stopPlayerMovement()
+            } else if player.position.x < 448 {
+                player.position.x = 448
+                player.stopPlayerMovement()
+            }
         }
     }
 

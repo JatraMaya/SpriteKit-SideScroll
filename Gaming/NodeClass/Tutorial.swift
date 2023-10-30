@@ -25,8 +25,6 @@ class Tutorial {
         self.dialogBox = SKSpriteNode(imageNamed: "frameConversation")
         self.dialogBox.name = "tutorialLabel"
         self.label = SKLabelNode(fontNamed: "SFProRounded")
-        self.label.name = "ini label"
-//        self.label.fontColor = UIColor.brown
         self.label.scene?.size.width = self.dialogBox.frame.maxX
         self.label.text = tutorialDialog[0]
         self.dialogBox.position = CGPoint(x: parent.position.x, y: parent.position.y + 150)
@@ -47,7 +45,6 @@ class Tutorial {
     }
 
     func removeLabel(_ parent: SKNode) {
-
         if parent.childNode(withName: "tutorialLabel") != nil {
             self.label.text = tutorialDialog[1]
             self.label.removeFromParent()
@@ -57,6 +54,7 @@ class Tutorial {
 
 }
 
+// Extention to resize Label node font size to it's parent container
 extension SKLabelNode {
     func fitToWidth(maxWidth:CGFloat){
         while frame.size.width >= maxWidth {

@@ -38,17 +38,17 @@ class DesaScene: SKScene {
 
     override init(size: CGSize) {
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
-        buttonNPCInteraction.zPosition = 5002
+        buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
 
         buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
-        buttonObjectInteraction.zPosition = 5002
+        buttonObjectInteraction.zPosition = layerPosition.layer4.rawValue
         buttonObjectInteraction.size = CGSize(width: 100, height: 60)
 
         buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
-        buttonQuestInfo.zPosition = 5002
+        buttonQuestInfo.zPosition = layerPosition.layer4.rawValue
 
         buttonSetting = SKSpriteNode(imageNamed: "btnSetting")
-        buttonSetting.zPosition = 5002
+        buttonSetting.zPosition = layerPosition.layer4.rawValue
 
         cameraNode = SKCameraNode()
         player = Player()
@@ -172,6 +172,9 @@ class DesaScene: SKScene {
 
         if player.position.x < 234 {
             player.position.x = 234
+            player.stopPlayerMovement()
+        } else if player.position.x > 2988 {
+            player.position.x = 2988
             player.stopPlayerMovement()
         }
     }
