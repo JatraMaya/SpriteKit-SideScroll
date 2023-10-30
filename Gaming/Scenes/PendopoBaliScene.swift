@@ -44,6 +44,12 @@ class PendopoBaliScene: SKScene {
 
     // MARK: Call all the necessary function when game first load
     override func didMove(to view: SKView) {
+        if !isAudioPlayed {
+            isAudioPlayed = true
+            playSound(named: "Pantai Majapahit", fileType: "mp3")
+            audioPlayer?.setVolume(0.5, fadeDuration: 10)
+        }
+
         for background in [bg1, bg2] {
             background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
@@ -80,7 +86,7 @@ class PendopoBaliScene: SKScene {
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
-                SceneManager.shared.transition(self, toScene: .BaliScene, transition: SKTransition.fade(withDuration: 1))
+                SceneManager.shared.transition(self, toScene: .BaliScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             if node.name == "buttonSetting" {

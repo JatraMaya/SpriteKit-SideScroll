@@ -86,13 +86,13 @@ class SingasanaScene: SKScene {
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
-                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 1))
+                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             if node.name == "buttonSetting" {
                 buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button setting pressed")
-                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 1))
+                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
             }
         }
     }
