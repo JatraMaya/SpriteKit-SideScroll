@@ -8,7 +8,6 @@
 import SpriteKit
 import AVFoundation
 
-
 class SingasanaScene: SKScene {
     let player: Player
     let bg1: SKSpriteNode
