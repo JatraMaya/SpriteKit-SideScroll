@@ -27,6 +27,9 @@ class KomplekKerajaanScene: SKScene {
     var buttonObjectInteraction: SKSpriteNode
     var activeItem: String = ""
 
+    var buttonSceneShifterToDesa: SKSpriteNode
+    var buttonSceneShifterToSinggasana: SKSpriteNode
+
     var buttonNPCInteraction: SKSpriteNode
     var buttonQuestInfo: SKSpriteNode
     var buttonSetting: SKSpriteNode
@@ -61,6 +64,14 @@ class KomplekKerajaanScene: SKScene {
         buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
         buttonObjectInteraction.zPosition = layerPosition.layer4.rawValue
         buttonObjectInteraction.size = CGSize(width: 100, height: 60)
+
+        buttonSceneShifterToDesa = SKSpriteNode(imageNamed: "btnTransition")
+        buttonSceneShifterToDesa.zPosition = layerPosition.layer4.rawValue
+        buttonSceneShifterToDesa.size = CGSize(width: 100, height: 60)
+
+        buttonSceneShifterToSinggasana = SKSpriteNode(imageNamed: "btnTransition")
+        buttonSceneShifterToSinggasana.zPosition = layerPosition.layer4.rawValue
+        buttonSceneShifterToSinggasana.size = CGSize(width: 100, height: 60)
 
         buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
         buttonQuestInfo.zPosition = 5002
@@ -120,6 +131,8 @@ class KomplekKerajaanScene: SKScene {
 
         setupNPCInteractionButton()
         setupObjectInteractionButton()
+        setupSceneShifterToDesaButton()
+        setupSceneShifterToSinggasanaButton()
 
         player.setupPlayer(self, frame, xPos: -540)
 
@@ -193,15 +206,19 @@ class KomplekKerajaanScene: SKScene {
             }
         }
 
-        /// Setup Dialog Box Position
-//        if player.position.x >= size.width / 2 {
-//            camera?.position.x = player.position.x
-//            bg1.position.x = (camera?.position.x)!
-//            buttonNPCInteraction.position.x = (cameraNode.frame.maxX * 3)
-//            for i in [npcDalamKerajaan] {
-//                i.dialogBox.position.x = (cameraNode.frame.midX)
-//            }
-//        }
+        /// Show Scene Shifter Button to Dese Majapahit
+        if player.position.x >= 410 && player.position.x <= 515 {
+            buttonSceneShifterToDesa.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+        } else {
+            buttonSceneShifterToDesa.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
+        }
+
+        // Show Scene Shifter Button to Singgasana
+        if player.position.x <= -780 && player.position.x >= -850 {
+            buttonSceneShifterToSinggasana.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+        } else {
+            buttonSceneShifterToSinggasana.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
+        }
 
 
 
@@ -238,31 +255,29 @@ class KomplekKerajaanScene: SKScene {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
 
-            ///
+            /// Touch show dialog box
             if childNode(withName: "dialogBox") == nil && (node.name != "buttonNPCInteraction") {
                 player.handlePlayerMovementRightToLeft(touch, self.size)
             }
 
-            ///
-//            if childNode(withName: "dialogBox") == nil && (node.name != "buttonObjectInteraction") {
-//                player.handlePlayerMovementRightToLeft(touch, self.size)
-//            }
+            /// Touch run scene transition to desa majapahit
+            if node.name == "buttonSceneShifterToDesa" {
+                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
+            }
 
-            /// Show item descrip when buttonObjectInteraction pressed
-//            if self.activeItem == self.objectPatakaBaruna.itemName {
-//                objectPatakaBaruna.showItemDescription(touch)
-//            }
+            /// Touch run scene transition to Singgasana
+            if node.name == "buttonSceneShifterToSinggasana" {
+                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
+            }
 
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
-                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             if node.name == "buttonSetting" {
                 buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button setting pressed")
-                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             if self.activeNpc == "npcDalamKerajaan" {
@@ -327,6 +342,20 @@ class KomplekKerajaanScene: SKScene {
 //        backgroundQuestInfo.run(SKAction.sequence([SKAction.fadeAlpha(to: 0, duration: 0.1), SKAction.moveTo(y: 10, duration: 0.1)]))
 
 
+
+    func setupSceneShifterToDesaButton() {
+        buttonSceneShifterToDesa.name = "buttonSceneShifterToDesa"
+        buttonSceneShifterToDesa.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
+
+        addChild(buttonSceneShifterToDesa)
+    }
+
+    func setupSceneShifterToSinggasanaButton() {
+        buttonSceneShifterToSinggasana.name = "buttonSceneShifterToSinggasana"
+        buttonSceneShifterToSinggasana.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
+
+        addChild(buttonSceneShifterToSinggasana)
+    }
 
     func setupQuestInfoButton() {
         buttonQuestInfo.name = "buttonQuestInfo"

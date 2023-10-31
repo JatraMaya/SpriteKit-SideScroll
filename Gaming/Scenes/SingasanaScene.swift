@@ -8,7 +8,6 @@
 import SpriteKit
 import AVFoundation
 
-
 class SingasanaScene: SKScene {
     let player: Player
     let bg1: SKSpriteNode
@@ -17,6 +16,8 @@ class SingasanaScene: SKScene {
 
     var audioPlayer: AVAudioPlayer?
     var isAudioPlayed = false
+
+    var buttonSceneShifterToKomplekKerajaan: SKSpriteNode
 
     var buttonQuestInfo: SKSpriteNode
     var buttonSetting: SKSpriteNode
@@ -33,6 +34,10 @@ class SingasanaScene: SKScene {
 
         buttonSetting = SKSpriteNode(imageNamed: "btnSetting")
         buttonSetting.zPosition = 5002
+
+        buttonSceneShifterToKomplekKerajaan = SKSpriteNode(imageNamed: "btnTransition")
+        buttonSceneShifterToKomplekKerajaan.zPosition = layerPosition.layer4.rawValue
+        buttonSceneShifterToKomplekKerajaan.size = CGSize(width: 100, height: 60)
 
         super.init(size: size)
     }
@@ -59,21 +64,30 @@ class SingasanaScene: SKScene {
         bg1.setScale(0.5)
         bg2.setScale(0.25)
 
-        player.setupPlayer(self, frame, false, xPos: 700, yPos: 150)
+        player.setupPlayer(self, frame, false, xPos: 690, yPos: 150)
 
         setupCamera()
         setupSettingButton()
         setupQuestInfoButton()
+        setupSceneShifterToKomplekKerajaan()
     }
 
 
     // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
         print("\(player.position)")
+        player.updatePlayerPositionRightToLeft(frame)
 
         buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
 
         buttonSetting.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.27)
+
+        /// Show Scene Shifter Button to Komplek Kerajaan
+        if player.position.x >= 700 && player.position.x <= 730 {
+            buttonSceneShifterToKomplekKerajaan.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+        } else {
+            buttonSceneShifterToKomplekKerajaan.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
+        }
     }
 
 
@@ -83,16 +97,23 @@ class SingasanaScene: SKScene {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
 
+            if childNode(withName: "dialogBox") == nil && (node.name != "buttonNPCInteraction") {
+                player.handlePlayerMovementRightToLeft(touch, self.size)
+            }
+
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
-                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             if node.name == "buttonSetting" {
                 buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button setting pressed")
-                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
+            }
+
+            /// Touch run scene transition to Komplek Kerajaan
+            if node.name == "buttonSceneShifterToKomplekKerajaan" {
+                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 2))
             }
         }
     }
@@ -103,6 +124,8 @@ class SingasanaScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
+
+            player.stopPlayerMovement()
 
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 1, duration: 0.1))
@@ -133,6 +156,13 @@ class SingasanaScene: SKScene {
         buttonSetting.size = CGSize(width: 44, height: 44)
 
         addChild(buttonSetting)
+    }
+
+    func setupSceneShifterToKomplekKerajaan() {
+        buttonSceneShifterToKomplekKerajaan.name = "buttonSceneShifterToKomplekKerajaan"
+        buttonSceneShifterToKomplekKerajaan.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
+
+        addChild(buttonSceneShifterToKomplekKerajaan)
     }
 
 

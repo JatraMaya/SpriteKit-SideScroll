@@ -26,6 +26,8 @@ class DesaScene: SKScene {
     var buttonQuestInfo: SKSpriteNode
     var buttonSetting: SKSpriteNode
 
+    var buttonSceneShifterToKomplekKerajaan: SKSpriteNode
+
     let cameraNode: SKCameraNode
 
     var audioPlayer: AVAudioPlayer?
@@ -50,6 +52,10 @@ class DesaScene: SKScene {
 
         buttonSetting = SKSpriteNode(imageNamed: "btnSetting")
         buttonSetting.zPosition = layerPosition.layer4.rawValue
+
+        buttonSceneShifterToKomplekKerajaan = SKSpriteNode(imageNamed: "btnTransition")
+        buttonSceneShifterToKomplekKerajaan.zPosition = layerPosition.layer4.rawValue
+        buttonSceneShifterToKomplekKerajaan.size = CGSize(width: 100, height: 60)
 
         cameraNode = SKCameraNode()
         player = Player()
@@ -111,7 +117,7 @@ class DesaScene: SKScene {
         setupObjectInteractionButton()
         setupQuestInfoButton()
         setupSettingButton()
-        
+        setupSceneShifterToKomplekKerajaan()
         setupKapalJungJawa()
     }
 
@@ -177,6 +183,14 @@ class DesaScene: SKScene {
             player.position.x = 2988
             player.stopPlayerMovement()
         }
+
+        /// Show Scene Shifter Button to Komplek Kerajaan
+        if player.position.x >= 234 && player.position.x <= 280 {
+            buttonSceneShifterToKomplekKerajaan.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+        } else {
+            buttonSceneShifterToKomplekKerajaan.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
+        }
+
     }
 
 
@@ -210,6 +224,11 @@ class DesaScene: SKScene {
                 buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button setting pressed")
                 SceneManager.shared.transition(self, toScene: .BaliScene, transition: SKTransition.fade(withDuration: 2))
+            }
+
+            /// Touch run scene transition to Komplek Kerajaan
+            if node.name == "buttonSceneShifterToKomplekKerajaan" {
+                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 2))
             }
         }
     }
@@ -264,6 +283,13 @@ class DesaScene: SKScene {
         buttonSetting.size = CGSize(width: 44, height: 44)
 
         addChild(buttonSetting)
+    }
+
+    func setupSceneShifterToKomplekKerajaan() {
+        buttonSceneShifterToKomplekKerajaan.name = "buttonSceneShifterToKomplekKerajaan"
+        buttonSceneShifterToKomplekKerajaan.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
+
+        addChild(buttonSceneShifterToKomplekKerajaan)
     }
 
     func setupKapalJungJawa() {
