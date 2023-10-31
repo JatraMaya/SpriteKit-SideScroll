@@ -152,7 +152,6 @@ class DesaScene: SKScene {
             for i in [npc1, npc2] {
                 i.dialogBox.position.x = (cameraNode.frame.midX)
             }
-            item.dialogBox.position.x = (cameraNode.frame.midX)
         }
 
         if npc1.isNpcActive || npc2.isNpcActive {

@@ -11,8 +11,6 @@ import SpriteKit
 class Item {
     
     let sprite: SKSpriteNode
-    let dialogBox: SKShapeNode
-    let dialogText: SKLabelNode
     let objectInteractionMark: SKSpriteNode
     let itemName: String
     var itemPopUp: SKSpriteNode
@@ -20,14 +18,11 @@ class Item {
 
 
     init(size: CGSize, imageName: String, itemName: String, assetName: String, spriteSize: CGSize) {
-        let dialogBoxSize = CGSize(width: size.width - 65, height: size.height / 3.5)
 
         self.sprite = SKSpriteNode(imageNamed: imageName)
         self.sprite.size = spriteSize
         self.itemName = itemName
-        self.dialogBox = SKShapeNode(rectOf: dialogBoxSize)
         self.objectInteractionMark = SKSpriteNode(imageNamed: "objectInteractionMark")
-        self.dialogText = SKLabelNode(text: "")
         self.itemPopUp = SKSpriteNode(imageNamed: assetName)
 
         self.sprite.addChild(objectInteractionMark)
@@ -43,15 +38,15 @@ class Item {
         self.objectInteractionMark.name = "questionMarkBubble"
         self.objectInteractionMark.position.y = sprite.position.x + 90
 
-        self.dialogBox.fillColor = UIColor.red
-        self.dialogBox.name = "dialogBox"
-        self.dialogBox.zPosition = 100
+//        self.dialogBox.fillColor = UIColor.red
+//        self.dialogBox.name = "dialogBox"
+//        self.dialogBox.zPosition = 100
     }
 
     func setupItem(_ parent: SKScene, x: CGFloat, y: CGFloat) {
         self.sprite.position = CGPoint(x: x, y: y)
 //        self.dialogBox.position = CGPoint(x: size.width / 2, y: size.height / 5)
-        self.dialogBox.zPosition = 5005
+//        self.dialogBox.zPosition = 5005
 
         parent.addChild(self.sprite)
     }
@@ -75,8 +70,8 @@ class Item {
             let location = touch.location(in: parent)
             let node = parent.atPoint(location)
 
-            if (node.name == "buttonObjectInteraction") && (parent.childNode(withName: "dialogBox") == nil) {
-                    parent.addChild(dialogBox)
+            if (node.name == "buttonObjectInteraction") && (parent.childNode(withName: "itemDescription") == nil) {
+//                    parent.addChild(dialogBox)
                     setupDescription()
             }
 
@@ -87,17 +82,12 @@ class Item {
     }
 
     func setupDescription(){
-        dialogText.text = itemDescriptions[self.itemName]
-        dialogBox.addChild(itemPopUp)
-        dialogBox.addChild(dialogText)
-        itemPopUp.position.y = itemPopUp.parent!.position.y / 2
-//        itemPopUp.anchorPoint = itemPopUp.parent!.position
-
+        self.sprite.addChild(itemPopUp)
+        self.itemPopUp.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        itemPopUp.position.y = itemPopUp.parent!.position.y + 50
     }
 
     func removeDescription() {
-        dialogText.removeFromParent()
-        dialogBox.removeFromParent()
         itemPopUp.removeFromParent()
     }
 
