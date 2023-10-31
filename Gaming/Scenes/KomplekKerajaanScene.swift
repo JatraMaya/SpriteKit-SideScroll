@@ -190,7 +190,7 @@ class KomplekKerajaanScene: SKScene {
         }
 
         /// Show Scene Shifter Button to Dese Majapahit
-        if player.position.x <= 515 && player.position.x >= 510 {
+        if player.position.x >= 410 && player.position.x <= 515 {
             buttonSceneShifterToDesa.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
         } else {
             buttonSceneShifterToDesa.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
@@ -241,12 +241,12 @@ class KomplekKerajaanScene: SKScene {
                 player.handlePlayerMovementRightToLeft(touch, self.size)
             }
 
-            /// Touch scene transition to desa majapahit
+            /// Touch run scene transition to desa majapahit
             if node.name == "buttonSceneShifterToDesa" {
                 SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
             }
 
-            /// Touch scene transition to Singgasana
+            /// Touch run scene transition to Singgasana
             if node.name == "buttonSceneShifterToSinggasana" {
                 SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
             }
