@@ -6,6 +6,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class BaliScene: SKScene {
     var buttonQuestInfo: SKSpriteNode
@@ -18,6 +19,9 @@ class BaliScene: SKScene {
     let bg2: SKSpriteNode
     let bg3: SKSpriteNode
 
+    var audioPlayer: AVAudioPlayer?
+    var isAudioPlayed = false
+
     override init(size: CGSize) {
         buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
         buttonQuestInfo.zPosition = 5002
@@ -28,7 +32,7 @@ class BaliScene: SKScene {
         cameraNode = SKCameraNode()
         player = Player()
 
-        bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
+        bg1 = SKSpriteNode(imageNamed: "gunungAgung")
         bg2 = SKSpriteNode(imageNamed: "bali1")
         bg3 = SKSpriteNode(imageNamed: "bali2")
 
@@ -44,6 +48,12 @@ class BaliScene: SKScene {
 
     // MARK: Call all the necessary function when game first load
     override func didMove(to view: SKView) {
+        if !isAudioPlayed {
+            isAudioPlayed = true
+            playSound(named: "Pantai Majapahit", fileType: "mp3")
+            audioPlayer?.setVolume(0.2, fadeDuration: 10)
+        }
+
         for background in [bg1, bg2, bg3] {
             if background.name != "bg1" {
                 background.anchorPoint = CGPoint(x: 0.15, y: 0.5)
@@ -56,7 +66,7 @@ class BaliScene: SKScene {
             addChild(background)
         }
 
-        bg1.setScale(0.5)
+        bg1.setScale(0.25)
         bg2.setScale(0.25)
         bg3.setScale(0.25)
 
@@ -105,13 +115,13 @@ class BaliScene: SKScene {
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
-                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 1))
+                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             if node.name == "buttonSetting" {
                 buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button setting pressed")
-                SceneManager.shared.transition(self, toScene: .PendopoScene, transition: SKTransition.fade(withDuration: 1))
+                SceneManager.shared.transition(self, toScene: .PendopoScene, transition: SKTransition.fade(withDuration: 2))
             }
         }
     }
@@ -153,6 +163,28 @@ class BaliScene: SKScene {
         buttonSetting.size = CGSize(width: 44, height: 44)
 
         addChild(buttonSetting)
+    }
+
+    
+    // MARK: Function to handle play and pause sound
+    func playSound(named: String, fileType: String) {
+        guard let path = Bundle.main.path(forResource: named, ofType: fileType) else {
+            print("Sound file not found")
+            return
+        }
+
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+            audioPlayer?.numberOfLoops = -1
+            audioPlayer?.volume = 0.0
+            audioPlayer?.play()
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
+        }
+    }
+
+    func stopSound() {
+        audioPlayer?.stop()
     }
 }
 

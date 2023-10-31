@@ -22,7 +22,7 @@ class PendopoBaliScene: SKScene {
 
     override init(size: CGSize) {
         player = Player()
-        bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
+        bg1 = SKSpriteNode(imageNamed: "gunungAgung")
         bg2 = SKSpriteNode(imageNamed: "pendopoBali")
 
         bg2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -44,13 +44,19 @@ class PendopoBaliScene: SKScene {
 
     // MARK: Call all the necessary function when game first load
     override func didMove(to view: SKView) {
+        if !isAudioPlayed {
+            isAudioPlayed = true
+            playSound(named: "Pantai Majapahit", fileType: "mp3")
+            audioPlayer?.setVolume(0.5, fadeDuration: 10)
+        }
+
         for background in [bg1, bg2] {
             background.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             background.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
             addChild(background)
         }
 
-        bg1.setScale(0.5)
+        bg1.setScale(0.25)
         bg2.setScale(0.25)
 
         player.setupPlayer(self, frame, false, xPos: 500, yPos: 140)
@@ -80,7 +86,7 @@ class PendopoBaliScene: SKScene {
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
-                SceneManager.shared.transition(self, toScene: .BaliScene, transition: SKTransition.fade(withDuration: 1))
+                SceneManager.shared.transition(self, toScene: .BaliScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             if node.name == "buttonSetting" {

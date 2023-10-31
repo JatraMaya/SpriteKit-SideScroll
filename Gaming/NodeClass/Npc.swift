@@ -21,7 +21,7 @@ class Npc {
     var isNpcActive = false
     var interactionMark: SKSpriteNode
 
-    init(imageName: String, npcName: String) {
+    init(imageName: String, npcName: String, npcSize: CGSize) {
         self.npcName = npcName
         
         interactionMark = SKSpriteNode(imageNamed: "frame11")
@@ -32,7 +32,8 @@ class Npc {
 
         /// Set Npc size here
         sprite = SKSpriteNode(imageNamed: imageName)
-        sprite.size = CGSize(width: 55, height: 120)
+        sprite.size = npcSize
+//        sprite.size = CGSize(width: 55, height: 120)
         sprite.name = self.npcName
         sprite.addChild(interactionMark)
 
@@ -56,9 +57,11 @@ class Npc {
 
     }
 
-    func setupNpc(_ parent: SKNode, x: CGFloat, y: CGFloat) {
+    func setupNpc(_ parent: SKNode, x: CGFloat, y: CGFloat, dialogBoxX: CGFloat? = nil, dialogBoxY: CGFloat? = nil) {
         parent.addChild(self.sprite)
-        self.dialogBox.position = CGPoint(x: x, y: y)
+        let dialogBoxPositionX = dialogBoxX ?? x
+        let dialogBoxPositionY = dialogBoxY ?? y
+        self.dialogBox.position = CGPoint(x: dialogBoxPositionX, y: dialogBoxPositionY)
         self.dialogBox.zPosition = 5005
         self.sprite.position = CGPoint(x: x, y: y)
     }

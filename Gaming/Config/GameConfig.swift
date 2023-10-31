@@ -7,7 +7,7 @@
 
 import Foundation
 
-let playerSpeed: CGFloat = 2
+let playerSpeed: CGFloat = 1.5
 
 enum layerPosition: CGFloat {
     case layer0 = 0
