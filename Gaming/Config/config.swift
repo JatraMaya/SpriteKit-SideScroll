@@ -22,6 +22,12 @@ let dialogs = [
     ]
 ]
 
+let questLine = [
+    "Complete first quest",
+    "Complete second quest",
+    "Complete third quest"
+]
+
 let itemDescriptions = [
     "key": "This is a basic key to open a door"
 ]

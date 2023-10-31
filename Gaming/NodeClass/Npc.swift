@@ -62,7 +62,7 @@ class Npc {
         let dialogBoxPositionX = dialogBoxX ?? x
         let dialogBoxPositionY = dialogBoxY ?? y
         self.dialogBox.position = CGPoint(x: dialogBoxPositionX, y: dialogBoxPositionY)
-        self.dialogBox.zPosition = 5005
+        self.dialogBox.zPosition = layerPosition.layer5.rawValue
         self.sprite.position = CGPoint(x: x, y: y)
     }
 
