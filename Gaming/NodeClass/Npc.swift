@@ -13,31 +13,27 @@ class Npc {
     var sprite: SKSpriteNode
     var dialogBox: SKSpriteNode
     var npcName: String
-    var playerImage: SKSpriteNode
-    var npcImage: SKSpriteNode
-    var dialogText: SKLabelNode
     var dialogLength: Int?
     var dialogStatusCount = 0
     var isNpcActive = false
     var interactionMark: SKSpriteNode
+    var dialogBoxAssets: [String]
+    var currentDialogBoxAssetIndex = 0
 
-    init(imageName: String, npcName: String, npcSize: CGSize) {
+    init(imageName: String, npcName: String, npcSize: CGSize, dialogBoxAssets: [String]) {
         self.npcName = npcName
         
         interactionMark = SKSpriteNode(imageNamed: "frame11")
         dialogLength = dialogs[self.npcName]?.count
-        playerImage = SKSpriteNode(imageNamed: "imgMada")
-        npcImage = SKSpriteNode(imageNamed: imageName)
-        dialogText = SKLabelNode(text: dialogs[self.npcName]?[0])
+        self.dialogBoxAssets = dialogBoxAssets
 
         /// Set Npc size here
         sprite = SKSpriteNode(imageNamed: imageName)
         sprite.size = npcSize
-//        sprite.size = CGSize(width: 55, height: 120)
         sprite.name = self.npcName
         sprite.addChild(interactionMark)
 
-        dialogBox = SKSpriteNode(imageNamed: "frameConversation")
+        dialogBox = SKSpriteNode(imageNamed: "dialogPembawaPesan1")
         dialogBox.name = "dialogBox"
         dialogBox.zPosition = 100
         dialogBox.size = CGSize(width: 720, height: 110)
@@ -46,15 +42,6 @@ class Npc {
         interactionMark.size = CGSize(width: 35, height: 50)
         interactionMark.name = "speechBubble"
         interactionMark.position.y = sprite.position.x + 80
-
-        dialogText.name = "dialogText"
-        npcImage.name = "npcImage"
-        npcImage.position.x = dialogBox.frame.maxX - 25
-
-        playerImage.name = "playerImage"
-        playerImage.position.x = dialogBox.frame.minX + 80
-        playerImage.size = CGSize(width: 90, height: 90)
-
     }
 
     func setupNpc(_ parent: SKNode, x: CGFloat, y: CGFloat, dialogBoxX: CGFloat? = nil, dialogBoxY: CGFloat? = nil) {
@@ -75,6 +62,9 @@ class Npc {
                 self.isNpcActive = true
             }
 
+            self.dialogBox.position.x = playerSprite.position.x
+            self.dialogBox.position.y = playerSprite.position.y - 55
+
         } else {
             self.sprite.childNode(withName: "speechBubble")?.alpha = 0
             self.isNpcActive = false
@@ -83,39 +73,23 @@ class Npc {
     }
 
     func setupDialog() {
-        dialogBox.addChild(dialogText)
-        dialogBox.addChild(playerImage)
+        let dialogBoxAsset = dialogBoxAssets[currentDialogBoxAssetIndex]
+        dialogBox.texture = SKTexture(imageNamed: dialogBoxAsset)
+
+        currentDialogBoxAssetIndex += 1
+        if currentDialogBoxAssetIndex == dialogBoxAssets.count {
+            currentDialogBoxAssetIndex = 0
+        }
     }
 
     func removeDialog() {
-        playerImage.removeFromParent()
-        npcImage.removeFromParent()
-        dialogText.removeFromParent()
         dialogStatusCount = 0
-        dialogText.text = dialogs[self.npcName]?[0]
         dialogBox.removeFromParent()
     }
 
     func updateDialog() {
-        if dialogStatusCount % 2 == 1 {
-            if dialogBox.childNode(withName: "playerImage") == nil {
-                dialogBox.addChild(playerImage)
-            }
-            if dialogBox.childNode(withName: "npcImage") != nil {
-                npcImage.removeFromParent()
-            }
-        } else {
-            if dialogBox.childNode(withName: "npcImage") == nil {
-                dialogBox.addChild(npcImage)
-            }
-            if dialogBox.childNode(withName: "playerImage") != nil {
-                playerImage.removeFromParent()
-            }
-        }
-
         if dialogStatusCount != dialogLength! - 1 {
             dialogStatusCount += 1
-            dialogText.text = dialogs[self.npcName]?[dialogStatusCount]
         } else {
             removeDialog()
             dialogBox.removeFromParent()
@@ -128,15 +102,16 @@ class Npc {
             let node = parent.atPoint(location)
 
             if (node.name == "buttonNPCInteraction") && (parent.childNode(withName: "dialogBox") == nil) {
-                    parent.addChild(dialogBox)
-                    setupDialog()
+                parent.addChild(dialogBox)
+                setupDialog()
             }
 
             if (node.name == "dialogBox") {
-                    updateDialog()
-                }
+                updateDialog()
+                let randomIndex = Int.random(in: 0..<dialogBoxAssets.count)
+                let dialogBoxAsset = dialogBoxAssets[randomIndex]
+                dialogBox.texture = SKTexture(imageNamed: dialogBoxAsset)
+            }
         }
-
     }
-
 }
