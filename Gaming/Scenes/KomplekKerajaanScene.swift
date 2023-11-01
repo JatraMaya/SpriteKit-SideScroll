@@ -9,6 +9,8 @@ import SpriteKit
 import AVFoundation
 
 class KomplekKerajaanScene: SKScene {
+    var npcQuest: Bool = false
+    
     var isTutorialDone = UserDefaults.standard.bool(forKey: "isTutorialDone")
 
     let tutorial: Tutorial
@@ -139,7 +141,7 @@ class KomplekKerajaanScene: SKScene {
     // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
         player.updatePlayerPositionRightToLeft(frame)
-
+        
         buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
 
         buttonSetting.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.27)
@@ -149,13 +151,14 @@ class KomplekKerajaanScene: SKScene {
         }
 
         // Show the notification when the player finishes interacting with the NPC
-        if self.activeNpc == "npcDalamKerajaan" && !npcDalamKerajaan.isNpcActive {
+        if npcDalamKerajaan.questisShow == true {
             let _ = buttonQuestInfo.position
-            questInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * 0.3, y: cameraNode.frame.maxY - frame.height * -0.4) // Adjust the offset as needed
+            questInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.25, y: cameraNode.frame.maxY - frame.height * -0.4) // Adjust the offset as needed
             // Update the image of the notification node based on the completed quest
-            if let imageName = questInfoImages["quest1"] { // Replace 'completedQuest' with the variable that holds the name of the completed quest
-                questInfo.texture = SKTexture(imageNamed: imageName)
-            }
+                if let imageName = questInfoImages["quest1"] { // Replace 'completedQuest' with the variable that holds the name of the completed quest
+                    questInfo.texture = SKTexture(imageNamed: imageName)
+                    npcDalamKerajaan.questisShow = false
+                }
             if childNode(withName: "questInfo") == nil {
                 self.addChild(questInfo)
                 let wait = SKAction.wait(forDuration: 4.0)
@@ -270,8 +273,8 @@ class KomplekKerajaanScene: SKScene {
 
             /// Touch run scene transition to desa majapahit
             if node.name == "buttonSceneShifterToDesa" {
-                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
-            }
+                    SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
+                }
 
             /// Show item description
             if self.activeItem == self.objectPatakaNareswara.itemName {
@@ -281,7 +284,11 @@ class KomplekKerajaanScene: SKScene {
 
             /// Touch run scene transition to Singgasana
             if node.name == "buttonSceneShifterToSinggasana" {
-                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
+                let questTracker = UserDefaults.standard.integer(forKey: "questTracker")
+
+                if questTracker == 2 {
+                    SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
+                }
             }
 
             if node.name == "buttonQuestInfo" {

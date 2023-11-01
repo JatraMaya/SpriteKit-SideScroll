@@ -11,7 +11,7 @@ import SpriteKit
 class SceneManager {
     
     enum SceneType: Int {
-        case DesaScene, KomplekKerajaanScene, SingasanaScene, BaliScene, PendopoScene, OpeningNaration
+        case DesaScene, KomplekKerajaanScene, SingasanaScene, BaliScene, PendopoScene, OpeningNaration, EndingScene
     }
     
     private init() {}
@@ -45,6 +45,8 @@ class SceneManager {
             return PendopoBaliScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         case SceneType.OpeningNaration:
             return OpeningNaration(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        case SceneType.EndingScene:
+            return EndingScene(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         }
     }
 }

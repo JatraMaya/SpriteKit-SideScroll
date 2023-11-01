@@ -16,6 +16,7 @@ class SingasanaScene: SKScene {
 
     let npcRatuTribuwhana: Npc
     var buttonNPCInteraction: SKSpriteNode
+    var activeNpc = ""
 
     var audioPlayer: AVAudioPlayer?
     var isAudioPlayed = false
@@ -32,7 +33,7 @@ class SingasanaScene: SKScene {
         bg2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         cameraNode = SKCameraNode()
 
-        npcRatuTribuwhana = Npc(imageName: "ratuTribhuwana", npcName: "npcR atuTribhuwana", npcSize: CGSize(width: 60, height: 130), dialogBoxAssets: ["DialogRatu"])
+        npcRatuTribuwhana = Npc(imageName: "ratuTribhuwana", npcName: "npc RatuTribhuwana", npcSize: CGSize(width: 60, height: 130), dialogBoxAssets: ["DialogRatu"])
 
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
         buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
@@ -87,7 +88,6 @@ class SingasanaScene: SKScene {
 
     // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
-        print("\(player.position)")
         player.updatePlayerPositionRightToLeft(frame)
 
         /// Update Interaction Mark Indicator
@@ -114,6 +114,7 @@ class SingasanaScene: SKScene {
         /// NPC interaction trigger
         if player.position.x >= 250 && player.position.x <= 335 {
             buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+            self.activeNpc = npcRatuTribuwhana.npcName
         } else {
             buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
         }
@@ -151,7 +152,25 @@ class SingasanaScene: SKScene {
             if node.name == "buttonSceneShifterToKomplekKerajaan" {
                 SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 2))
             }
+
+            if self.activeNpc == npcRatuTribuwhana.npcName {
+                npcRatuTribuwhana.handleNpcDialog(touch)
+            }
+
+            if node.name == "dialogBox" {
+                setupChoice()
+            }
+
+            if node.name == "choiceA" {
+                UserDefaults.standard.set(true, forKey: "isWinning")
+                SceneManager.shared.transition(self, toScene: .EndingScene, transition: SKTransition.fade(withDuration: 2))
+            } else if node.name == "choiceB" {
+                UserDefaults.standard.set(false, forKey: "isWinning")
+                SceneManager.shared.transition(self, toScene: .EndingScene, transition: SKTransition.fade(withDuration: 2))
+            }
         }
+
+
     }
 
 
@@ -206,6 +225,32 @@ class SingasanaScene: SKScene {
         buttonNPCInteraction.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
 
         addChild(buttonNPCInteraction)
+    }
+
+    func setupChoice() {
+        let choice1 = SKTexture(imageNamed: "Choice1")
+        let choice2 = SKTexture(imageNamed: "Choice2")
+
+        let choice1Answered = SKTexture(imageNamed: "Choice1Answered")
+        let choice2Answered = SKTexture(imageNamed: "Choice2Answered")
+
+        let choiceA = SKSpriteNode(texture: choice1)
+        let choiceB = SKSpriteNode(texture: choice2)
+
+        choiceA.zPosition = 6
+        choiceB.zPosition = 6
+
+        choiceA.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
+        choiceB.position = CGPoint(x: frame.width / 2, y: frame.height / 3)
+
+        choiceA.name = "choiceA"
+        choiceB.name = "choiceB"
+
+        choiceA.setScale(0.15)
+        choiceB.setScale(0.15)
+
+        addChild(choiceA)
+        addChild(choiceB)
     }
 
 
