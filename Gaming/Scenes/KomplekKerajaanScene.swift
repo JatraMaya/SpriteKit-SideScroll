@@ -9,7 +9,7 @@ import SpriteKit
 import AVFoundation
 
 class KomplekKerajaanScene: SKScene {
-    var isTutorialDone: Bool
+    var isTutorialDone = UserDefaults.standard.bool(forKey: "isTutorialDone")
 
     let tutorial: Tutorial
     let player: Player
@@ -45,7 +45,6 @@ class KomplekKerajaanScene: SKScene {
         cameraNode = SKCameraNode()
         player = Player()
 
-        isTutorialDone = UserDefaults.standard.bool(forKey: "isTutorialDone")
         tutorial = Tutorial(size: size, parent: player)
 
         npcDalamKerajaan = Npc(imageName: "IdleNpc", npcName: "npcDalamKerajaan", npcSize: CGSize(width: 55, height: 120), dialogBoxAssets: ["dialogPembawaPesan1", "dialogPembawaPesan2"])
@@ -155,11 +154,13 @@ class KomplekKerajaanScene: SKScene {
             if let imageName = questInfoImages["quest1"] { // Replace 'completedQuest' with the variable that holds the name of the completed quest
                 questInfo.texture = SKTexture(imageNamed: imageName)
             }
-            self.addChild(questInfo)
-            let wait = SKAction.wait(forDuration: 4.0)
-            let remove = SKAction.removeFromParent()
-            let sequence = SKAction.sequence([wait, remove])
-            questInfo.run(sequence)
+            if childNode(withName: "questInfo") == nil {
+                self.addChild(questInfo)
+                let wait = SKAction.wait(forDuration: 4.0)
+                let remove = SKAction.removeFromParent()
+                let sequence = SKAction.sequence([wait, remove])
+                questInfo.run(sequence)
+            }
         }
 
         /// Update visibility of interaction mark
@@ -167,10 +168,6 @@ class KomplekKerajaanScene: SKScene {
 
         if npcDalamKerajaan.isNpcActive {
             self.activeNpc = npcDalamKerajaan.npcName
-
-            if !isTutorialDone {
-                tutorial.presentText(player, frame: frame)
-            }
         } else {
             self.activeNpc = ""
         }
@@ -246,6 +243,7 @@ class KomplekKerajaanScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !isTutorialDone{
             self.tutorial.removeLabel(player)
+            UserDefaults.standard.setValue(true, forKey: "isTutorialDone")
         }
 
         for touch in touches {
@@ -291,11 +289,10 @@ class KomplekKerajaanScene: SKScene {
             if self.activeNpc == "npcDalamKerajaan" {
                 npcDalamKerajaan.handleNpcDialog(touch)
 
-                if !isTutorialDone {
-                    tutorial.removeLabel(player)
-                    isTutorialDone = true
-                    UserDefaults.standard.setValue(true, forKey: "isTutorialDone")
-                }
+//                if !isTutorialDone {
+//                    tutorial.removeLabel(player)
+//                    UserDefaults.standard.setValue(true, forKey: "isTutorialDone")
+//                }
             }
         }
     }

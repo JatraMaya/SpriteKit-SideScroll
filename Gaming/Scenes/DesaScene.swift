@@ -148,11 +148,14 @@ class DesaScene: SKScene {
             if let imageName = questInfoImages["quest2"] {
                 questInfo.texture = SKTexture(imageNamed: imageName)
             }
-            self.addChild(questInfo)
-            let wait = SKAction.wait(forDuration: 4.0)
-            let remove = SKAction.removeFromParent()
-            let sequence = SKAction.sequence([wait, remove])
-            questInfo.run(sequence)
+
+            if childNode(withName: "questInfo") == nil {
+                self.addChild(questInfo)
+                let wait = SKAction.wait(forDuration: 4.0)
+                let remove = SKAction.removeFromParent()
+                let sequence = SKAction.sequence([wait, remove])
+                questInfo.run(sequence)
+            }
         }
 
         // Show the notification when the player finishes interacting with the NPC
@@ -163,11 +166,14 @@ class DesaScene: SKScene {
             if let imageName = questInfoImages["quest3"] {
                 questInfo.texture = SKTexture(imageNamed: imageName)
             }
-            self.addChild(questInfo)
-            let wait = SKAction.wait(forDuration: 4.0)
-            let remove = SKAction.removeFromParent()
-            let sequence = SKAction.sequence([wait, remove])
-            questInfo.run(sequence)
+
+            if childNode(withName: "questInfo") == nil {
+                self.addChild(questInfo)
+                let wait = SKAction.wait(forDuration: 4.0)
+                let remove = SKAction.removeFromParent()
+                let sequence = SKAction.sequence([wait, remove])
+                questInfo.run(sequence)
+            }
         }
 
         item.updateActionCheckMark(player)

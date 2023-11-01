@@ -16,6 +16,7 @@
 		649EC8282AEEB56800E1892F /* Depan Kerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649EC8252AEEB56800E1892F /* Depan Kerajaan.mp3 */; };
 		649EC8292AEEB56800E1892F /* Sungai.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649EC8262AEEB56800E1892F /* Sungai.mp3 */; };
 		649EC82A2AEEB56800E1892F /* Pantai Majapahit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649EC8272AEEB56800E1892F /* Pantai Majapahit.mp3 */; };
+		BD4407732AF1EDD8009DA530 /* OnBoardingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4407722AF1EDD8009DA530 /* OnBoardingScene.swift */; };
 		BD5B833C2AE2608A004A8345 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B833B2AE2608A004A8345 /* Item.swift */; };
 		BD6809982AF0F38F00AA67CF /* OpeningNaration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6809972AF0F38F00AA67CF /* OpeningNaration.swift */; };
 		BD6F59BB2AD6948200103994 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6F59BA2AD6948200103994 /* AppDelegate.swift */; };
@@ -43,6 +44,7 @@
 		649EC8252AEEB56800E1892F /* Depan Kerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Depan Kerajaan.mp3"; sourceTree = "<group>"; };
 		649EC8262AEEB56800E1892F /* Sungai.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sungai.mp3; sourceTree = "<group>"; };
 		649EC8272AEEB56800E1892F /* Pantai Majapahit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Pantai Majapahit.mp3"; sourceTree = "<group>"; };
+		BD4407722AF1EDD8009DA530 /* OnBoardingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScene.swift; sourceTree = "<group>"; };
 		BD5B833B2AE2608A004A8345 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		BD6809972AF0F38F00AA67CF /* OpeningNaration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningNaration.swift; sourceTree = "<group>"; };
 		BD6F59B72AD6948200103994 /* Gaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gaming.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +149,7 @@
 				649EC81B2AEE8F8E00E1892F /* BaliScene.swift */,
 				649EC81D2AEE8FA500E1892F /* PendopoBaliScene.swift */,
 				BD6809972AF0F38F00AA67CF /* OpeningNaration.swift */,
+				BD4407722AF1EDD8009DA530 /* OnBoardingScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				BD6F59D62AD7F7BF00103994 /* Player.swift in Sources */,
 				BD6F59D32AD7D22C00103994 /* GameConfig.swift in Sources */,
 				BD6809982AF0F38F00AA67CF /* OpeningNaration.swift in Sources */,
+				BD4407732AF1EDD8009DA530 /* OnBoardingScene.swift in Sources */,
 				BDB3C2BE2AE965D400FBBB08 /* SingasanaScene.swift in Sources */,
 				BDA0D98C2ADD459100B6ABE6 /* Npc.swift in Sources */,
 			);
@@ -395,7 +399,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B34FJD89YP;
+				DEVELOPMENT_TEAM = F8U2R4K53M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Palapa Oath";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.adventure-games";
@@ -410,7 +414,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = yari.Gaming;
+				PRODUCT_BUNDLE_IDENTIFIER = jatramaya.github.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -427,7 +431,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B34FJD89YP;
+				DEVELOPMENT_TEAM = F8U2R4K53M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Palapa Oath";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.adventure-games";
@@ -442,7 +446,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = yari.Gaming;
+				PRODUCT_BUNDLE_IDENTIFIER = jatramaya.github.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
