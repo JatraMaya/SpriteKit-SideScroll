@@ -18,10 +18,10 @@ class DesaScene: SKScene {
     var buttonNPCInteraction: SKSpriteNode
     var activeNpc: String = ""
 
-    let item: Item
-    var isObjectInteractionButtonActive = false
-    var buttonObjectInteraction: SKSpriteNode
-    var activeItem: String = ""
+//    let item: Item
+//    var isObjectInteractionButtonActive = false
+//    var buttonObjectInteraction: SKSpriteNode
+//    var activeItem: String = ""
 
     let questInfo = SKSpriteNode()
     let questInfoImages: [String: String] = ["quest2": "questBali1", "quest3": "questBali2"]
@@ -45,10 +45,11 @@ class DesaScene: SKScene {
     override init(size: CGSize) {
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
         buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
+        buttonNPCInteraction.size = CGSize(width: 100, height: 60)
 
-        buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
-        buttonObjectInteraction.zPosition = layerPosition.layer4.rawValue
-        buttonObjectInteraction.size = CGSize(width: 100, height: 60)
+//        buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
+//        buttonObjectInteraction.zPosition = layerPosition.layer4.rawValue
+//        buttonObjectInteraction.size = CGSize(width: 100, height: 60)
 
         buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
         buttonQuestInfo.zPosition = layerPosition.layer4.rawValue
@@ -64,7 +65,7 @@ class DesaScene: SKScene {
         player = Player()
         npc1 = Npc(imageName: "NpcWarga", npcName: "npc1", npcSize: CGSize(width: 50, height: 110), dialogBoxAssets: ["DialogWargaBiasa"])
         npc2 = Npc(imageName: "Warga_Tua_2", npcName: "npc2", npcSize: CGSize(width: 50, height: 110), dialogBoxAssets: ["DialogWargaSepuh1", "DialogWargaSepuh2"])
-        item = Item(size: size, imageName: "compNareswara", itemName: "key", assetName: "ObjectInteractionPatakaSangDwijaNagaNareswara", spriteSize: CGSize(width: 35, height: 138))
+//        item = Item(size: size, imageName: "compNareswara", itemName: "key", assetName: "ObjectInteractionPatakaSangDwijaNagaNareswara", spriteSize: CGSize(width: 35, height: 138))
 
         bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
         bg2 = SKSpriteNode(imageNamed: "desa1")
@@ -117,10 +118,10 @@ class DesaScene: SKScene {
 
         npc1.setupNpc(self, x: 936, y: 150)
         npc2.setupNpc(self, x: 1544, y: 160)
-        item.setupItem(self, x: (frame.maxX + 800), y: (size.height / 5))
+//        item.setupItem(self, x: (frame.maxX + 800), y: (size.height / 5))
         
         setupNPCInteractionButton()
-        setupObjectInteractionButton()
+//        setupObjectInteractionButton()
         setupQuestInfoButton()
 //        setupSettingButton()
         setupSceneShifterToKomplekKerajaan()
@@ -142,7 +143,7 @@ class DesaScene: SKScene {
 
         // Show the notification when the player finishes interacting with the NPC
         if self.activeNpc == "npc1" && !npc1.isNpcActive {
-            let questInfoButtonPosition = buttonQuestInfo.position
+            _ = buttonQuestInfo.position
             questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4)
             // Update the image of the notification node based on the completed quest
             if let imageName = questInfoImages["quest2"] {
@@ -160,7 +161,7 @@ class DesaScene: SKScene {
 
         // Show the notification when the player finishes interacting with the NPC
         if self.activeNpc == "npc2" && !npc2.isNpcActive {
-            let questInfoButtonPosition = buttonQuestInfo.position
+            _ = buttonQuestInfo.position
             questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4)
             // Update the image of the notification node based on the completed quest
             if let imageName = questInfoImages["quest3"] {
@@ -176,7 +177,7 @@ class DesaScene: SKScene {
             }
         }
 
-        item.updateActionCheckMark(player)
+//        item.updateActionCheckMark(player)
 
         if npc1.isNpcActive {
             self.activeNpc = npc1.npcName
@@ -186,11 +187,11 @@ class DesaScene: SKScene {
             self.activeNpc = ""
         }
 
-        if item.isItemActive {
-            self.activeItem = item.itemName
-        } else {
-            self.activeItem = ""
-        }
+//        if item.isItemActive {
+//            self.activeItem = item.itemName
+//        } else {
+//            self.activeItem = ""
+//        }
 
         if player.position.x >= size.width / 2 {
             camera?.position.x = player.position.x
@@ -209,13 +210,13 @@ class DesaScene: SKScene {
             isNPCInteractionButtonActive = false
         }
 
-        if item.isItemActive {
-            buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
-            isObjectInteractionButtonActive = true
-        } else {
-            buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 5))
-            isObjectInteractionButtonActive = false
-        }
+//        if item.isItemActive {
+//            buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+//            isObjectInteractionButtonActive = true
+//        } else {
+//            buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX * 3, duration: 5))
+//            isObjectInteractionButtonActive = false
+//        }
 
         if player.position.x < 234 {
             player.position.x = 234
@@ -261,10 +262,10 @@ class DesaScene: SKScene {
             } else if self.activeNpc == "npc2"{
                 npc2.handleNpcDialog(touch)
             }
-
-            if self.activeItem == self.item.itemName {
-                item.showItemDescription(touch)
-            }
+//
+//            if self.activeItem == self.item.itemName {
+//                item.showItemDescription(touch)
+//            }
 
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
@@ -314,12 +315,12 @@ class DesaScene: SKScene {
         addChild(buttonNPCInteraction)
     }
 
-    func setupObjectInteractionButton() {
-        buttonObjectInteraction.name = "buttonObjectInteraction"
-        buttonObjectInteraction.position = CGPoint(x: cameraNode.frame.maxX * 5, y: (frame.height / 2))
-
-        addChild(buttonObjectInteraction)
-    }
+//    func setupObjectInteractionButton() {
+//        buttonObjectInteraction.name = "buttonObjectInteraction"
+//        buttonObjectInteraction.position = CGPoint(x: cameraNode.frame.maxX * 5, y: (frame.height / 2))
+//
+//        addChild(buttonObjectInteraction)
+//    }
 
     func setupQuestInfoButton() {
         buttonQuestInfo.name = "buttonQuestInfo"

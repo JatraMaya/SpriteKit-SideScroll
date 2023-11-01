@@ -22,10 +22,11 @@ class KomplekKerajaanScene: SKScene {
     let bg2: SKSpriteNode
     let papanWitana: SKSpriteNode
 
-    let objectPatakaBaruna: Item
+    let objectPatakaNareswara: Item
     var isObjectInteractionButtonActive = false
     var buttonObjectInteraction: SKSpriteNode
     var activeItem: String = ""
+    var isItemDescriptionShown = false
 
     var buttonSceneShifterToDesa: SKSpriteNode
     var buttonSceneShifterToSinggasana: SKSpriteNode
@@ -51,6 +52,7 @@ class KomplekKerajaanScene: SKScene {
 
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
         buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
+        buttonNPCInteraction.size = CGSize(width: 100, height: 60)
 
         buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
         buttonObjectInteraction.zPosition = layerPosition.layer4.rawValue
@@ -70,7 +72,7 @@ class KomplekKerajaanScene: SKScene {
         buttonSetting = SKSpriteNode(imageNamed: "btnSetting")
         buttonSetting.zPosition = 5002
 
-        objectPatakaBaruna = Item(size: size, imageName: "compBaruna", itemName: "baruna", assetName: "ObjectInteractionPatakaSangHyangBaruna", spriteSize: CGSize(width: 35, height: 138))
+        objectPatakaNareswara = Item(size: size, imageName: "compNareswara", itemName: "nareswara", assetName: "ObjectInteractionPatakaSangDwijaNagaNareswara", spriteSize: CGSize(width: 35, height: 138))
 
         bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
         bg2 = SKSpriteNode(imageNamed: "keraton2")
@@ -128,7 +130,7 @@ class KomplekKerajaanScene: SKScene {
 
         player.setupPlayer(self, frame, xPos: -540)
 
-        objectPatakaBaruna.setupItem(self, x: -1070, y: 170)
+        objectPatakaNareswara.setupItem(self, x: -1070, y: 170)
 
         npcDalamKerajaan.setupNpc(self, x: -200, y: 135, dialogBoxX: player.position.x, dialogBoxY: 90)
     }
@@ -163,8 +165,8 @@ class KomplekKerajaanScene: SKScene {
             }
         }
 
-        /// Update visibility of interaction mark
-        objectPatakaBaruna.updateActionCheckMark(player)
+        /// Update visibility of object interaction mark
+        objectPatakaNareswara.updateActionCheckMark(player)
 
         if npcDalamKerajaan.isNpcActive {
             self.activeNpc = npcDalamKerajaan.npcName
@@ -173,8 +175,8 @@ class KomplekKerajaanScene: SKScene {
         }
 
         /// Check active object name
-        if objectPatakaBaruna.isItemActive {
-            self.activeItem = objectPatakaBaruna.itemName
+        if objectPatakaNareswara.isItemActive {
+            self.activeItem = objectPatakaNareswara.itemName
         } else {
             self.activeItem = ""
         }
@@ -229,7 +231,7 @@ class KomplekKerajaanScene: SKScene {
         }
 
         /// Show Object Interaction Button
-        if objectPatakaBaruna.isItemActive {
+        if objectPatakaNareswara.isItemActive {
             buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
             isObjectInteractionButtonActive = true
         } else {
@@ -269,6 +271,12 @@ class KomplekKerajaanScene: SKScene {
             /// Touch run scene transition to desa majapahit
             if node.name == "buttonSceneShifterToDesa" {
                 SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
+            }
+
+            /// Show item description
+            if self.activeItem == self.objectPatakaNareswara.itemName {
+                objectPatakaNareswara.showItemDescription(touch)
+                isItemDescriptionShown = true
             }
 
             /// Touch run scene transition to Singgasana

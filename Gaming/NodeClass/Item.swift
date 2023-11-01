@@ -71,7 +71,6 @@ class Item {
             let node = parent.atPoint(location)
 
             if (node.name == "buttonObjectInteraction") && (parent.childNode(withName: "itemDescription") == nil) {
-//                    parent.addChild(dialogBox)
                     setupDescription()
             }
 
@@ -84,7 +83,7 @@ class Item {
     func setupDescription(){
         self.sprite.addChild(itemPopUp)
         self.itemPopUp.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        itemPopUp.position.y = itemPopUp.parent!.position.y + 50
+        itemPopUp.position.y = itemPopUp.parent!.position.y - 150
     }
 
     func removeDescription() {

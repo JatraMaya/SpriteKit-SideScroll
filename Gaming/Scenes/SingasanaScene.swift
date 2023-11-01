@@ -14,6 +14,9 @@ class SingasanaScene: SKScene {
     let bg2: SKSpriteNode
     let cameraNode: SKCameraNode
 
+    let npcRatuTribuwhana: Npc
+    var buttonNPCInteraction: SKSpriteNode
+
     var audioPlayer: AVAudioPlayer?
     var isAudioPlayed = false
 
@@ -28,6 +31,12 @@ class SingasanaScene: SKScene {
         bg2 = SKSpriteNode(imageNamed: "SinggasanaNew")
         bg2.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         cameraNode = SKCameraNode()
+
+        npcRatuTribuwhana = Npc(imageName: "ratuTribhuwana", npcName: "npcR atuTribhuwana", npcSize: CGSize(width: 60, height: 130), dialogBoxAssets: ["DialogRatu"])
+
+        buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
+        buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
+        buttonNPCInteraction.size = CGSize(width: 100, height: 60)
 
         buttonQuestInfo = SKSpriteNode(imageNamed: "btnQuestInfo")
         buttonQuestInfo.zPosition = 5002
@@ -52,7 +61,7 @@ class SingasanaScene: SKScene {
         if !isAudioPlayed {
             isAudioPlayed = true
             playSound(named: "komplekKerajaan", fileType: "mp3")
-            audioPlayer?.setVolume(0.5, fadeDuration: 10)
+            audioPlayer?.setVolume(0.3, fadeDuration: 10)
         }
 
         for background in [bg1, bg2] {
@@ -66,7 +75,10 @@ class SingasanaScene: SKScene {
 
         player.setupPlayer(self, frame, false, xPos: 690, yPos: 150)
 
+        npcRatuTribuwhana.setupNpc(self, x: 250, y: 180)
+
         setupCamera()
+        setupNPCInteractionButton()
 //        setupSettingButton()
         setupQuestInfoButton()
         setupSceneShifterToKomplekKerajaan()
@@ -78,12 +90,36 @@ class SingasanaScene: SKScene {
         print("\(player.position)")
         player.updatePlayerPositionRightToLeft(frame)
 
-        buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
+        /// Update Interaction Mark Indicator
+        for i in [npcRatuTribuwhana] {
+            i.updateActionSpeechMark(player)
+        }
 
+        /// Update the position of Quest Info Button and Setting Button
+        buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
         buttonSetting.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.27)
 
+        /// Left Scene Barrier
+        if player.position.x > 740 {
+            player.position.x = 740
+            player.stopPlayerMovement()
+        }
+
+        /// Left Scene Barrier
+        if player.position.x < 320 {
+            player.position.x = 320
+            player.stopPlayerMovement()
+        }
+
+        /// NPC interaction trigger
+        if player.position.x >= 250 && player.position.x <= 335 {
+            buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
+        } else {
+            buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
+        }
+
         /// Show Scene Shifter Button to Komplek Kerajaan
-        if player.position.x >= 700 && player.position.x <= 730 {
+        if player.position.x >= 700 && player.position.x <= 740 {
             buttonSceneShifterToKomplekKerajaan.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
         } else {
             buttonSceneShifterToKomplekKerajaan.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
@@ -163,6 +199,13 @@ class SingasanaScene: SKScene {
         buttonSceneShifterToKomplekKerajaan.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
 
         addChild(buttonSceneShifterToKomplekKerajaan)
+    }
+
+    func setupNPCInteractionButton() {
+        buttonNPCInteraction.name = "buttonNPCInteraction"
+        buttonNPCInteraction.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
+
+        addChild(buttonNPCInteraction)
     }
 
 

@@ -19,6 +19,9 @@ let dialogs = [
     ],
     "npcDalamKerajaan": [
         "1.", "2"
+    ],
+    "npcRatuTribhuwana": [
+        "1"
     ]
 ]
 
