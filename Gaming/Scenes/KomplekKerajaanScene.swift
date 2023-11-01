@@ -53,6 +53,7 @@ class KomplekKerajaanScene: SKScene {
 
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
         buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
+        buttonNPCInteraction.size = CGSize(width: 100, height: 60)
 
         buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
         buttonObjectInteraction.zPosition = layerPosition.layer4.rawValue
@@ -163,12 +164,11 @@ class KomplekKerajaanScene: SKScene {
             questInfo.run(sequence)
         }
 
-        /// Update visibility of interaction mark
+        /// Update visibility of object interaction mark
         objectPatakaNareswara.updateActionCheckMark(player)
 
         if npcDalamKerajaan.isNpcActive {
             self.activeNpc = npcDalamKerajaan.npcName
-
             if !isTutorialDone {
                 tutorial.presentText(player, frame: frame)
             }

@@ -45,6 +45,7 @@ class DesaScene: SKScene {
     override init(size: CGSize) {
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
         buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
+        buttonNPCInteraction.size = CGSize(width: 100, height: 60)
 
 //        buttonObjectInteraction = SKSpriteNode(imageNamed: "btnObjectInteraction")
 //        buttonObjectInteraction.zPosition = layerPosition.layer4.rawValue
