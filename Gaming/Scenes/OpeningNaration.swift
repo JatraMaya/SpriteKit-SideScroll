@@ -10,7 +10,6 @@ import SpriteKit
 
 class OpeningNaration: SKScene {
     
-
     let layer1: SKSpriteNode
     let layer2: SKSpriteNode
     let layer3: SKSpriteNode
