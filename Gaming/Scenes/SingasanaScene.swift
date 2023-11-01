@@ -67,7 +67,7 @@ class SingasanaScene: SKScene {
         player.setupPlayer(self, frame, false, xPos: 690, yPos: 150)
 
         setupCamera()
-        setupSettingButton()
+//        setupSettingButton()
         setupQuestInfoButton()
         setupSceneShifterToKomplekKerajaan()
     }

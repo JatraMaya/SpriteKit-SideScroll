@@ -12,8 +12,10 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let scene = OpeningNaration(size: view.frame.size)
-        let scene = SingasanaScene(size: view.frame.size)
+//        let scene = OpeningNaration(size: view.frame.size)
+        let scene = KomplekKerajaanScene(size: view.frame.size)
+//        let scene = DesaScene(size: view.frame.size)
+//        let scene = SingasanaScene(size: view.frame.size)
 //        let scene = BaliScene(size: view.frame.size)
 //        let scene = PendopoBaliScene(size: view.frame.size)
 

@@ -23,6 +23,9 @@ class DesaScene: SKScene {
     var buttonObjectInteraction: SKSpriteNode
     var activeItem: String = ""
 
+    let questInfo = SKSpriteNode()
+    let questInfoImages: [String: String] = ["quest2": "questBali1", "quest3": "questBali2"]
+
     var buttonQuestInfo: SKSpriteNode
     var buttonSetting: SKSpriteNode
 
@@ -59,8 +62,8 @@ class DesaScene: SKScene {
 
         cameraNode = SKCameraNode()
         player = Player()
-        npc1 = Npc(imageName: "NpcWarga", npcName: "npc1", npcSize: CGSize(width: 50, height: 110))
-        npc2 = Npc(imageName: "Warga_Tua_2", npcName: "npc2", npcSize: CGSize(width: 50, height: 110))
+        npc1 = Npc(imageName: "NpcWarga", npcName: "npc1", npcSize: CGSize(width: 50, height: 110), dialogBoxAssets: ["DialogWargaBiasa"])
+        npc2 = Npc(imageName: "Warga_Tua_2", npcName: "npc2", npcSize: CGSize(width: 50, height: 110), dialogBoxAssets: ["DialogWargaSepuh1", "DialogWargaSepuh2"])
         item = Item(size: size, imageName: "compNareswara", itemName: "key", assetName: "ObjectInteractionPatakaSangDwijaNagaNareswara", spriteSize: CGSize(width: 35, height: 138))
 
         bg1 = SKSpriteNode(imageNamed: "gunungPenanggungan")
@@ -109,6 +112,9 @@ class DesaScene: SKScene {
         
         setupCamera()
 
+        questInfo.name = "questInfo"
+        questInfo.size = CGSize(width: 280, height: 44)
+
         npc1.setupNpc(self, x: 936, y: 150)
         npc2.setupNpc(self, x: 1544, y: 160)
         item.setupItem(self, x: (frame.maxX + 800), y: (size.height / 5))
@@ -116,7 +122,7 @@ class DesaScene: SKScene {
         setupNPCInteractionButton()
         setupObjectInteractionButton()
         setupQuestInfoButton()
-        setupSettingButton()
+//        setupSettingButton()
         setupSceneShifterToKomplekKerajaan()
         setupKapalJungJawa()
     }
@@ -124,7 +130,6 @@ class DesaScene: SKScene {
 
     // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
-        print("\(player.position)")
         player.updatePlayerPositionLeftToRight(frame)
 
         buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
@@ -133,6 +138,36 @@ class DesaScene: SKScene {
 
         for i in [npc1, npc2] {
             i.updateActionSpeechMark(player)
+        }
+
+        // Show the notification when the player finishes interacting with the NPC
+        if self.activeNpc == "npc1" && !npc1.isNpcActive {
+            let questInfoButtonPosition = buttonQuestInfo.position
+            questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4)
+            // Update the image of the notification node based on the completed quest
+            if let imageName = questInfoImages["quest2"] {
+                questInfo.texture = SKTexture(imageNamed: imageName)
+            }
+            self.addChild(questInfo)
+            let wait = SKAction.wait(forDuration: 4.0)
+            let remove = SKAction.removeFromParent()
+            let sequence = SKAction.sequence([wait, remove])
+            questInfo.run(sequence)
+        }
+
+        // Show the notification when the player finishes interacting with the NPC
+        if self.activeNpc == "npc2" && !npc2.isNpcActive {
+            let questInfoButtonPosition = buttonQuestInfo.position
+            questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4)
+            // Update the image of the notification node based on the completed quest
+            if let imageName = questInfoImages["quest3"] {
+                questInfo.texture = SKTexture(imageNamed: imageName)
+            }
+            self.addChild(questInfo)
+            let wait = SKAction.wait(forDuration: 4.0)
+            let remove = SKAction.removeFromParent()
+            let sequence = SKAction.sequence([wait, remove])
+            questInfo.run(sequence)
         }
 
         item.updateActionCheckMark(player)
@@ -200,6 +235,17 @@ class DesaScene: SKScene {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
 
+            /// Touch show quest info
+            if node.name == "buttonQuestInfo" {
+                let _ = buttonQuestInfo.position
+                questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4) // Adjust the offset as needed
+                self.addChild(questInfo)
+                let wait = SKAction.wait(forDuration: 3.0)
+                let remove = SKAction.removeFromParent()
+                let sequence = SKAction.sequence([wait, remove])
+                questInfo.run(sequence)
+            }
+
             if childNode(withName: "dialogBox") == nil && (node.name != "buttonNPCInteraction") {
                 player.handlePlayerMovementLeftToRight(touch, self.size)
             }
@@ -217,13 +263,11 @@ class DesaScene: SKScene {
             if node.name == "buttonQuestInfo" {
                 buttonQuestInfo.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button quest info pressed")
-                SceneManager.shared.transition(self, toScene: .KomplekKerajaanScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             if node.name == "buttonSetting" {
                 buttonSetting.run(SKAction.scale(to: 0.8, duration: 0.1))
                 print("button setting pressed")
-                SceneManager.shared.transition(self, toScene: .BaliScene, transition: SKTransition.fade(withDuration: 2))
             }
 
             /// Touch run scene transition to Komplek Kerajaan

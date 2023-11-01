@@ -29,7 +29,7 @@ class Item {
         self.sprite.name = "item"
 
         self.itemPopUp.name = "itemDescription"
-        self.itemPopUp.zPosition = 5
+        self.itemPopUp.zPosition = 5005
         self.itemPopUp.size = CGSize(width: 720, height: 310)
         self.itemPopUp.position = CGPoint(x: 0, y: 1200)
 

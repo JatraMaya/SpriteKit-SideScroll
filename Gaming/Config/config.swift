@@ -12,13 +12,13 @@ let distanceBetweenSpriteEnd: CGFloat = -5
 
 let dialogs = [
     "npc1": [
-        "hey", "apa kabar", "baik", "lu gimana", "biasa aja"
+        "1"
     ],
     "npc2": [
-        "pinjem seratus", "ogah", "kenapa gitu?", "ogah aja"
+        "1", "2"
     ],
     "npcDalamKerajaan": [
-        "Lapor mahapatih Gadjah Mada, ada yang prajurit yang membawa pesan dari bali menunggu di depan", "Ah... akhirnya"
+        "1.", "2"
     ]
 ]
 

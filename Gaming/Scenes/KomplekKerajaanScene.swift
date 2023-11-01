@@ -10,13 +10,13 @@ import AVFoundation
 
 class KomplekKerajaanScene: SKScene {
     var isTutorialDone: Bool
-    var startQuest: Bool = false
+
     let tutorial: Tutorial
     let player: Player
     let cameraNode: SKCameraNode
 
-    let backgroundQuestInfo: SKSpriteNode
-    let questLabel: SKLabelNode
+    let questInfo = SKSpriteNode()
+    let questInfoImages: [String: String] = ["quest1": "questBali0"]
 
     let bg1: SKSpriteNode
     let bg2: SKSpriteNode
@@ -42,21 +42,13 @@ class KomplekKerajaanScene: SKScene {
     var isAudioPlayed = false
 
     override init(size: CGSize) {
-
         cameraNode = SKCameraNode()
         player = Player()
-
-        backgroundQuestInfo = SKSpriteNode(imageNamed: "frameQuest")
-        backgroundQuestInfo.name = "QuestInfo"
-        backgroundQuestInfo.setScale(0.3)
-        backgroundQuestInfo.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        backgroundQuestInfo.position.x = 130
-        questLabel = SKLabelNode(text: questLine[0])
 
         isTutorialDone = UserDefaults.standard.bool(forKey: "isTutorialDone")
         tutorial = Tutorial(size: size, parent: player)
 
-        npcDalamKerajaan = Npc(imageName: "IdleNpc", npcName: "npcDalamKerajaan", npcSize: CGSize(width: 55, height: 120))
+        npcDalamKerajaan = Npc(imageName: "IdleNpc", npcName: "npcDalamKerajaan", npcSize: CGSize(width: 55, height: 120), dialogBoxAssets: ["dialogPembawaPesan1", "dialogPembawaPesan2"])
 
         buttonNPCInteraction = SKSpriteNode(imageNamed: "btnNPCInteraction")
         buttonNPCInteraction.zPosition = layerPosition.layer4.rawValue
@@ -120,12 +112,13 @@ class KomplekKerajaanScene: SKScene {
         bg1.setScale(0.5)
         bg2.setScale(0.25)
 
-
-
-        setupSettingButton()
+//        setupSettingButton()
         setupQuestInfoButton()
 
         setupPapanWitana()
+
+        questInfo.name = "questInfo"
+        questInfo.size = CGSize(width: 280, height: 44)
 
         setupCamera()
 
@@ -144,12 +137,6 @@ class KomplekKerajaanScene: SKScene {
 
     // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
-        print("\(player.position)")
-
-//        if self.startQuest {
-//            setupQuest()
-//        }
-
         player.updatePlayerPositionRightToLeft(frame)
 
         buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
@@ -158,6 +145,21 @@ class KomplekKerajaanScene: SKScene {
 
         for i in [npcDalamKerajaan] {
             i.updateActionSpeechMark(player)
+        }
+
+        // Show the notification when the player finishes interacting with the NPC
+        if self.activeNpc == "npcDalamKerajaan" && !npcDalamKerajaan.isNpcActive {
+            let _ = buttonQuestInfo.position
+            questInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * 0.3, y: cameraNode.frame.maxY - frame.height * -0.4) // Adjust the offset as needed
+            // Update the image of the notification node based on the completed quest
+            if let imageName = questInfoImages["quest1"] { // Replace 'completedQuest' with the variable that holds the name of the completed quest
+                questInfo.texture = SKTexture(imageNamed: imageName)
+            }
+            self.addChild(questInfo)
+            let wait = SKAction.wait(forDuration: 4.0)
+            let remove = SKAction.removeFromParent()
+            let sequence = SKAction.sequence([wait, remove])
+            questInfo.run(sequence)
         }
 
         /// Update visibility of interaction mark
@@ -220,8 +222,6 @@ class KomplekKerajaanScene: SKScene {
             buttonSceneShifterToSinggasana.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
         }
 
-
-
         /// Show NPC Interaction Button
         if npcDalamKerajaan.isNpcActive {
             buttonNPCInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 400, duration: 0.1))
@@ -239,9 +239,6 @@ class KomplekKerajaanScene: SKScene {
             buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
             isObjectInteractionButtonActive = false
         }
-
-        /// Update visibility of interaction mark
-        objectPatakaBaruna.updateActionCheckMark(player)
     }
 
 
@@ -254,6 +251,17 @@ class KomplekKerajaanScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
+
+            /// Touch show quest info
+            if node.name == "buttonQuestInfo" {
+                let _ = buttonQuestInfo.position
+                questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4) // Adjust the offset as needed
+                self.addChild(questInfo)
+                let wait = SKAction.wait(forDuration: 3.0)
+                let remove = SKAction.removeFromParent()
+                let sequence = SKAction.sequence([wait, remove])
+                questInfo.run(sequence)
+            }
 
             /// Touch show dialog box
             if childNode(withName: "dialogBox") == nil && (node.name != "buttonNPCInteraction") {
@@ -282,7 +290,6 @@ class KomplekKerajaanScene: SKScene {
 
             if self.activeNpc == "npcDalamKerajaan" {
                 npcDalamKerajaan.handleNpcDialog(touch)
-                setupQuest()
 
                 if !isTutorialDone {
                     tutorial.removeLabel(player)
@@ -332,17 +339,6 @@ class KomplekKerajaanScene: SKScene {
         addChild(buttonObjectInteraction)
     }
 
-    func setupQuest() {
-
-        if buttonQuestInfo.childNode(withName: "QuestInfo") == nil {
-            buttonQuestInfo.addChild(backgroundQuestInfo)
-            backgroundQuestInfo.addChild(questLabel)
-        }
-        }
-//        backgroundQuestInfo.run(SKAction.sequence([SKAction.fadeAlpha(to: 0, duration: 0.1), SKAction.moveTo(y: 10, duration: 0.1)]))
-
-
-
     func setupSceneShifterToDesaButton() {
         buttonSceneShifterToDesa.name = "buttonSceneShifterToDesa"
         buttonSceneShifterToDesa.position = CGPoint(x: cameraNode.frame.maxX + 600, y: frame.height / 2)
@@ -378,6 +374,7 @@ class KomplekKerajaanScene: SKScene {
 
         addChild(papanWitana)
     }
+
 
     // MARK: Function to handle play and pause sound
     func playSound(named: String, fileType: String) {
