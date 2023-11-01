@@ -80,6 +80,10 @@ class Npc {
         if currentDialogBoxAssetIndex == dialogBoxAssets.count {
             currentDialogBoxAssetIndex = 0
         }
+
+        if (self.sprite.name == "npc RatuTribhuwana") {
+            self.dialogBox.position = CGPoint(x: self.sprite.position.x + 175, y: self.sprite.position.y - 70)
+        }
     }
 
     func removeDialog() {
@@ -106,11 +110,13 @@ class Npc {
                 setupDialog()
             }
 
-            if (node.name == "dialogBox") {
+            if (node.name == "dialogBox") && (self.sprite.name != "npc RatuTribhuwana") {
                 updateDialog()
                 let randomIndex = Int.random(in: 0..<dialogBoxAssets.count)
                 let dialogBoxAsset = dialogBoxAssets[randomIndex]
                 dialogBox.texture = SKTexture(imageNamed: dialogBoxAsset)
+            } else if ((node.name == "dialogBox") && (self.sprite.name == "npc RatuTribhuwana")) {
+                removeDialog()
             }
         }
     }

@@ -270,8 +270,8 @@ class KomplekKerajaanScene: SKScene {
 
             /// Touch run scene transition to desa majapahit
             if node.name == "buttonSceneShifterToDesa" {
-                SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
-            }
+                    SceneManager.shared.transition(self, toScene: .DesaScene, transition: SKTransition.fade(withDuration: 2))
+                }
 
             /// Show item description
             if self.activeItem == self.objectPatakaNareswara.itemName {
@@ -281,7 +281,11 @@ class KomplekKerajaanScene: SKScene {
 
             /// Touch run scene transition to Singgasana
             if node.name == "buttonSceneShifterToSinggasana" {
-                SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
+                let questTracker = UserDefaults.standard.integer(forKey: "questTracker")
+
+                if questTracker == 2 {
+                    SceneManager.shared.transition(self, toScene: .SingasanaScene, transition: SKTransition.fade(withDuration: 2))
+                }
             }
 
             if node.name == "buttonQuestInfo" {

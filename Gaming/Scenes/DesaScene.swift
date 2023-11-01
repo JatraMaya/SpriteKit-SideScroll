@@ -156,6 +156,12 @@ class DesaScene: SKScene {
                 let remove = SKAction.removeFromParent()
                 let sequence = SKAction.sequence([wait, remove])
                 questInfo.run(sequence)
+
+                let qurrentQuestTracker = UserDefaults.standard.integer(forKey: "questTracker")
+
+                if qurrentQuestTracker < 2 {
+                    UserDefaults.standard.setValue(1, forKey: "questTracker")
+                }
             }
         }
 
@@ -174,6 +180,7 @@ class DesaScene: SKScene {
                 let remove = SKAction.removeFromParent()
                 let sequence = SKAction.sequence([wait, remove])
                 questInfo.run(sequence)
+                UserDefaults.standard.setValue(2, forKey: "questTracker")
             }
         }
 

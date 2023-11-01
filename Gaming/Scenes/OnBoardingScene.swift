@@ -53,6 +53,7 @@ class OnBoardingScene: SKScene {
             if node.name == "new game" {
                 newGame.fontColor = UIColor.white
                 UserDefaults.standard.set(false, forKey: "isTutorialDone")
+                UserDefaults.standard.set(2, forKey: "questTracker")
                 SceneManager.shared.transition(self, toScene: .OpeningNaration, transition: SKTransition.fade(withDuration: 2))
             } else if node.name == "continue game" {
                 print("continue game")
