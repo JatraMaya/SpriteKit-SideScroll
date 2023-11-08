@@ -93,6 +93,10 @@ class Npc {
         if (self.sprite.name == "npc RatuTribhuwana") {
             self.dialogBox.position = CGPoint(x: self.sprite.position.x + 175, y: self.sprite.position.y - 70)
         }
+
+        if (self.sprite.name == "npc RatuTribhuwana") {
+            self.dialogBox.position = CGPoint(x: self.sprite.position.x + 175, y: self.sprite.position.y - 70)
+        }
     }
 
     func removeDialog() {
