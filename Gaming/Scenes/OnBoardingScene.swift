@@ -38,11 +38,11 @@ class OnBoardingScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
-        newGame.position = CGPoint(x: frame.width / 2, y: frame.height / 2.6)
+        newGame.position = CGPoint(x: frame.width / 2, y: frame.height / 2.4)
         continueGame.position = CGPoint(x: frame.width / 2, y: frame.height / 2)
         addChild(background)
         addChild(newGame)
-        addChild(continueGame)
+//        addChild(continueGame)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -19,6 +19,8 @@ class Npc {
     var interactionMark: SKSpriteNode
     var dialogBoxAssets: [String]
     var currentDialogBoxAssetIndex = 0
+    var questisShow = false
+    
 
     init(imageName: String, npcName: String, npcSize: CGSize, dialogBoxAssets: [String]) {
         self.npcName = npcName
@@ -56,29 +58,40 @@ class Npc {
     func updateActionSpeechMark(_ playerSprite: SKSpriteNode) {
         let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
 
-        if (-distanceBetweenSpriteStart..<distanceBetweenSpriteEnd).contains(playerVsSpritePosition) {
-            if playerSprite.xScale == 1 {
-                self.sprite.childNode(withName: "speechBubble")?.alpha = 1
-                self.isNpcActive = true
-            }
+        if (-distanceBetweenSpriteStart..<distanceBetweenSpriteEnd).contains(playerVsSpritePosition) && playerSprite.xScale == 1 {
+            self.sprite.childNode(withName: "speechBubble")?.alpha = 1
+            self.isNpcActive = true
 
             self.dialogBox.position.x = playerSprite.position.x
             self.dialogBox.position.y = playerSprite.position.y - 55
 
-        } else {
+        }
+        else if (distanceBetweenSpriteEnd..<distanceBetweenSpriteStart).contains(playerVsSpritePosition) && playerSprite.xScale == -1 {
+            
+            self.sprite.childNode(withName: "speechBubble")?.alpha = 1
+            self.isNpcActive = true
+
+            self.dialogBox.position.x = playerSprite.position.x
+            self.dialogBox.position.y = playerSprite.position.y - 55
+        }
+        else {
             self.sprite.childNode(withName: "speechBubble")?.alpha = 0
             self.isNpcActive = false
         }
-
+        
     }
 
     func setupDialog() {
         let dialogBoxAsset = dialogBoxAssets[currentDialogBoxAssetIndex]
         dialogBox.texture = SKTexture(imageNamed: dialogBoxAsset)
 
-        currentDialogBoxAssetIndex += 1
+        currentDialogBoxAssetIndex = 0
         if currentDialogBoxAssetIndex == dialogBoxAssets.count {
-            currentDialogBoxAssetIndex = 0
+            currentDialogBoxAssetIndex += 1
+        }
+
+        if (self.sprite.name == "npc RatuTribhuwana") {
+            self.dialogBox.position = CGPoint(x: self.sprite.position.x + 175, y: self.sprite.position.y - 70)
         }
 
         if (self.sprite.name == "npc RatuTribhuwana") {
@@ -88,6 +101,7 @@ class Npc {
 
     func removeDialog() {
         dialogStatusCount = 0
+        questisShow = true
         dialogBox.removeFromParent()
     }
 

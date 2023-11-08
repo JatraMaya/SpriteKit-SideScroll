@@ -403,7 +403,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F8U2R4K53M;
+				DEVELOPMENT_TEAM = FAV732MUB5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Palapa Oath";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.adventure-games";
@@ -435,7 +435,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F8U2R4K53M;
+				DEVELOPMENT_TEAM = FAV732MUB5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Palapa Oath";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.adventure-games";

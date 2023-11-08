@@ -142,12 +142,13 @@ class DesaScene: SKScene {
         }
 
         // Show the notification when the player finishes interacting with the NPC
-        if self.activeNpc == "npc1" && !npc1.isNpcActive {
+        if self.activeNpc == "npc1" && npc1.questisShow == true {
             _ = buttonQuestInfo.position
             questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4)
             // Update the image of the notification node based on the completed quest
             if let imageName = questInfoImages["quest2"] {
                 questInfo.texture = SKTexture(imageNamed: imageName)
+                npc1.questisShow = false
             }
 
             if childNode(withName: "questInfo") == nil {
@@ -166,12 +167,13 @@ class DesaScene: SKScene {
         }
 
         // Show the notification when the player finishes interacting with the NPC
-        if self.activeNpc == "npc2" && !npc2.isNpcActive {
+        if self.activeNpc == "npc2" && npc2.questisShow == true {
             _ = buttonQuestInfo.position
             questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4)
             // Update the image of the notification node based on the completed quest
             if let imageName = questInfoImages["quest3"] {
                 questInfo.texture = SKTexture(imageNamed: imageName)
+                npc2.questisShow = false
             }
 
             if childNode(withName: "questInfo") == nil {

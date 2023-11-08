@@ -54,11 +54,18 @@ class Item {
     func updateActionCheckMark(_ playerSprite: SKSpriteNode) {
         let playerVsSpritePosition = (playerSprite.position.x - self.sprite.position.x)
 
-        if (-distanceBetweenSpriteStart..<distanceBetweenSpriteEnd).contains(playerVsSpritePosition) {
+        if (-distanceBetweenSpriteStart..<distanceBetweenSpriteEnd).contains(playerVsSpritePosition) && playerSprite.xScale == 1 {
                 self.sprite.childNode(withName: "questionMarkBubble")?.alpha = 1
                 self.isItemActive = true
 
-        } else {
+        }
+        else if (distanceBetweenSpriteEnd..<distanceBetweenSpriteStart).contains(playerVsSpritePosition) && playerSprite.xScale == -1 {
+            
+            self.sprite.childNode(withName: "questionMarkBubble")?.alpha = 1
+            self.isItemActive = true
+
+        }
+        else {
             self.sprite.childNode(withName: "questionMarkBubble")?.alpha = 0
             self.isItemActive = false
         }
