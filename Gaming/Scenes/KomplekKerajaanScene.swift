@@ -9,11 +9,10 @@ import SpriteKit
 import AVFoundation
 
 class KomplekKerajaanScene: SKScene {
-    var npcQuest: Bool = false
-    
-    var isTutorialDone = UserDefaults.standard.bool(forKey: "isTutorialDone")
 
-    let tutorial: Tutorial
+    let tutorialMovement: SKSpriteNode
+//    let tutorialObjectInteraction: SKSpriteNode
+
     let player: Player
     let cameraNode: SKCameraNode
 
@@ -48,7 +47,7 @@ class KomplekKerajaanScene: SKScene {
         cameraNode = SKCameraNode()
         player = Player()
 
-        tutorial = Tutorial(size: size, parent: player)
+        tutorialMovement = SKSpriteNode(imageNamed: "TutorialMovement")
 
         npcDalamKerajaan = Npc(imageName: "IdleNpc", npcName: "npcDalamKerajaan", npcSize: CGSize(width: 55, height: 120), dialogBoxAssets: ["dialogPembawaPesan1", "dialogPembawaPesan2"])
 
@@ -92,10 +91,6 @@ class KomplekKerajaanScene: SKScene {
 
     // MARK: Call all the necessary function when game first load
     override func didMove(to view: SKView) {
-        if !isTutorialDone {
-            tutorial.presentText(player, frame: frame)
-         }
-
         if !isAudioPlayed {
             isAudioPlayed = true
             playSound(named: "komplekKerajaan", fileType: "mp3")
@@ -115,26 +110,7 @@ class KomplekKerajaanScene: SKScene {
         bg1.setScale(0.5)
         bg2.setScale(0.25)
 
-//        setupSettingButton()
-        setupQuestInfoButton()
-
-        setupPapanWitana()
-
-        questInfo.name = "questInfo"
-        questInfo.size = CGSize(width: 280, height: 44)
-
-        setupCamera()
-
-        setupNPCInteractionButton()
-        setupObjectInteractionButton()
-        setupSceneShifterToDesaButton()
-        setupSceneShifterToSinggasanaButton()
-
-        player.setupPlayer(self, frame, xPos: -540)
-
-        objectPatakaNareswara.setupItem(self, x: -1070, y: 170)
-
-        npcDalamKerajaan.setupNpc(self, x: -200, y: 135, dialogBoxX: player.position.x, dialogBoxY: 90)
+        setupNode()
     }
 
 
@@ -246,10 +222,6 @@ class KomplekKerajaanScene: SKScene {
 
     // MARK: control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !isTutorialDone{
-            self.tutorial.removeLabel(player)
-            UserDefaults.standard.setValue(true, forKey: "isTutorialDone")
-        }
 
         for touch in touches {
             let location = touch.location(in: self)
@@ -264,6 +236,11 @@ class KomplekKerajaanScene: SKScene {
                 let remove = SKAction.removeFromParent()
                 let sequence = SKAction.sequence([wait, remove])
                 questInfo.run(sequence)
+            }
+
+            /// Remove tutorial movement from scene
+            if node.name == "movementTutorial" {
+                tutorialMovement.removeFromParent()
             }
 
             /// Touch show dialog box
@@ -304,10 +281,6 @@ class KomplekKerajaanScene: SKScene {
             if self.activeNpc == "npcDalamKerajaan" {
                 npcDalamKerajaan.handleNpcDialog(touch)
 
-//                if !isTutorialDone {
-//                    tutorial.removeLabel(player)
-//                    UserDefaults.standard.setValue(true, forKey: "isTutorialDone")
-//                }
             }
         }
     }
@@ -385,6 +358,32 @@ class KomplekKerajaanScene: SKScene {
         papanWitana.position = CGPoint(x: -760, y: 165)
 
         addChild(papanWitana)
+    }
+
+    func setupTutorialMovement() {
+        tutorialMovement.name = "movementTutorial"
+        tutorialMovement.position = CGPoint(x: player.position.x - 1170, y: size.height / 2)
+        tutorialMovement.size = CGSize(width: 852, height: 393)
+        tutorialMovement.zPosition = 5010
+
+        addChild(tutorialMovement)
+    }
+
+    func setupNode() {
+//        setupSettingButton()
+        setupQuestInfoButton()
+        setupPapanWitana()
+        setupCamera()
+        setupNPCInteractionButton()
+        setupObjectInteractionButton()
+        setupSceneShifterToDesaButton()
+        setupSceneShifterToSinggasanaButton()
+        setupTutorialMovement()
+        questInfo.name = "questInfo"
+        questInfo.size = CGSize(width: 280, height: 44)
+        player.setupPlayer(self, frame, xPos: -1170)
+        objectPatakaNareswara.setupItem(self, x: -1070, y: 170)
+        npcDalamKerajaan.setupNpc(self, x: -200, y: 135, dialogBoxX: player.position.x, dialogBoxY: 90)
     }
 
 
