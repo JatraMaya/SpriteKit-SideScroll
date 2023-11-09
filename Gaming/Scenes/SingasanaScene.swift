@@ -231,8 +231,8 @@ class SingasanaScene: SKScene {
         let choice1 = SKTexture(imageNamed: "Choice1")
         let choice2 = SKTexture(imageNamed: "Choice2")
 
-        let choice1Answered = SKTexture(imageNamed: "Choice1Answered")
-        let choice2Answered = SKTexture(imageNamed: "Choice2Answered")
+        var choice1Answered = SKTexture(imageNamed: "Choice1Answered")
+        var choice2Answered = SKTexture(imageNamed: "Choice2Answered")
 
         let choiceA = SKSpriteNode(texture: choice1)
         let choiceB = SKSpriteNode(texture: choice2)

@@ -9,9 +9,13 @@ import SpriteKit
 import AVFoundation
 
 class KomplekKerajaanScene: SKScene {
-
     let tutorialMovement: SKSpriteNode
-//    let tutorialObjectInteraction: SKSpriteNode
+    let tutorialObjectInteraction1: SKSpriteNode
+    let tutorialObjectInteraction2: SKSpriteNode
+    let tutorialObjectInteraction3: SKSpriteNode
+    let tutorialNpcInteraction1: SKSpriteNode
+    let tutorialNpcInteraction2: SKSpriteNode
+    let tutorialNpcInteraction3: SKSpriteNode
 
     let player: Player
     let cameraNode: SKCameraNode
@@ -48,6 +52,12 @@ class KomplekKerajaanScene: SKScene {
         player = Player()
 
         tutorialMovement = SKSpriteNode(imageNamed: "TutorialMovement")
+        tutorialObjectInteraction1 = SKSpriteNode(imageNamed: "TutorialObjectInteraction1")
+        tutorialObjectInteraction2 = SKSpriteNode(imageNamed: "TutorialObjectInteraction2")
+        tutorialObjectInteraction3 = SKSpriteNode(imageNamed: "TutorialObjectInteraction3")
+        tutorialNpcInteraction1 = SKSpriteNode(imageNamed: "TutorialNpcInteraction1")
+        tutorialNpcInteraction2 = SKSpriteNode(imageNamed: "TutorialNpcInteraction2")
+        tutorialNpcInteraction3 = SKSpriteNode(imageNamed: "TutorialNpcInteraction3")
 
         npcDalamKerajaan = Npc(imageName: "IdleNpc", npcName: "npcDalamKerajaan", npcSize: CGSize(width: 55, height: 120), dialogBoxAssets: ["dialogPembawaPesan1", "dialogPembawaPesan2"])
 
@@ -91,6 +101,41 @@ class KomplekKerajaanScene: SKScene {
 
     // MARK: Call all the necessary function when game first load
     override func didMove(to view: SKView) {
+        tutorialObjectInteraction1.name = "objectInteractionTutorial1"
+        tutorialObjectInteraction1.position = CGPoint(x: player.position.x - 1100, y: size.height / 2)
+        tutorialObjectInteraction1.size = CGSize(width: 852, height: 393)
+        tutorialObjectInteraction1.zPosition = 5010
+        tutorialObjectInteraction1.isHidden = true
+        addChild(tutorialObjectInteraction1)
+
+        tutorialObjectInteraction2.name = "objectInteractionTutorial2"
+        tutorialObjectInteraction2.position = CGPoint(x: player.position.x - 1100, y: size.height / 2)
+        tutorialObjectInteraction2.size = CGSize(width: 852, height: 393)
+        tutorialObjectInteraction2.zPosition = 5010
+
+        tutorialObjectInteraction3.name = "objectInteractionTutorial3"
+        tutorialObjectInteraction3.position = CGPoint(x: player.position.x - 1100, y: size.height / 2)
+        tutorialObjectInteraction3.size = CGSize(width: 852, height: 393)
+        tutorialObjectInteraction3.zPosition = 5010
+
+        tutorialNpcInteraction1.name = "npcInteractionTutorial1"
+        tutorialNpcInteraction1.position = CGPoint(x: player.position.x + 100, y: size.height / 2)
+        tutorialNpcInteraction1.size = CGSize(width: 852, height: 393)
+        tutorialNpcInteraction1.zPosition = 5010
+        tutorialNpcInteraction1.isHidden = true
+        addChild(tutorialNpcInteraction1)
+
+        tutorialNpcInteraction2.name = "npcInteractionTutorial2"
+        tutorialNpcInteraction2.position = CGPoint(x: player.position.x + 100, y: size.height / 2)
+        tutorialNpcInteraction2.size = CGSize(width: 852, height: 393)
+        tutorialNpcInteraction2.zPosition = 5010
+
+        tutorialNpcInteraction3.name = "npcInteractionTutorial3"
+        tutorialNpcInteraction3.position = CGPoint(x: player.position.x + 100, y: size.height / 2)
+        tutorialNpcInteraction3.size = CGSize(width: 852, height: 393)
+        tutorialNpcInteraction3.zPosition = 5010
+
+
         if !isAudioPlayed {
             isAudioPlayed = true
             playSound(named: "komplekKerajaan", fileType: "mp3")
@@ -116,10 +161,14 @@ class KomplekKerajaanScene: SKScene {
 
     // MARK: Update Scene (including node location) accroding to delta time
     override func update(_ currentTime: TimeInterval) {
-        player.updatePlayerPositionRightToLeft(frame)
-        
-        buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
+        /// Stop player movement when object interaction tutorial show up
+        if tutorialObjectInteraction1.isHidden || tutorialObjectInteraction2.isHidden || tutorialObjectInteraction3.isHidden && tutorialNpcInteraction1.isHidden || tutorialNpcInteraction2.isHidden || tutorialNpcInteraction3.isHidden {
+            player.updatePlayerPositionRightToLeft(frame)
+        } else {
+            player.stopPlayerMovement()
+        }
 
+        buttonQuestInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.4)
         buttonSetting.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.45, y: cameraNode.frame.maxY - frame.height * -0.27)
 
         for i in [npcDalamKerajaan] {
@@ -129,9 +178,9 @@ class KomplekKerajaanScene: SKScene {
         // Show the notification when the player finishes interacting with the NPC
         if npcDalamKerajaan.questisShow == true {
             let _ = buttonQuestInfo.position
-            questInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.25, y: cameraNode.frame.maxY - frame.height * -0.4) // Adjust the offset as needed
+            questInfo.position = CGPoint(x: cameraNode.frame.minX + frame.width * -0.25, y: cameraNode.frame.maxY - frame.height * -0.4) 
             // Update the image of the notification node based on the completed quest
-                if let imageName = questInfoImages["quest1"] { // Replace 'completedQuest' with the variable that holds the name of the completed quest
+                if let imageName = questInfoImages["quest1"] {
                     questInfo.texture = SKTexture(imageNamed: imageName)
                     npcDalamKerajaan.questisShow = false
                 }
@@ -217,30 +266,64 @@ class KomplekKerajaanScene: SKScene {
             buttonObjectInteraction.run(SKAction.moveTo(x: cameraNode.frame.maxX + 600, duration: 0.5))
             isObjectInteractionButtonActive = false
         }
+
+        /// Show tutorial for object interaction
+        if isObjectInteractionButtonActive {
+            tutorialObjectInteraction1.isHidden = false
+        }
+
+        /// Show tutorial for npc interaction
+        if isNPCInteractionButtonActive {
+            tutorialNpcInteraction1.isHidden = false
+        }
     }
 
 
     // MARK: control functionality when button is touch
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
         for touch in touches {
             let location = touch.location(in: self)
             let node = self.atPoint(location)
 
-            /// Touch show quest info
-            if node.name == "buttonQuestInfo" {
-                let _ = buttonQuestInfo.position
-                questInfo.position = CGPoint(x: player.position.x, y: cameraNode.frame.maxY - frame.height * -0.4) // Adjust the offset as needed
-                self.addChild(questInfo)
-                let wait = SKAction.wait(forDuration: 3.0)
-                let remove = SKAction.removeFromParent()
-                let sequence = SKAction.sequence([wait, remove])
-                questInfo.run(sequence)
-            }
-
             /// Remove tutorial movement from scene
             if node.name == "movementTutorial" {
                 tutorialMovement.removeFromParent()
+            }
+            
+            /// Remove tutorial object interaction 1 from scene
+            if node.name == "objectInteractionTutorial1" {
+                tutorialObjectInteraction1.removeFromParent()
+                addChild(tutorialObjectInteraction2)
+            }
+            
+            /// Remove tutorial object interaction 2 from scene
+            if node.name == "objectInteractionTutorial2" {
+                tutorialObjectInteraction2.removeFromParent()
+                addChild(tutorialObjectInteraction3)
+            }
+            
+            ///Remove tutorial object interaction 3 from scene
+            if node.name == "objectInteractionTutorial3" {
+                tutorialObjectInteraction3.isHidden = true
+                tutorialObjectInteraction3.removeFromParent()
+            }
+            
+            /// Remove tutorial npc interaction 1 from scene
+            if node.name == "npcInteractionTutorial1" {
+                tutorialNpcInteraction1.removeFromParent()
+                addChild(tutorialNpcInteraction2)
+            }
+            
+            /// Remove tutorial npc interaction 2 from scene
+            if node.name == "npcInteractionTutorial2" {
+                tutorialNpcInteraction2.removeFromParent()
+                addChild(tutorialNpcInteraction3)
+            }
+            
+            /// Remove tutorial npc interaction 3 from scene
+            if node.name == "npcInteractionTutorial3" {
+                tutorialNpcInteraction3.isHidden = true
+                tutorialNpcInteraction3.removeFromParent()
             }
 
             /// Touch show dialog box
@@ -280,7 +363,6 @@ class KomplekKerajaanScene: SKScene {
 
             if self.activeNpc == "npcDalamKerajaan" {
                 npcDalamKerajaan.handleNpcDialog(touch)
-
             }
         }
     }
@@ -341,7 +423,9 @@ class KomplekKerajaanScene: SKScene {
     func setupQuestInfoButton() {
         buttonQuestInfo.name = "buttonQuestInfo"
         buttonQuestInfo.size = CGSize(width: 44, height: 44)
-        
+        buttonQuestInfo.position = CGPoint(x: -200, y: 100)
+        buttonQuestInfo.zPosition = 6002
+
         addChild(buttonQuestInfo)
     }
 
@@ -369,6 +453,10 @@ class KomplekKerajaanScene: SKScene {
         addChild(tutorialMovement)
     }
 
+    func setupTutorialObjectInteraction() {
+
+    }
+
     func setupNode() {
 //        setupSettingButton()
         setupQuestInfoButton()
@@ -379,11 +467,12 @@ class KomplekKerajaanScene: SKScene {
         setupSceneShifterToDesaButton()
         setupSceneShifterToSinggasanaButton()
         setupTutorialMovement()
+        setupTutorialObjectInteraction()
         questInfo.name = "questInfo"
         questInfo.size = CGSize(width: 280, height: 44)
         player.setupPlayer(self, frame, xPos: -1170)
-        objectPatakaNareswara.setupItem(self, x: -1070, y: 170)
-        npcDalamKerajaan.setupNpc(self, x: -200, y: 135, dialogBoxX: player.position.x, dialogBoxY: 90)
+        objectPatakaNareswara.setupItem(self, x: -1000, y: 170)
+        npcDalamKerajaan.setupNpc(self, x: 200, y: 135, dialogBoxX: player.position.x, dialogBoxY: 90)
     }
 
 

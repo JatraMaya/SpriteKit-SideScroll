@@ -17,6 +17,7 @@
 		649EC8282AEEB56800E1892F /* Depan Kerajaan.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649EC8252AEEB56800E1892F /* Depan Kerajaan.mp3 */; };
 		649EC8292AEEB56800E1892F /* Sungai.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649EC8262AEEB56800E1892F /* Sungai.mp3 */; };
 		649EC82A2AEEB56800E1892F /* Pantai Majapahit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 649EC8272AEEB56800E1892F /* Pantai Majapahit.mp3 */; };
+		64B1C2C32AFB8D7100D936B3 /* NewScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B1C2C22AFB8D7100D936B3 /* NewScene.swift */; };
 		BD274F0C2AF21E78006B6A97 /* EndingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD274F0B2AF21E78006B6A97 /* EndingScene.swift */; };
 		BD4407732AF1EDD8009DA530 /* OnBoardingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4407722AF1EDD8009DA530 /* OnBoardingScene.swift */; };
 		BD5B833C2AE2608A004A8345 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5B833B2AE2608A004A8345 /* Item.swift */; };
@@ -47,6 +48,7 @@
 		649EC8252AEEB56800E1892F /* Depan Kerajaan.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Depan Kerajaan.mp3"; sourceTree = "<group>"; };
 		649EC8262AEEB56800E1892F /* Sungai.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sungai.mp3; sourceTree = "<group>"; };
 		649EC8272AEEB56800E1892F /* Pantai Majapahit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Pantai Majapahit.mp3"; sourceTree = "<group>"; };
+		64B1C2C22AFB8D7100D936B3 /* NewScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewScene.swift; sourceTree = "<group>"; };
 		BD274F0B2AF21E78006B6A97 /* EndingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingScene.swift; sourceTree = "<group>"; };
 		BD4407722AF1EDD8009DA530 /* OnBoardingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingScene.swift; sourceTree = "<group>"; };
 		BD5B833B2AE2608A004A8345 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			children = (
 				BDB3C2BD2AE965D400FBBB08 /* SingasanaScene.swift */,
 				BDA69E702AE9133500211E96 /* KomplekKerajaanScene.swift */,
+				64B1C2C22AFB8D7100D936B3 /* NewScene.swift */,
 				BDA69E6E2AE912E800211E96 /* DesaScene.swift */,
 				649EC81B2AEE8F8E00E1892F /* BaliScene.swift */,
 				649EC81D2AEE8FA500E1892F /* PendopoBaliScene.swift */,
@@ -261,6 +264,7 @@
 				BD6809982AF0F38F00AA67CF /* OpeningNaration.swift in Sources */,
 				BD4407732AF1EDD8009DA530 /* OnBoardingScene.swift in Sources */,
 				BD274F0C2AF21E78006B6A97 /* EndingScene.swift in Sources */,
+				64B1C2C32AFB8D7100D936B3 /* NewScene.swift in Sources */,
 				BDB3C2BE2AE965D400FBBB08 /* SingasanaScene.swift in Sources */,
 				BDA0D98C2ADD459100B6ABE6 /* Npc.swift in Sources */,
 			);
@@ -415,7 +419,6 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F8U2R4K53M;
 				DEVELOPMENT_TEAM = B34FJD89YP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Palapa Oath";
@@ -448,7 +451,6 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = F8U2R4K53M;
 				DEVELOPMENT_TEAM = B34FJD89YP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Palapa Oath";

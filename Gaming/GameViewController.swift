@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
         
 //        let scene = OnBoardingScene(size: view.frame.size)
         let scene = KomplekKerajaanScene(size: view.frame.size)
+//        let scene = NewScene(size: view.frame.size)
 //        let scene = OpeningNaration(size: view.frame.size)
 //        let scene = KomplekKerajaanScene(size: view.frame.size)
 //        let scene = OpeningNaration(size: view.frame.size)
